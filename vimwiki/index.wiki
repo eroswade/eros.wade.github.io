@@ -1,0 +1,10 @@
+%toc
+= Eros.Wade 的BLOG =
+== 日常 ==
+== BSD ==
+[[freebsd_切换WIFI]]
+== AI ==
+== VIM ==
+[[vim_wiki使用]]
+
+[[vim_doc导入]]

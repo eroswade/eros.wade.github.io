@@ -1,0 +1,7 @@
+=== FREEBSD 切换WIFI源 ===
+==== 扫描 ====
+ifconfig wlan0 up scan
+==== 切换 ====
+ifconfig wlan0 down
+ifconfig wlan0 ssid "EROS"
+ifconfig wlan0 up
