@@ -1,3 +1,3 @@
-# eros.wade.github.io
-Eros's Release
-blog.eroswade.com
+## EROS's Blog
+Welcome to Eros's blog
+[Blog](http://eroswade.github.io)
