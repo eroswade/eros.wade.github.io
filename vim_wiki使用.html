@@ -1,12 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="Stylesheet" type="text/css" href="style.css">
-<title>vim_wiki使用</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="Stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="Stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <title>vim_wiki使用</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-
+    <div class="content">
+        
 <div class="toc">
 <ul>
 <li><a href="#toc_0.0.0.1">标题和目录 </a>
@@ -38,7 +41,7 @@
 <code> %nohtml 告诉 vimwiki 不为某条目生成HTML文件。即使你在该条目打开时为它单独执行 :Vimwiki2HTML ，也不会生成</code>
 </p>
 <blockquote>
-在VimWiki生成HTML页面时，将生成 title（标题）和toc（目录）。 
+在VimWiki生成HTML页面时，将生成 title（标题）和toc（目录）。 <br>
 </blockquote>
 <blockquote>
 标题。通过= 标题 =的形式定义各级标题，如= h1 =、== h2 ==，最多支持6级标题。可以在任意行按键盘的+键，就自动添加标题（如果已存在标题，则降低标题级别），按-键，就自动删除标题（如果已存在标题，则升高标题级别）。
@@ -67,7 +70,7 @@ wiki链接。通过
 </p>
 
 <p>
-的方式，建立新的wiki页。在<code>[[主题]]</code>上键入回车，就会打开对应的wiki文件，如果没有，则自动创建。
+的方式，建立新的wiki页。在<code>[[主题]]</code>上键入回车，就会打开对应的wiki文件，如果没有，则自动创建。<br&gt;
 </p>
 
 <p>
@@ -80,7 +83,7 @@ wiki链接。通过
 
 <p>
 <a href="http://www.berlinix.com ">波黎克斯</a>
-的方式，引用外部链接，这种方式的展现效果只显示链接的描述（上例即只显示“波黎克斯”这几个字）。
+的方式，引用外部链接，这种方式的展现效果只显示链接的描述（上例即只显示“波黎克斯”这几个字）。<br&gt;
 </p>
 
 <p>
@@ -154,24 +157,27 @@ see :h vimwiki-synax-lists
 </p>
 
 <p>
-<code>| HEAD1 | HEAD2   |</code>
-</p>
-
-<p>
-<code>| ------+-------- |</code>
-</p>
-
-<p>
-<code>| Vim   | Editor  |</code>
-</p>
-
-<p>
-<code>| GCC   |Compiler |</code>
+<code>| HEAD1 | HEAD2   |</code><br>
+<code>| ------+-------- |</code><br>
+<code>| Vim   | Editor  |</code><br>
+<code>| GCC   |Compiler |</code><br>
 </p>
 
 <p>
 see :h vimwiki-syntax-tables
 </p>
 
+    </div>
+
+    <script type="text/javascript" >
+        $(document).ready(function() {
+             //使用类选择器
+            $(".toc").addClass("well");
+
+            //$("#img1").mouseout(function() {
+            //    $("#img1").css("opacity", 1);
+            //});
+        });
+    </script>
 </body>
 </html>
