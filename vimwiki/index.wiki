@@ -1,9 +1,10 @@
-%toc
+%%toc
 %title Eros Wiki Page
 %template def_template
 
 = Eros.Wade 的BLOG =
 == 日常 ==
+[[diary/diary|日记]]
 == BSD ==
 [[freebsd_切换WIFI]]<br>
 [[freebsd_Install Libreoffice]]
