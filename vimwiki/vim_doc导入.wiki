@@ -1,3 +1,5 @@
+%title vim: include plugin doc
+%template def_template
 = vim doc 导入=
 插件的DOC不会自动导入
 

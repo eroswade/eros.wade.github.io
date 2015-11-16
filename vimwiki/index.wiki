@@ -1,4 +1,7 @@
 %toc
+%title Eros Wiki Page
+%template def_template
+
 = Eros.Wade 的BLOG =
 == 日常 ==
 == BSD ==

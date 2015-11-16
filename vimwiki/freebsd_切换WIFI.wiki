@@ -1,7 +1,10 @@
+%title freebsd change wifi
+%template def_template
+
 === FREEBSD 切换WIFI源 ===
 ==== 扫描 ====
 ifconfig wlan0 up scan
 ==== 切换 ====
-ifconfig wlan0 down
-ifconfig wlan0 ssid "EROS"
-ifconfig wlan0 up
+ifconfig wlan0 down<br>
+ifconfig wlan0 ssid "EROS"<br>
+ifconfig wlan0 up<br>

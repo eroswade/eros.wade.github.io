@@ -1,15 +1,16 @@
 <html>
 <head>
-    <link rel="Stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="Stylesheet" type="text/css" href="css/style.css" />
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-    <title>freebsd_�л�WIFI</title>
+    <link rel="Stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <title>freebsd change wifi</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
     <div class="content">
         
+
 <h3 id="toc_0.0.1">FREEBSD 切换WIFI源 </h3>
 <h4 id="toc_0.0.1.1">扫描</h4>
 <p>
@@ -17,9 +18,9 @@ ifconfig wlan0 up scan
 </p>
 <h4 id="toc_0.0.1.2">切换</h4>
 <p>
-ifconfig wlan0 down
-ifconfig wlan0 ssid "EROS"
-ifconfig wlan0 up
+ifconfig wlan0 down<br>
+ifconfig wlan0 ssid "EROS"<br>
+ifconfig wlan0 up<br>
 </p>
 
     </div>
@@ -34,6 +35,27 @@ ifconfig wlan0 up
             //});
         });
     </script>
-    <script id="dsq-count-scr" src="//erosblog.disqus.com/count.js" async></script>
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+        */
+        /*variables
+            var disqus_config = function () {
+                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+        */
+        (function() {  // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+        
+            s.src = '//erosblog.disqus.com/embed.js';
+        
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 </body>
 </html>
