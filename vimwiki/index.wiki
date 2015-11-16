@@ -2,9 +2,9 @@
 = Eros.Wade 的BLOG =
 == 日常 ==
 == BSD ==
-[[freebsd_切换WIFI]]
+[[freebsd_切换WIFI]]<br>
+[[freebsd_Install Libreoffice]]
 == AI ==
 == VIM ==
-[[vim_wiki使用]]
-
+[[vim_wiki使用]]<br>
 [[vim_doc导入]]

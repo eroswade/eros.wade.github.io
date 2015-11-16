@@ -1,0 +1,5 @@
+== ERRLIST ==
+# kg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place). 
+  Problematic file: /usr/local/bin/dvipdf
+    # solve solution : pkg delete -f ghostscript9
+    # solve solution : someone said that using make config to change the dependancy. cancel the require of teTex
