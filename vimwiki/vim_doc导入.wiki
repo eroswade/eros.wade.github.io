@@ -3,6 +3,6 @@
 = vim doc 导入=
 插件的DOC不会自动导入
 
-需要进入DOC目录 运行 "helptags ." 其中"."表示当前目录
+需要进入DOC目录 运行 `:helptags .` 其中"."表示当前目录
 
-如果插件装在别的路径下. 需要定义路径.比如"helptags e:\dev\vimfiles\doc"
+如果插件装在别的路径下. 需要定义路径.比如`:helptags e:\dev\vimfiles\doc`

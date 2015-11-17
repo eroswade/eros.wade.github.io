@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body >
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
       <a class="navbar-brand" href="index.html">ErosWade</a>
    </div>
@@ -61,12 +61,14 @@
 <p>
 <code> %nohtml 告诉 vimwiki 不为某条目生成HTML文件。即使你在该条目打开时为它单独执行 :Vimwiki2HTML ，也不会生成</code>
 </p>
-<blockquote>
+
+<p>
 在VimWiki生成HTML页面时，将生成 title（标题）和toc（目录）。 <br>
-</blockquote>
-<blockquote>
-标题。通过= 标题 =的形式定义各级标题，如= h1 =、== h2 ==，最多支持6级标题。可以在任意行按键盘的+键，就自动添加标题（如果已存在标题，则降低标题级别），按-键，就自动删除标题（如果已存在标题，则升高标题级别）。
-</blockquote>
+</p>
+
+<p>
+标题。通过<code>= 标题 =</code>的形式定义各级标题，如= h1 =、== h2 ==，最多支持6级标题。可以在任意行按键盘的+键，就自动添加标题（如果已存在标题，则降低标题级别），按-键，就自动删除标题（如果已存在标题，则升高标题级别）。
+</p>
 <ol>
 <li>
 可以改变HEAD的颜色.
@@ -108,7 +110,7 @@ wiki链接。通过
 </p>
 
 <p>
-表格中使用链接的格式为`[[link][descr]]<code>，而不能用通常的`[[link|descr]]</code>格式。
+表格中使用链接的格式为 <code>[[link][descr]]</code>，而不能用通常<code>[[link|descr]]</code>格式。
 </p>
 
 <p>
@@ -129,10 +131,10 @@ see :h vimwiki-syntax-links
 用\{\{\{和\}\}\}把代码段扩起来（可以有多行）。生成HTML代码&lt;pre&gt;。 see :h vimwiki-syntax-preformatted
 
 <li>
-用"`"（数字键1）前面那个键把文字扩起来（所有文字必须在一行）。生成HTML代码&lt;code&gt;。 
+用'（数字键1）前面那个键把文字扩起来（所有文字必须在一行）。生成HTML代码 <code>&lt;code&gt;</code> 。 
 
 <li>
-公式 用`$`符号 see :h vimwiki-syntax-math
+公式 用 $ 符号 see :h vimwiki-syntax-math
 
 <li>
 <code>%%</code> 表示注释 不在HTML里出现
@@ -154,13 +156,13 @@ see :h vimwiki-syntax-links
 
 <ol>
 <li>
-用*将文字扩起来（"*"和前后的文字间要有空格），以加粗方式显示，如<code>*</code>加粗<code>*</code>的效果为： *加粗*
+用*将文字扩起来（"*"和前后的文字间要有空格），以加粗方式显示，如<code>*</code>加粗<code>*</code>的效果为: <strong>加粗</strong> 
 
 <li>
-用`^<code>实现文字上标，如x</code>^<code>2</code>^`的效果为：x<sup><small>2</small></sup>
+用^实现文字上标，如<code>x^2^</code>的效果为：x<sup><small>2</small></sup>
 
 <li>
-用`,,<code>实现文字下标，如A</code>,,<code>1</code>,,`的效果为：A<sub><small>1</small></sub>
+用,,实现文字下标，如<code>A,,1,,</code>的效果为：A<sub><small>1</small></sub>
 
 </ol>
 

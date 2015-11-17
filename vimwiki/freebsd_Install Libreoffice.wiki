@@ -1,11 +1,11 @@
 %title install Libreoffice
 %template def_template
 == Steps == 
-* cd /usr/ports/editors/Libreoffice4
-* make install clean
+* `cd /usr/ports/editors/Libreoffice4`
+* `make install clean`
 
 == ERRLIST ==
-# pkg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place). <br>
-Problematic file: /usr/local/bin/dvipdf
-    # solve solution : pkg delete -f ghostscript9
-    # solve solution : someone said that using make config to change the dependancy. cancel the require of teTex
+# <i>pkg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place).</i> <br>
+<i>Problematic file: /usr/local/bin/dvipdf</i>
+    * solve solution : `pkg delete -f ghostscript9`
+    * solve solution : someone said that using make config to change the dependancy. cancel the require of teTex

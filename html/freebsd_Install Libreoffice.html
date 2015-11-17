@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body >
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-header">
       <a class="navbar-brand" href="index.html">ErosWade</a>
    </div>
@@ -34,30 +34,30 @@
 <h2 id="toc_0.1">Steps</h2>
 <ul>
 <li>
-cd /usr/ports/editors/Libreoffice4
+<code>cd /usr/ports/editors/Libreoffice4</code>
 
 <li>
-make install clean
+<code>make install clean</code>
 
 </ul>
 
 <h2 id="toc_0.2">ERRLIST</h2>
 <ol>
 <li>
-pkg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place). <br>
+<i>pkg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place).</i> <br>
 
 </ol>
 <p>
-Problematic file: /usr/local/bin/dvipdf
+<i>Problematic file: /usr/local/bin/dvipdf</i>
 </p>
-<ol>
+<ul>
 <li>
-solve solution : pkg delete -f ghostscript9
+solve solution : <code>pkg delete -f ghostscript9</code>
 
 <li>
 solve solution : someone said that using make config to change the dependancy. cancel the require of teTex
 
-</ol>
+</ul>
 
     </div>
 
