@@ -1,8 +1,9 @@
+= 中文版 =
 == 安装: ==
-     a 下载安装WAMP<br>
-     b 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
+a. 下载安装WAMP<br>
+b. 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
 == 使用 ==
-    访问: localhost 就可以打开CI的基础页面<br>
+访问: localhost 就可以打开CI的基础页面<br>
 
 == 认识CI的基础页 ==
 其实CI的基础页访问地址为 localhost/index.php/welcome  CI所有的入口都在INDEX.PHP.
@@ -26,9 +27,41 @@ welcome是类名 ,而且重点是welcome第一个字母必须大写. <br>
 	# 还可以跟参数
 
 == 创建自己的页面 ==
-     跟据 http://codeigniter.org.cn/user_guide/tutorial/static_pages.html 自己尝试创建
+跟据 http://codeigniter.org.cn/user_guide/tutorial/static_pages.html 自己尝试创建
 
 == 用CMD调试CI的方法 ==
 运行 php.exe [PATH]/index.php class(类) function(函数) param(参数)
 
+== install: ==
+a. download WAMP and install it.<br>
+b. download CODEIGNITER and unrar it to the dir of WWW which under WAMP path
+== usage ==
+access: using ie or firfox access `localhost`, u will see the welcome page <br>
 
+= English Version =
+== understand ci welcome page ==
+The exact address of welcome page is //localhost/index.php/welcome . The enterance of CI is INDEX.PHP.
+{{{
+class Welcome extends CI_Controller {
+              public function index ()
+            {
+                         $this ->load -> view( 'welcome_message' ); 
+            } 
+}
+}}}
+welcome is the class name , and the 'W' must upcase. <br>
+cuz of function `index` ,,we can access WELCOME/INDEX without call the function.<br>
+That means the address is mush longer: localhost/index.php/welcome/index<br>
+construction of URL:  
+
+	# localhost -- IP
+	# index.php -- access position, can be canceled. Before cancel it, u mast write `config/route.php`
+	# welcome -- class name
+	# index -- function name
+	# and params.
+
+== build your own page ==
+Try to fellow the doc : http://www.codeigniter.com/user_guide/tutorial/static_pages.html
+
+== Use CMD to debug CI ==
+run php.exe [PATH]/index.php class function param

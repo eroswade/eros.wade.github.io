@@ -6,11 +6,11 @@
 == 日常 ==
 [[diary/diary|日记]]
 == BSD ==
-[[freebsd_切换WIFI]]<br>
+[[freebsd_切换WIFI]] Switch freebsd wifi <br>
 [[freebsd_Install Libreoffice]]
 == AI ==
 == VIM ==
 [[vim_wiki使用]]<br>
-[[vim_doc导入]]
+[[vim_doc导入]] install vim plugins doc<br>
 == CI ==
-[[CI初步]]
+[[CI初步]]  First step of using CI

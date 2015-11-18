@@ -66,7 +66,7 @@
                 <div class="content-grid-sec">
                     <div class="content-sec-info">
                         
-<h2 id="toc_0.1">Steps</h2>
+<h2 id="toc_0.1">Steps 安装步骤</h2>
 <ul>
 <li>
 <code>cd /usr/ports/editors/Libreoffice4</code>
@@ -76,7 +76,7 @@
 
 </ul>
 
-<h2 id="toc_0.2">ERRLIST</h2>
+<h2 id="toc_0.2">ERRLIST 错误</h2>
 <ol>
 <li>
 <i>pkg-static: ghostscript9-base-9.06_11 conflicts with ghostscript9-nox11-9.06_10 (installs files into the same place).</i> <br>
@@ -90,7 +90,16 @@
 solve solution : <code>pkg delete -f ghostscript9</code>
 
 <li>
-solve solution : someone said that using make config to change the dependancy. cancel the require of teTex
+solve solution : someone said that using <code>make config</code> to change the dependancy. cancel the require of teTex
+
+</ul>
+
+<ul>
+<li>
+解决方案:  <code>pkg delete -f ghostscript9</code> 我选择的是这种.
+
+<li>
+解决方案: 有人说可以用<code>make config</code> 来改变需求包的方式安装完成. 
 
 </ul>
 

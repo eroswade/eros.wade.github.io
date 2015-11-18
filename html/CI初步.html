@@ -66,17 +66,18 @@
                 <div class="content-grid-sec">
                     <div class="content-sec-info">
                         
-<h2 id="toc_0.1">安装:</h2>
-<blockquote>
-a 下载安装WAMP<br>
-b 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
-</blockquote>
-<h2 id="toc_0.2">使用</h2>
-<blockquote>
+<h1 id="toc_1">中文版 </h1>
+<h2 id="toc_1.1">安装:</h2>
+<p>
+a. 下载安装WAMP<br>
+b. 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
+</p>
+<h2 id="toc_1.2">使用</h2>
+<p>
 访问: localhost 就可以打开CI的基础页面<br>
-</blockquote>
+</p>
 
-<h2 id="toc_0.3">认识CI的基础页 </h2>
+<h2 id="toc_1.3">认识CI的基础页 </h2>
 <p>
 其实CI的基础页访问地址为 localhost/index.php/welcome  CI所有的入口都在INDEX.PHP.
 </p>
@@ -113,14 +114,72 @@ index 函数名, 必须
 
 </ol>
 
-<h2 id="toc_0.4">创建自己的页面 </h2>
-<blockquote>
+<h2 id="toc_1.4">创建自己的页面 </h2>
+<p>
 跟据 <a href="http://codeigniter.org.cn/user_guide/tutorial/static_pages.html">http://codeigniter.org.cn/user_guide/tutorial/static_pages.html</a> 自己尝试创建
-</blockquote>
+</p>
 
-<h2 id="toc_0.5">用CMD调试CI的方法 </h2>
+<h2 id="toc_1.5">用CMD调试CI的方法 </h2>
 <p>
 运行 php.exe [PATH]/index.php class(类) function(函数) param(参数)
+</p>
+
+<h2 id="toc_1.6">install:</h2>
+<p>
+a. download WAMP and install it.<br>
+b. download CODEIGNITER and unrar it to the dir of WWW which under WAMP path
+</p>
+<h2 id="toc_1.7">usage</h2>
+<p>
+access: using ie or firfox access <code>localhost</code>, u will see the welcome page <br>
+</p>
+
+<h1 id="toc_2">English Version</h1>
+<h2 id="toc_2.1">understand ci welcome page</h2>
+<p>
+The exact address of welcome page is //localhost/index.php/welcome . The enterance of CI is INDEX.PHP.
+</p>
+<pre>
+class Welcome extends CI_Controller {
+              public function index ()
+            {
+                         $this -&gt;load -&gt; view( 'welcome_message' ); 
+            } 
+}
+</pre>
+<p>
+welcome is the class name , and the 'W' must upcase. <br>
+cuz of function <code>index</code> ,,we can access WELCOME/INDEX without call the function.<br>
+That means the address is mush longer: localhost/index.php/welcome/index<br>
+construction of URL:  
+</p>
+
+<ol>
+<li>
+localhost -- IP
+
+<li>
+index.php -- access position, can be canceled. Before cancel it, u mast write <code>config/route.php</code>
+
+<li>
+welcome -- class name
+
+<li>
+index -- function name
+
+<li>
+and params.
+
+</ol>
+
+<h2 id="toc_2.2">build your own page</h2>
+<p>
+Try to fellow the doc : <a href="http://www.codeigniter.com/user_guide/tutorial/static_pages.html">http://www.codeigniter.com/user_guide/tutorial/static_pages.html</a>
+</p>
+
+<h2 id="toc_2.3">Use CMD to debug CI</h2>
+<p>
+run php.exe [PATH]/index.php class function param
 </p>
 
 

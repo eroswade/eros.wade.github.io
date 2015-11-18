@@ -1,10 +1,13 @@
 %title freebsd change wifi
 %template def_template
 
- = FREEBSD 切换WIFI源 =
-==== 扫描 ====
+ = FREEBSD 切换WIFI源 Freebsd switch wifi source =
+==== 扫描 scan ====
 `ifconfig wlan0 up scan`
-==== 切换 ====
+==== 切换 shift ====
 `ifconfig wlan0 down`<br>
 `ifconfig wlan0 ssid "EROS"`<br>
 `ifconfig wlan0 up`<br>
+
+TODO:
+still have some question: can't update ip. so still can't surfring..
