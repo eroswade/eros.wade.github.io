@@ -1,0 +1,34 @@
+== 安装: ==
+     a 下载安装WAMP<br>
+     b 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
+== 使用 ==
+    访问: localhost 就可以打开CI的基础页面<br>
+
+== 认识CI的基础页 ==
+其实CI的基础页访问地址为 localhost/index.php/welcome  CI所有的入口都在INDEX.PHP.
+{{{
+class Welcome extends CI_Controller {
+              public function index ()
+            {
+                         $this ->load -> view( 'welcome_message' ); 
+            } 
+}
+}}}
+welcome是类名 ,而且重点是welcome第一个字母必须大写. <br>
+因为有一个index函数,所以不需要写调用函数名,就可以访问到WELCOME/INDEX<br>
+也就是说实际的网址其实还要长 localhost/index.php/welcome/index<br>
+分析URL:  
+
+	# localhost 服务器IP
+	# index.php 访问入口,可以取消. 需要写config/route.php 重定义路由表
+	# welcome 类名 必须
+	# index 函数名, 必须
+	# 还可以跟参数
+
+== 创建自己的页面 ==
+     跟据 http://codeigniter.org.cn/user_guide/tutorial/static_pages.html 自己尝试创建
+
+== 用CMD调试CI的方法 ==
+运行 php.exe [PATH]/index.php class(类) function(函数) param(参数)
+
+

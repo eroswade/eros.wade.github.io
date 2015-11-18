@@ -12,3 +12,5 @@
 == VIM ==
 [[vim_wiki使用]]<br>
 [[vim_doc导入]]
+== CI ==
+[[CI初步]]
