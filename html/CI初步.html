@@ -5,7 +5,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <title>Eros Wiki Page</title>
+    <title>CI����</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body >
@@ -66,26 +66,61 @@
                 <div class="content-grid-sec">
                     <div class="content-sec-info">
                         
+<h2 id="toc_0.1">安装:</h2>
+<blockquote>
+a 下载安装WAMP<br>
+b 下载CODEIGNITER 解压缩到 WAMP安装目录的 WWW目录下 注意 CI里的 INDEX.PHP必须在WWW目录下
+</blockquote>
+<h2 id="toc_0.2">使用</h2>
+<blockquote>
+访问: localhost 就可以打开CI的基础页面<br>
+</blockquote>
 
-<h1 id="toc_1">Eros.Wade 的BLOG</h1>
-<h2 id="toc_1.1">日常</h2>
+<h2 id="toc_0.3">认识CI的基础页 </h2>
 <p>
-<a href="diary/diary.html">日记</a>
+其实CI的基础页访问地址为 localhost/index.php/welcome  CI所有的入口都在INDEX.PHP.
 </p>
-<h2 id="toc_1.2">BSD</h2>
+<pre>
+class Welcome extends CI_Controller {
+              public function index ()
+            {
+                         $this -&gt;load -&gt; view( 'welcome_message' ); 
+            } 
+}
+</pre>
 <p>
-<a href="freebsd_切换WIFI.html">freebsd_切换WIFI</a><br>
-<a href="freebsd_Install Libreoffice.html">freebsd_Install Libreoffice</a>
+welcome是类名 ,而且重点是welcome第一个字母必须大写. <br>
+因为有一个index函数,所以不需要写调用函数名,就可以访问到WELCOME/INDEX<br>
+也就是说实际的网址其实还要长 localhost/index.php/welcome/index<br>
+分析URL:  
 </p>
-<h2 id="toc_1.3">AI</h2>
-<h2 id="toc_1.4">VIM</h2>
+
+<ol>
+<li>
+localhost 服务器IP
+
+<li>
+index.php 访问入口,可以取消. 需要写config/route.php 重定义路由表
+
+<li>
+welcome 类名 必须
+
+<li>
+index 函数名, 必须
+
+<li>
+还可以跟参数
+
+</ol>
+
+<h2 id="toc_0.4">创建自己的页面 </h2>
+<blockquote>
+跟据 <a href="http://codeigniter.org.cn/user_guide/tutorial/static_pages.html">http://codeigniter.org.cn/user_guide/tutorial/static_pages.html</a> 自己尝试创建
+</blockquote>
+
+<h2 id="toc_0.5">用CMD调试CI的方法 </h2>
 <p>
-<a href="vim_wiki使用.html">vim_wiki使用</a><br>
-<a href="vim_doc导入.html">vim_doc导入</a>
-</p>
-<h2 id="toc_1.5">CI</h2>
-<p>
-<a href="CI初步.html">CI初步</a>
+运行 php.exe [PATH]/index.php class(类) function(函数) param(参数)
 </p>
 
 
