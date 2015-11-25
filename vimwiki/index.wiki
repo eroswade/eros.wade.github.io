@@ -14,3 +14,4 @@
 [[vim_doc导入]] install vim plugins doc<br>
 == CI ==
 [[CI初步]]  First step of using CI
+[[CI model]]
