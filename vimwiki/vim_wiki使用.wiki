@@ -77,4 +77,7 @@ see :h vimwiki-synax-lists
 
 see :h vimwiki-syntax-tables
 
-
+== 日记 == 
+,w,w write diary
+,wi goto diary page
+,w,i create diary index or regenator.

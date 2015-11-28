@@ -5,7 +5,7 @@
     <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../js/jquery-1.10.2.min.js"></script>
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <title>diary</title>
+    <title>2015-11-28</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="baidu-site-verification" content="7oFIqFZfPX" />
 </head>
@@ -67,19 +67,80 @@
                 <div class="content-grid-sec">
                     <div class="content-sec-info">
                         
-<h1 id="toc_1">Diary</h1>
+<p>
+测试了WEBKIT for win 和 CDHTMLDLG. 
+</p>
 
-<h2 id="toc_1.1">2015</h2>
+<p>
+都存在很大的缺陷  HTMLDLG 不支持HTML5 对CSS支持很差. WEBKIT应该来说是最好的,但在WIN上存在很大的问题. 在UNIX下编程会比较OK. 
+</p>
 
-<h3 id="toc_1.1.1">November</h3>
-<ul>
-<li>
-<a href="2015-11-28.html">2015-11-28</a> python GTK cef opencv combine together 
+<p>
+另一种方式: 用PYTHON 做,但不知道PYTHON对WEBKIT支持怎么样. 支持GTK OK.而且兼容OPENCV. 调试也方便.
+</p>
 
-<li>
-<a href="2015-11-17.html">2015-11-17</a>
 
-</ul>
+
+<h2 id="toc_0.1">install opencv</h2>
+<blockquote>
+Below Python packages are to be downloaded and installed to their default locations.
+</blockquote>
+<blockquote>
+1.1. Python-2.7.x.
+</blockquote>
+<blockquote>
+1.2. Numpy.
+</blockquote>
+<blockquote>
+1.3. Matplotlib (Matplotlib is optional, but recommended since we use it a lot in our tutorials).
+</blockquote>
+<blockquote>
+Install all packages into their default locations. Python will be installed to C:/Python27/.
+</blockquote>
+<blockquote>
+After installation, open Python IDLE. Enter import numpy and make sure Numpy is working fine.
+</blockquote>
+<blockquote>
+Download latest OpenCV release from sourceforge site and double-click to extract it.
+</blockquote>
+<blockquote>
+Goto opencv/build/python/2.7 folder.
+</blockquote>
+<blockquote>
+Copy cv2.pyd to C:/Python27/lib/site-packeges.
+</blockquote>
+<blockquote>
+Open Python IDLE and type following codes in Python terminal.
+</blockquote>
+<blockquote>
+&gt;&gt;&gt; import cv2
+&gt;&gt;&gt; print cv2._<em>version</em>_
+</blockquote>
+
+<p>
+If the results are printed out without any errors, congratulations !!! You have installed OpenCV-Python successfully.
+</p>
+
+<h2 id="toc_0.2">install pygtk</h2>
+<p>
+just install it by msi pack
+</p>
+
+<h2 id="toc_0.3">install cefpython</h2>
+<p>
+there is no webkit pack on windows system. so i choice cefpython instead.
+run setup.py install
+</p>
+
+<h2 id="toc_0.4">opencv debug</h2>
+<p>
+opencv can run line by line. 
+</p>
+
+<h2 id="toc_0.5">GTK CEF test</h2>
+<p>
+a little difficult.
+</p>
 
 
                     </div>
