@@ -1,0 +1,47 @@
+== CEF initial ==
+# The OS executes the browser process entry point function (main or wWinMain).
+# The entry point function:
+    # Creates an instance of SimpleApp which handles process-level callbacks.
+    # Initializes CEF and runs the CEF message loop.
+# After initialization CEF calls SimpleApp::OnContextInitialized(). This method:
+    # Creates the singleton instance of SimpleHandler.
+    # Creates a browser window using CefBrowserHost::CreateBrowserSync().
+# All browsers share the SimpleHandler instance which is responsible for customizing browser behavior and handling browser-related callbacks (life span, loading state, title display, etc).
+# When a browser window is closed SimpleHandler::OnBeforeClose() is called. When all browser windows have closed the OnBeforeClose implementation quits the CEF message loop to exit the application.
+
+=== Application Structure ===
+Every CEF3 application has the same general structure.
+
+    # Provide an entry-point function that initializes CEF and runs either sub-process executable logic or the CEF message loop.
+    # Provide an implementation of CefApp to handle process-specific callbacks.
+    # Provide an implementation of CefClient to handle browser-instance-specific callbacks.
+    # Call CefBrowserHost::CreateBrowser() to create a browser instance and manage the browser life span using CefLifeSpanHandler.
+
+
+== Direct usage of C API ==
+CEF can be used without c++ wrapper. the demo of C usage is [[https://github.com/CzarekTomczak/cefcapi | here]] <br>
+it's all most the same like the demo of cefsimple
+
+== Process Considerations ==
+CEF3 uses a number of processes for different purposes.
+
+    # Browser process - This process is the same as the client application process that calls CefInitialize().
+    # Render process - Web content (WebKit and V8) is hosted in a this process.
+    # Plugin process - Plugins like Flash are hosted in this process. 
+    # GPU process - Accelerated content is rendered in this process. 
+    # Utility process - Some miscellaneous tasks are executed in this process.
+
+
+== Implementation Details ==
+CEF3 has the following major implementation classes:
+
+    # CefMainDelegate - Implements the common process bootstrap logic.
+    # CefContentClient - Implements the Content API callbacks that are common to all processes.
+    # CefContext - Represents the global CEF context in the browser process. A single CefContext object is created by CefInitialize() and destroyed by CefShutdown().
+    # CefBrowserMainParts - Implements the browser process bootstrap logic.
+    # CefContentBrowserClient - Implements the Content API callbacks for the browser process.
+    # CefBrowserHostImpl - Implements the CefBrowser and CefBrowserHost interfaces in the browser process. Provides the glue code and implements interfaces for communicating with the RenderViewHost.
+    # CefContentRendererClient - Implements the Content API callbacks for the render process.
+    # CefBrowserImpl - Implements the CefBrowser interface in the render process. Provides the glue code and implements interfaces for communicating with the RenderView.
+
+== Multi ==

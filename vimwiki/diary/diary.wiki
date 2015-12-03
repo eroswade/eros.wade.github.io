@@ -2,7 +2,10 @@
 
 == 2015 ==
 
+=== December ===
+    * [[2015-12-01|CEF initial]]
+
 === November ===
-    * [[2015-11-28]] python GTK cef opencv combine together 
+    * [[2015-11-28]]
     * [[2015-11-17]]
 
