@@ -1,0 +1,18 @@
+== Scrapy ==
+
+http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html
+
+=== install ===
+need VCForPython27 support
+pip install Scrapy
+ # download scrapy
+ # download lxml
+ # twrist
+ # pycparser
+ # cffi
+ # idna
+ # enum
+ # zope
+Manual install
+ # libxml2
+ #
