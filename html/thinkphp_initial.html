@@ -5,7 +5,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <title>Eros Wiki Page</title>
+    <title>thinkphp_initial</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="baidu-site-verification" content="7oFIqFZfPX" />
 </head>
@@ -67,32 +67,129 @@
                 <div class="content-grid-sec">
                     <div class="content-sec-info">
                         
+<h1 id="toc_1">Initial</h1>
+<h2 id="toc_1.1">目录结构调整</h2>
+<ol>
+<li>
+THINK_PATH 框架目录 
 
-<h1 id="toc_1">Eros.Wade 的BLOG</h1>
-<h2 id="toc_1.1">日常</h2>
+<li>
+APP_PATH 应用目录 
+
+<li>
+RUNTIME_PATH 应用运行时目录（可写） 
+
+<li>
+APP_DEBUG 应用调试模式 （默认为false） 
+
+<li>
+STORAGE_TYPE 存储类型（默认为File） 
+
+<li>
+APP_MODE 应用模式（默认为common） 
+<pre>
+// 定义应用目录
+define('APP_PATH','./Apps/');
+// 定义运行时目录
+define('RUNTIME_PATH','./Runtime/');
+// 开启调试模式
+define('APP_DEBUG',True);
+// 更名框架目录名称，并载入框架入口文件
+require './Think/ThinkPHP.php';
+</pre>
+
+</ol>
+
+<h2 id="toc_1.2">自动生成EASY  目录安全文件</h2>
 <p>
-<a href="diary/diary.html">日记</a>
+define('DIR_SECURE_FILENAME', 'default.html');
 </p>
-<h2 id="toc_1.2">BSD</h2>
+
+<h2 id="toc_1.3">control</h2>
 <p>
-<a href="freebsd_切换WIFI.html">freebsd_切换WIFI</a> Switch freebsd wifi <br>
-<a href="freebsd_Install Libreoffice.html">freebsd_Install Libreoffice</a>
+控制器类的命名方式是：控制器名（驼峰法，首字母大写）+Controller<br>
+<code>TestController</code><br>
+控制器文件的命名方式是：类名+class.php（类文件后缀）<br>
+<code>Test.class.php</code>
+Default 代码为HOME模块(文件夹) 下的Controller下
 </p>
-<h2 id="toc_1.3">AI</h2>
-<h2 id="toc_1.4">VIM</h2>
+<pre>
+    namespace Home\Controller;// 文件路径
+    use Think\Controller;// 调用Control
+    class IndexController extends Controller
+    {   
+        public function index()
+        {        
+            echo 'hello,world!';    
+        }
+    }
+</pre>
+
+<h2 id="toc_1.4">配置加载</h2>
 <p>
-<a href="vim_wiki使用.html">vim_wiki使用</a><br>
-<a href="vim_doc导入.html">vim_doc导入</a> install vim plugins doc<br>
+惯例配置-&gt;应用配置-&gt;模式配置-&gt;调试配置-&gt;状态配置-&gt;模块配置-&gt;扩展配置-&gt;动态配置 <br>
 </p>
-<h2 id="toc_1.5">CI</h2>
+<h3 id="toc_1.4.1">惯例配置</h3>
 <p>
-<a href="CI初步.html">CI初步</a>  First step of using CI
-<a href="CI model.html">CI model</a>
+框架内置有一个惯例配置文件（位于ThinkPHP/Conf/convention.php）全局
 </p>
-<h2 id="toc_1.6">thinkphp</h2>
+<h3 id="toc_1.4.2">应用配置</h3>
 <p>
-<a href="thinkphp_initial.html">thinkphp_initial</a>
+Application/Common/Conf/config.php
 </p>
+<h3 id="toc_1.4.3">模式配置</h3>
+<p>
+Application/Common/Conf/config_应用模式名称.php   仅在运行该模式下面才会加载
+</p>
+<h3 id="toc_1.4.4">调试配置</h3>
+<p>
+如果开启调试模式的话，则会自动加载框架的调试配置文件（位于ThinkPHP/Conf/debug.php）和应用调试配置文件（位于Application/Common/Conf/debug.php）
+</p>
+<h3 id="toc_1.4.5">状态配置</h3>
+<p>
+每个应用都可以在不同的情况下设置自己的状态（或者称之为应用场景），并且加载不同的配置文件。
+</p>
+
+<p>
+举个例子，你需要在公司和家里分别设置不同的数据库测试环境。那么可以这样处理，在公司环境中，我们在入口文件中定义：
+</p>
+
+<p>
+define('APP_STATUS','office');那么就会自动加载该状态对应的配置文件（位于Application/Common/Conf/office.php）。
+</p>
+
+<p>
+如果我们回家后，我们修改定义为：
+</p>
+
+<p>
+define('APP_STATUS','home');那么就会自动加载该状态对应的配置文件（位于Application/Common/Conf/home.php）。
+</p>
+
+<h3 id="toc_1.4.6">模块配置</h3>
+<p>
+每个模块会自动加载自己的配置文件（位于Application/当前模块名/Conf/config.php）。
+</p>
+
+<h2 id="toc_1.5">访问</h2>
+<p>
+HTTP: serverName/index.php（或者其他应用入口文件）/模块/控制器/操作/[参数名/参数值...]<br>
+CLI php.exe index.php(或其它应用入口文件） 模块/控制器/操作/[参数名/参数值...]<br>
+HOME/IndexControl/index/x/y<br>
+</p>
+
+<p>
+关闭大小写检测
+'URL_CASE_INSENSITIVE'  =&gt;  true,  
+</p>
+
+<p>
+如果我们直接访问入口文件的话，由于URL中没有模块、控制器和操作，因此系统会访问默认模块（Home）下面的默认控制器（Index）的默认操作（index），因此下面的访问是等效的：
+</p>
+<pre>
+http://serverName/index.php
+http://serverName/index.php/Home/Index/index
+</pre>
 
 
                     </div>

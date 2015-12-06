@@ -1,0 +1,84 @@
+= Initial =
+== 目录结构调整 ==
+# THINK_PATH 框架目录 
+# APP_PATH 应用目录 
+# RUNTIME_PATH 应用运行时目录（可写） 
+# APP_DEBUG 应用调试模式 （默认为false） 
+# STORAGE_TYPE 存储类型（默认为File） 
+# APP_MODE 应用模式（默认为common） 
+{{{
+// 定义应用目录
+define('APP_PATH','./Apps/');
+// 定义运行时目录
+define('RUNTIME_PATH','./Runtime/');
+// 开启调试模式
+define('APP_DEBUG',True);
+// 更名框架目录名称，并载入框架入口文件
+require './Think/ThinkPHP.php';
+}}}
+
+== 自动生成EASY  目录安全文件 ==
+define('DIR_SECURE_FILENAME', 'default.html');
+
+== control ==
+控制器类的命名方式是：控制器名（驼峰法，首字母大写）+Controller<br>
+`TestController`<br>
+控制器文件的命名方式是：类名+class.php（类文件后缀）<br>
+`Test.class.php`
+Default 代码为HOME模块(文件夹) 下的Controller下
+{{{
+    namespace Home\Controller;// 文件路径
+    use Think\Controller;// 调用Control
+    class IndexController extends Controller
+    {   
+        public function index()
+        {        
+            echo 'hello,world!';    
+        }
+    }
+}}}
+
+== 配置加载 ==
+惯例配置->应用配置->模式配置->调试配置->状态配置->模块配置->扩展配置->动态配置 <br>
+=== 惯例配置 ===
+框架内置有一个惯例配置文件（位于ThinkPHP/Conf/convention.php）全局
+=== 应用配置 ===
+Application/Common/Conf/config.php
+=== 模式配置 ===
+Application/Common/Conf/config_应用模式名称.php   仅在运行该模式下面才会加载
+=== 调试配置 ===
+如果开启调试模式的话，则会自动加载框架的调试配置文件（位于ThinkPHP/Conf/debug.php）和应用调试配置文件（位于Application/Common/Conf/debug.php）
+=== 状态配置 ===
+每个应用都可以在不同的情况下设置自己的状态（或者称之为应用场景），并且加载不同的配置文件。
+
+举个例子，你需要在公司和家里分别设置不同的数据库测试环境。那么可以这样处理，在公司环境中，我们在入口文件中定义：
+
+define('APP_STATUS','office');那么就会自动加载该状态对应的配置文件（位于Application/Common/Conf/office.php）。
+
+如果我们回家后，我们修改定义为：
+
+define('APP_STATUS','home');那么就会自动加载该状态对应的配置文件（位于Application/Common/Conf/home.php）。
+
+=== 模块配置 ===
+每个模块会自动加载自己的配置文件（位于Application/当前模块名/Conf/config.php）。
+
+== 访问 ==
+HTTP: serverName/index.php（或者其他应用入口文件）/模块/控制器/操作/[参数名/参数值...]<br>
+CLI php.exe index.php(或其它应用入口文件） 模块/控制器/操作/[参数名/参数值...]<br>
+HOME/IndexControl/index/x/y<br>
+
+关闭大小写检测
+'URL_CASE_INSENSITIVE'  =>  true,  
+
+如果我们直接访问入口文件的话，由于URL中没有模块、控制器和操作，因此系统会访问默认模块（Home）下面的默认控制器（Index）的默认操作（index），因此下面的访问是等效的：
+{{{
+http://serverName/index.php
+http://serverName/index.php/Home/Index/index
+}}}
+
+
+
+
+
+
+
