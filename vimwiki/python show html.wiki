@@ -1,0 +1,16 @@
+= python show webpage =
+There are three ways let python show webpage. 
+# using http web services , and access by brower
+    # Django
+    # python has it's own web services: SimpleHTTPServer, CGIHTTPServer,BaseHTTPServer
+# using CEF or something else.
+# call brower directory
+{{{
+#!/usr/bin/env python
+#-*- coding:UTF-8 -*-
+import webbrowser
+url = 'http://www.pythontab.com'
+webbrowser.open(url)
+print webbrowser.get()
+}}}
+
