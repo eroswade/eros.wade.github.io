@@ -1,0 +1,465 @@
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <link rel="Stylesheet" type="text/css" href="../css/style.css" />
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <title>Porting BSD to a new board--p1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="baidu-site-verification" content="7oFIqFZfPX" />
+</head>
+<body >
+<!--<div class="navbar navbar-inverse navbar-fixed-top">-->
+<!--<div class="navbar-header">-->
+<!--<a class="navbar-brand" href="index.html">ErosWade</a>-->
+<!--</div>-->
+<!--<div>-->
+<!--&lt;!&ndash; Everything you want hidden at 940px or less, place within here &ndash;&gt;-->
+<!--&lt;!&ndash; .nav, .navbar-search, .navbar-form, etc &ndash;&gt;-->
+<!--<ul class="nav navbar-nav">-->
+<!--<li class="">-->
+<!--<a href="index.html">Index</a>-->
+<!--</li>-->
+<!--<li class="">-->
+<!--<a href="diary/diary.html">Diary</a>-->
+<!--</li>-->
+<!--<li class="">-->
+<!--<a href="todo.html">To Do</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!---strat-banner---->
+<div class="banner">
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <!--<a href="index.html"> <img src="images/logo.png" title="soup" /></a>-->
+                <a href="../index.html">EROS</a>
+            </div>
+            <!---start-top-nav---->
+            <div class="top-menu">
+                <span class="menu"> </span>
+                <ul>
+                    <li class="active"><a href="../index.html">HOME</a></li>
+                    <li><a href="../html/index.html">ARTS</a></li>
+                    <li><a href="../html/diary/diary.html">DIARY</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="banner-head">
+            <h1>Eros Blog</h1>
+            <h2>理想的心情</h2>
+        </div>
+    </div>
+</div>
+<!---//End-banner---->
+
+<div class="content">
+    <div class="container">
+        <div class="content-grids">
+            <div class="col-md-8 content-main">
+
+                <div class="content-grid-sec">
+                    <div class="content-sec-info">
+                        
+<h1 id="toc_1">Porting FreeBSD to a new ARM Board Part 1 - UBoot</h1>
+<p>
+from: <a href="https://www.bidouilliste.com/blog/2015/11/27/Porting-FreeBSD-to-a-new-ARM-Board-Part-1/">Emmanuel Vadot's Journal</a>
+Add: 'i can't always surfing this page for the reason of GFW, so i copyed it here' -- Eros.Wade
+</p>
+
+<p>
+Nov 27, 2015 by Emmanuel Vadot
+</p>
+<h2 id="toc_1.1">UBoot</h2>
+
+<p>
+There is a lot of ARM boards, RaspberryPi, BeagleBone, CubieBoard, BananaPi etc ...
+</p>
+
+<p>
+Most of them support Linux officially and the vendors often provides images of Linux tailored for their boards.
+</p>
+
+<p>
+FreeBSD support the more popular ones, there is official images of the 10.2 release for :
+</p>
+
+<ol>
+<li>
+BeagleBone (And BeagleBone Black)
+
+<li>
+HummingBoard
+
+<li>
+GUMSTIX
+
+<li>
+PandaBoard
+
+<li>
+RaspberryPi Model B
+
+<li>
+WandBoard
+
+</ol>
+
+<p>
+And the 11.0 current adds the following boards :
+</p>
+<ol>
+<li>
+BananaPi
+
+<li>
+CubieBoard
+
+<li>
+CubieBoard 2
+
+<li>
+RaspberryPi 2
+
+</ol>
+
+<p>
+This series of articles will document my steps of bringing FreeBSD on the Olimex A20-SOM-EVB. I hope that I will not make a lot of mistakes and that it will help people to add FreeBSD support on other boards.
+</p>
+
+<p>
+The first step to add support for a new board is to run a custom Uboot on it.
+</p>
+
+<p>
+Das U-Boot is an universal boot loaded use of many platform and many architecture.
+</p>
+
+<p>
+Most of the boards uses U-Boot as their bootloader but generaly you can't boot FreeBSD the "official" way.
+</p>
+
+<p>
+The "official" way to boot FreeBSD on an ARM platform is to use ubldr.
+</p>
+
+<p>
+On i386 and amd64 the final boot stage is handled by loader(8), it will setup some variables (currdev and loaddev for example), process /boot/loader.rc etc ... and finally it will load and start the kernel.
+</p>
+
+<p>
+ubldr is simply a version of loader(8) that uses the U-Boot API.
+</p>
+
+<p>
+This is where the problems begin, most (if not all) U-Boot provided by the boards vendors aren't configured to include the API, that's why have to compile U-Boot ourselves.
+</p>
+
+<p>
+Fortunatly there is a easy way to create a U-Boot for a boards, it is to use the existing ports. The FreeBSD developpers have chosen to create a u-boot port for each supported platform. And because ports are packaged, it means that if you want the FreeBSD tailored u-boot for the BeagleBone you just have to pkg install u-boot-beaglebone and it will install the program into /usr/local/share/u-boot/u-boot-beaglebone/.
+</p>
+
+<p>
+The A20-SOM use an Allwinner processor and there is already some boards in -CURRENT with this processor, the CubieBoard (A10) and the CubieBoard2 (A20). The sysutils/u-boot-cubieboard port is a modular one. Some variables (PKGNAMESUFFIX, COMMENT, MODEL and CONF_TARGET) can be overwritten and this is what the sysutils/u-boot-cubieboard2 port does. So to create a port for the Olimex A20-SOM all I need is a Makefile that uses the cubieboard one and overide some variables :
+</p>
+<pre>
+PKGNAMESUFFIX=  -olinuxino-lime2
+
+COMMENT=        Cross-build U-Boot loader for Olimex A20 Olinuxino Lime 2
+
+LICENSE=        GPLv2
+
+# Local overrides
+MASTERDIR=      ${.CURDIR}/../u-boot-cubieboard
+DESCR=          ${.CURDIR}/pkg-descr
+MODEL=          sun7i-a20-olinuxino-lime2
+CONF_TARGET=    A20-OLinuXino-Lime2_defconfig
+
+.include "${MASTERDIR}/Makefile"
+</pre>
+
+<p>
+The MODEL variable contain the file of the dtb that will be used (We will talk about DTS/DTB in part 2)
+</p>
+
+<p>
+The CONF_TARGET is the U-Boot config file for the platform.
+</p>
+
+<p>
+If you're wondering why I use the olinuxino-lime2 config and dtb this is because the official linux images from Olimex for the A20-SOM uses them. The two boards are almost the same so Olimex only made one dts for them.
+</p>
+
+<p>
+After make install clean you will have those files in /usr/local/share/u-boot/u-boot-olinuxino-lime2:
+</p>
+
+<p>
+README                          sunxi-spl.bin                   u-boot-sunxi-with-spl.bin       u-boot.img
+</p>
+
+<p>
+README is a copy of pkg-descr. This leave us the SPL file, the U-Boot one and both of them combined in one file.
+</p>
+
+<p>
+So what's SPL ?
+</p>
+
+<p>
+SPL is the first file loaded and executed by the processor. All the different SoC uses different file name or location. For example the SoC in the BeagleBone (TI AM335x) load the file MLO from the first MSDOS partition of the SD card. But it can also load it from a SPI Flash or via the uart using the xmodem protocol. Every SoC implement a different boot procedure.
+</p>
+
+<p>
+The A20 SoC will try to load the SPL file from the SD Card first and then from other media (See the A20 User Manual page 96). It doesn't need a FAT partition, it will simply loads the data from the 16th sector. The SPL file will then load the u-boot program from the 64th sector and execute it.
+</p>
+
+<p>
+The u-boot-sunxi-with-spl.bin file contain both SPL and UBOOT data with the necessary padding between them. This means that we can simple dd this file on the sdcard:
+</p>
+<pre>
+# Assuming that your SD card is da0
+sudo dd if=/usr/local/share/u-boot/u-boot-olinuxino-lime2/u-boot-sunxi-with-spl.bin of=/dev/da0 bs=1k seek=8
+</pre>
+<p>
+Now connect to your board using the uart to verify that it can boot of the SD card with tip ucom1 -115200. To use the tip program without using the root account, you must be the the dialer group. ucom1 is defined in /etc/remote and resolv to /dev/cuaU0 which is the first usb&lt;-&gt;serial adapter on the system. -115200 tells tip to use the 115200 baudrate (the default is 9600).
+</p>
+
+<p>
+If you did everything right you will have something like this :
+</p>
+<pre>
+U-Boot SPL 2015.04 (Nov 27 2015 - 15:26:05)
+DRAM: 1024 MiB
+CPU: 912000000Hz, AXI/AHB/APB: 3/2/2
+
+
+U-Boot 2015.04 (Nov 27 2015 - 15:26:05) Allwinner Technology
+
+CPU:   Allwinner A20 (SUN7I)
+I2C:   ready
+DRAM:  1 GiB
+WARNING: Caches not enabled
+MMC:   SUNXI SD/MMC: 0
+** No partition table - mmc 0 **
+Using default environment
+
+In:    serial
+Out:   serial
+Err:   serial
+SCSI:  SUNXI SCSI INIT
+SATA link 0 timeout.
+AHCI 0001.0100 32 slots 1 ports 3 Gbps 0x1 impl SATA mode
+flags: ncq stag pm led clo only pmp pio slum part ccc apst
+Net:   dwmac.1c50000
+Hit any key to stop autoboot:  0
+Booting from: mmc 0 ubldr
+** Unrecognized filesystem type **
+</pre>
+
+<p>
+Because we used the patched U-Boot from ports, it is already configured to load the file ubldr from the first FAT partition of the SD card. Let examine the uboot environment variables :
+</p>
+<pre>
+sunxi# env print
+Fatboot=env exists loaderdev || env set loaderdev ${fatdev}; env exists UserFatboot &amp;&amp; run UserFatboot; echo Booting from: ${fatdev} ${bootfile}; fatload ${fatdev} ${kernel_addr_r} ${bootfile} &amp;&amp; bootelf;
+Netboot=env exists loaderdev || env set loaderdev net; env exists UserNetboot &amp;&amp; run UserNetboot; dhcp ${kernel_addr_r} ${bootfile} &amp;&amp; bootelf;
+SetupFatdev=env exists fatdev || env set fatdev 'mmc 0';
+baudrate=115200
+bootcmd=run Fatboot
+bootdelay=2
+bootfile=ubldr
+bootm_size=0xf000000
+console=ttyS0,115200
+ethact=dwmac.1c50000
+ethaddr=02:17:08:40:c1:8c
+fatdev=mmc 0
+fdt_addr_r=0x43000000
+fdtfile=olinuxino-lime2.dtb
+kernel_addr_r=0x42000000
+loaderdev=mmc 0
+preboot=usb start; env exists bootfile || env set bootfile ubldr; env exists SetupFatdev &amp;&amp; run SetupFatdev; env exists UserPreboot &amp;&amp; run UserPreboot;
+pxefile_addr_r=0x43200000
+ramdisk_addr_r=0x43300000
+scriptaddr=0x43100000
+stderr=serial,vga
+stdin=serial,usbkbd
+stdout=serial,vga
+
+Environment size: 995/131068 bytes
+</pre>
+<p>
+bootcmd is set to run the commands in the Fatboot variable. Those commands will load bootfile (ubldr) from fatdev (mmc 0) to address kernel_addr_r (0x42000000) and run the bootelf command.
+</p>
+
+<p>
+Let's compile ubldr.
+</p>
+
+<p>
+We have to run a buildworld before, I'm sure that it is somewhat possible without it but we will need it anyway after so let's do that now.
+</p>
+<pre>
+# Setup the environ for building freebsd
+export TARGET=arm
+export TARGET_ARCH=armv6
+export SRCROOT=/path/to/freebsd/source/tree
+export MAKEOBJDIRPREFIX=/path/to/obj/dir
+export MAKESYSPATH=$SRCROOT/share/mk
+buildenv=`make -C $SRCROOT buildenvvars`
+
+# Build World
+make -j `sysctl -n hw.ncpu` -C $SRCROOT buildworld
+
+# Build ubldr
+
+eval $buildenv make -C $SRCROOT/sys/boot -m $MAKESYSPATH obj
+eval $buildenv make -C $SRCROOT/sys/boot -m $MAKESYSPATH clean
+eval $buildenv make -C $SRCROOT/sys/boot -m $MAKESYSPATH depend
+eval $buildenv make -C $SRCROOT/sys/boot -m $MAKESYSPATH UBLDR_LOADADDR=0x42000000 all
+</pre>
+<p>
+Now let's create the fat partition on the SD card:
+</p>
+<pre>
+# Create a MBR scheme
+sudo gpart create -s mbr da0
+# Create a FAT12 partition, start the partition at 1M so it doesn't overide the SPL+UBOOT
+sudo gpart add -t \!12 -b 1M -s 1m da0
+sudo newfs_msdos -F12 /dev/da0s1
+sudo mount_msdosfs /dev/da0s1 /mnt
+sudo cp ${MAKEOBJDIRPREFIX}/${TARGET}.${TARGET_ARCH}/${SRCROOT}/sys/boot/arm/uboot/ubldr /mnt
+sudo umount /mnt
+
+And test the SD card on the board :
+
+U-Boot SPL 2015.04 (Nov 27 2015 - 15:26:05)
+DRAM: 1024 MiB
+CPU: 912000000Hz, AXI/AHB/APB: 3/2/2
+
+
+U-Boot 2015.04 (Nov 27 2015 - 15:26:05) Allwinner Technology
+
+CPU:   Allwinner A20 (SUN7I)
+I2C:   ready
+DRAM:  1 GiB
+WARNING: Caches not enabled
+MMC:   SUNXI SD/MMC: 0
+reading u-boot.env
+
+** Unable to read "u-boot.env" from mmc0:1 **
+Using default environment
+
+In:    serial
+Out:   serial
+Err:   serial
+SCSI:  SUNXI SCSI INIT
+SATA link 0 timeout.
+AHCI 0001.0100 32 slots 1 ports 3 Gbps 0x1 impl SATA mode
+flags: ncq stag pm led clo only pmp pio slum part ccc apst
+Net:   dwmac.1c50000
+Hit any key to stop autoboot:  0
+Booting from: mmc 0 ubldr
+reading ubldr
+263152 bytes read in 66 ms (3.8 MiB/s)
+## Starting application at 0x42000094 ...
+Consoles: U-Boot console
+Compatible U-Boot API signature found @7f235408
+
+FreeBSD/armv6 U-Boot loader, Revision 1.2
+(elbarto@harlock.staff.bocal.org, Fri Nov 27 15:52:44 CET 2015)
+
+DRAM: 1024MB
+MMC Device 1 not found
+MMC Device 2 not found
+MMC Device 3 not found
+MMC Device 1 not found
+Number of U-Boot devices: 3
+U-Boot env: loaderdev='mmc 0'
+Found U-Boot device: disk
+  Checking unit=1 slice=&lt;auto&gt; partition=&lt;auto&gt;... good.
+  Booting from disk1s1: %
+  -
+  can't load 'kernel'
+
+Type '?' for a list of commands, 'help' for more detailed help.
+loader&gt;
+</pre>
+<p>
+ubldr loads fine and now we're ready to load the DTB and the Kernel.
+</p>
+
+<p>
+See you soon in Part 2.
+</p>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 content-main-right">
+                <div class="search">
+                    <h3>SEARCH HERE</h3>
+                    <form>
+                        <input type="text" value="" onFocus="this.value=''" onBlur="this.value=''">
+                        <input type="submit" value="">
+                    </form>
+                </div>
+                <div class="categories">
+                    <h3>CATEGORIES</h3>
+                    <li class="active"><a href="index.html#toc_1.2">BSD</a></li>
+                    <li><a href="index.html#toc_1.3">AI</a></li>
+                    <li><a href="index.html#toc_1.4">VIM</a></li>
+                </div>
+                <div class="archives">
+                    <h3>Diary</h3>
+                    <li class="active"><a href="diary/diary.html">July 2014</a></li>
+                    <li><a href="diary/diary.html">June 2014</a></li>
+                    <li><a href="diary/diary.html">May 2014</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/javascript" >-->
+<!--$(document).ready(function() {-->
+<!--//使用类选择器-->
+<!--$(".toc").addClass("well");-->
+
+<!--//$("#img1").mouseout(function() {-->
+<!--//    $("#img1").css("opacity", 1);-->
+<!--//});-->
+<!--});-->
+<!--</script>-->
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    /*variables
+     var disqus_config = function () {
+     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+     };
+     */
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//erosblog.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</body>
+</html>

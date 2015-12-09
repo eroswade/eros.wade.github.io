@@ -8,6 +8,8 @@
 == BSD ==
 [[freebsd_切换WIFI]] Switch freebsd wifi <br>
 [[freebsd_Install Libreoffice]]
+[[Porting BSD to a new board--p1]]
+[[Porting BSD to a new board--p2]]
 == AI ==
 == VIM ==
 [[vim_wiki使用]]<br>
