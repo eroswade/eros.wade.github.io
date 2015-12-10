@@ -1,0 +1,105 @@
+== Installing the client ==
+
+{{{
+    [dan@ns1:] $ cd /usr/ports
+    [dan@ns1:/usr/ports] $ make search key=pptp
+    Port:   poptop-1.1.2
+    Path:   /usr/ports/net/poptop
+    Info:   Windows 9x compatible PPTP (VPN) server
+    Maint:  nsayer@freebsd.org
+    Index:  net
+    B-deps:
+    R-deps:
+
+    Port:   pptpclient-1.0.3
+    Path:   /usr/ports/net/pptpclient
+    Info:   PPTP client for establishing a VPN link with an NT server
+    Maint:  thomas@cuivre.fr.eu.org
+    Index:  net
+    B-deps: libgnugetopt-1.1
+    R-deps: libgnugetopt-1.1
+
+    [dan@ns1:/usr/ports] $
+}}}
+
+Since I wanted a client and did not need a server, I went with net/pptpclient. Here is the rather complicated installation process:
+
+{{{
+    cd /usr/ports/net/pptpclient
+    make install
+}}}
+
+You should read the examples which will be installed at /usr/local/share/examples/pptpclient.
+
+== Configuring the client ==
+ If you have configured a PPP client before, this should look familiar. I took the example provided by the port but saved the existing .conf file.
+
+{{{
+    cd /etc/ppp
+    mv ppp.conf ppp.conf.original
+    cp usr/local/share/examples/pptpclient/ppp.conf .
+    chmod 640 ppp.conf
+}}}
+
+The chmod ensures that the password contained in the file is not readable by everyone. 
+
+ If you read the /usr/local/share/examples/pptpclient you will see that you need to change a few things in the .conf file. 
+
+{{{
+    $ less ppp.conf
+    THEOFFICE:
+     set authname myusername
+     set authkey mypassword
+     set timeout 0
+     set ifaddr 0 0
+     add 10.5.9.0/24 HISADDR
+     alias enable yes
+}}}
+
+
+    # THEOFFICE: This is just a label. Give it a descriptive value. You will use this value on the command line when you invoke pptp.
+    # myusername: This is the user name assigned to you and which you use to authenticate at the VPN server.
+    # mypassword: This is the password you use in combination with the user name above.
+    # 10.5.9.0/24: This is the IP address of the VPN which you will be connecting to. Talk to your VPN administrator to find out what value you should be using. This is the value I will be using later when I get a static route.
+
+== Starting the client ==
+ Starting the client is easy:
+
+{{{
+    /usr/local/sbin/pptp a.b.c.d THEOFFICE
+}}}
+
+where a.b.c.d is the IP address of VPN Server and THEOFFICE is the label you created in the ppp.conf file. When you're done, you can just CONTROL-C it away. 
+
+== Running it all the time ==
+ This script appears to do the right thing. There are a few things you should know about this script:
+
+    It assumes tun0 is the interface you are using for pptp. If you are using more than one PPP connection, you'll probably have to be more careful with this.
+    While running, you'll see two instances of pptp running. This appears to be normal.
+    After stopping, it can take a little while for those two instances of pptp to stop running. This also appears normal.
+
+{{{
+    $ less /usr/local/etc/rc.d/pptp.sh
+    #!/bin/sh
+
+    case "$1" in
+    start)
+            /usr/local/sbin/pptp a.b.c.d THEOFFICE &
+            ;;
+
+    stop)
+            if [ -f /var/run/tun0.pid ]
+            then
+                    kill -TERM `cat /var/run/tun0.pid`
+            fi
+            ;;
+
+    *)
+            echo "Usage: ^Basename $0 {start|stop}" >&2
+            ;;
+    esac
+
+    exit 0
+}}}
+
+Make sure to do a chmod +x on the script (all files in /usr/local/etc/rc.d/ must be .sh and +x in order to be run at boot time. 
