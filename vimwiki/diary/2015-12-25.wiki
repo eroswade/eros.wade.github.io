@@ -1,0 +1,55 @@
+= QSTK =
+== 更新数据 ==
+import QSTK.qstkutil.DataAccess as da
+import QSTK.qstkutil.qsdateutil as du
+
+dt_start = dt.datetime(2006, 1, 1) # 时间
+dt_end = dt.datetime(2010, 12, 31)
+ls_symbols = ["AAPL", "GLD", "GOOG", "$SPX", "XOM"] # 哪些股票
+
+ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday)#初始化
+c_dataobj = da.DataAccess('Yahoo')# 获取数据来源
+
+ls_keys = ['open', 'high', 'low', 'close', 'volume', 'actual_close'] #确认取哪些数据
+
+ldf_data = c_dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys) #数据获取
+
+d_data = dict(zip(ls_keys, ldf_data))# 解锁数据 
+
+d_data['close'] # 显示数据  带header
+d_data['high']
+num = d_data['close'].values  # 拿出纯粹的数据
+
+数据存入路径:
+D:\Anaconda\Lib\site-packages\QSTK\QSData
+
+
+HOME WORK
+part 1
+例子
+T1 
+T3
+part 2
+write a function called simulate
+input:
+start date
+end date
+symbols [google aapl gld ]
+allocations [0.2, 0.3, 0.4, 0.1 ]
+output:
+1 standard deviation of returns of portfolio
+2 average daily returns of portfolio
+3 sharpe ratio of portfolio
+4 cumulative return of portfolio
+WIKI上有输出
+
+part 3 
+测试配比
+
+part 4
+出图 最好的配置  以2011年的数据为基础 
+
+
+
+
+
