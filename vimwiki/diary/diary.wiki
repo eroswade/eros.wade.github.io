@@ -3,6 +3,7 @@
 == 2015 ==
 
 === December ===
+    * [[2015-12-29|Computer investnig w4]]
     * [[2015-12-25|QSTK]]
     * [[2015-12-09|Q test]]
     * [[2015-12-05|Quantita]]
