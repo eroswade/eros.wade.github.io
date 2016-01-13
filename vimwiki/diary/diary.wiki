@@ -1,5 +1,10 @@
 = Diary =
 
+== 2016 ==
+
+=== January ===
+    * [[2016-01-13|MATLAB call python]]
+
 == 2015 ==
 
 === December ===
