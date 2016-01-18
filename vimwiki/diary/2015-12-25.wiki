@@ -23,6 +23,8 @@ num = d_data['close'].values  # 拿出纯粹的数据
 数据存入路径:
 D:\Anaconda\Lib\site-packages\QSTK\QSData
 
+copying build\lib\QSTK\QSData\Yahoo\XRAY.csv -> build\bdist.win-amd64\egg\QSTK\QSData\Yahoo
+
 
 HOME WORK
 part 1

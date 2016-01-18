@@ -21,4 +21,11 @@ d=py.sys.path;
 d=cell(d);
 dat=char(d{1});
 
+== data trans ==
+# 时间  py.datetime.date(int32(2011),int32(1),int32(1))
+# string   py.str(matlab char)
+# list      py.list(matlab cell)
 
+
+== matlab python std 差别 ==
+MATLAB默认用无偏/N-1 PYTHON默认用总体/N
