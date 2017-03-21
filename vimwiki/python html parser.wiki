@@ -1,4 +1,0 @@
-= python HTML parser =
-# HTMLParser
-# sgmllib
-# htmllib
