@@ -136,48 +136,8 @@
 <li>semi-strong 消息会连续的影响价值</li>
 <li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
 </ul>
-<p>认知偏差:<br>过度自信<br>过度应激<br>信息偏差</p>
-<h2 id="QSTK-处理事件"><a href="#QSTK-处理事件" class="headerlink" title="QSTK 处理事件"></a>QSTK 处理事件</h2><p>1 认为和大盘背离5% 都有事件发生.<br>2 </p>
-<h2 id="module-objectives"><a href="#module-objectives" class="headerlink" title="module objectives"></a>module objectives</h2><ul>
-<li>understand ‘risk’</li>
-<li>understand correlation and covariance 相关,和协方差</li>
-<li>understand mean variance optimization 均值方差优化</li>
-<li>understand the efficient frontier  有效边界</li>
-</ul>
-<h2 id="portfolio-optimization-投资策略优化"><a href="#portfolio-optimization-投资策略优化" class="headerlink" title="portfolio optimization  投资策略优化"></a>portfolio optimization  投资策略优化</h2><p>入: </p>
-<ul>
-<li>一组股票</li>
-<li>目标收益</li>
-</ul>
-<p>找出:<br>分配方式,使最小risk.</p>
-<h2 id="input-and-output-of-portfolio-optmizer"><a href="#input-and-output-of-portfolio-optmizer" class="headerlink" title="input and output of portfolio optmizer"></a>input and output of portfolio optmizer</h2><p>input:</p>
-<ul>
-<li>expected return for each equity</li>
-<li>volatility(rist) of each equity</li>
-<li>target return</li>
-<li>covariance matrix</li>
-</ul>
-<p>output:</p>
-<ul>
-<li>portfolio weights that minimize risk for target return</li>
-</ul>
-<h2 id="The-Efficient-Frontier-边界"><a href="#The-Efficient-Frontier-边界" class="headerlink" title="The Efficient Frontier(边界)"></a>The Efficient Frontier(边界)</h2><p>看evernote</p>
-<h2 id="How-Optimizers-Work"><a href="#How-Optimizers-Work" class="headerlink" title="How Optimizers Work"></a>How Optimizers Work</h2><p>qstk t8</p>
-<ul>
-<li>define variable: equity weights</li>
-<li>define constraints: min or max weight</li>
-<li>define optimization criteria: function of weights</li>
-<li>optimizer algorithm: <ul>
-<li>Tweak weights</li>
-<li>check constraints</li>
-<li>ok?</li>
-<li>call function</li>
-<li>repeat</li>
-</ul>
-</li>
-</ul>
-<p>里面有一个很重点的东西 cvxopt  convex optimization.<br>凸线优化 SIN函数可以找到高峰, 低谷能排除. 重点!!</p>
-
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/03/22/Computer-Investing-W4/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -203,16 +163,8 @@
 <p>If Python cannot find the module, MATLAB displays a Python error message.</p>
 <p>To add mymod, in folder modpath, to the path, type:</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">P = py.sys.path;</div><div class="line"><span class="keyword">if</span> count(P,<span class="string">'modpath'</span>) == <span class="number">0</span></div><div class="line">    insert(P,int32(<span class="number">0</span>),<span class="string">'modpath'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p><code>py.importlib.import_module(&#39;mymod&#39;)</code></p>
-<h2 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h2><p><code>py.reload(mod);</code></p>
-<h2 id="get-data"><a href="#get-data" class="headerlink" title="get data"></a>get data</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d=py.sys.path;</div><div class="line">d=cell(d);</div><div class="line">dat=char(d&#123;<span class="number">1</span>&#125;);</div></pre></td></tr></table></figure>
-<h2 id="data-trans"><a href="#data-trans" class="headerlink" title="data trans"></a>data trans</h2><ul>
-<li>时间  <code>py.datetime.date(int32(2011),int32(1),int32(1))</code></li>
-<li>string   <code>py.str(matlab char)</code></li>
-<li>list      <code>py.list(matlab cell)</code></li>
-</ul>
-<h2 id="matlab-python-std-差别"><a href="#matlab-python-std-差别" class="headerlink" title="matlab python std 差别"></a>matlab python std 差别</h2><p>MATLAB默认用无偏/N-1 PYTHON默认用总体/N</p>
-
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/03/22/matlab-call-python/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -236,17 +188,8 @@
 	
 		<h3 id="今天开始准备写写BLOG"><a href="#今天开始准备写写BLOG" class="headerlink" title="今天开始准备写写BLOG"></a>今天开始准备写写BLOG</h3><p>写了很多年日记，但就是不喜欢在网上写东西。文笔差是一部分，不愿意和陌生人分享也是一部分。</p>
 <h3 id="为什么开始写？"><a href="#为什么开始写？" class="headerlink" title="为什么开始写？"></a>为什么开始写？</h3><p>也许只是李笑来的影响。 想写写文字。 一来给自己一个锻炼文笔的地方。 二来也给自己一点压力吧。 还有很重要的一点，结婚，生子之后，确实成长了很多。 有很多东西，挺想和人说说。</p>
-<h3 id="写什么？"><a href="#写什么？" class="headerlink" title="写什么？"></a>写什么？</h3><p>可能主要还是写工作吧。 然后会写一些随想。这部分大概就是我的分类了。</p>
-<ul>
-<li>软件开发</li>
-<li>硬件开发</li>
-<li>经管</li>
-<li>数学/AI</li>
-<li>自己的项目</li>
-<li>计划总结</li>
-</ul>
-<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p><a href="http://hexo.io/" target="_blank" rel="external">hexo</a><br><a href="http://getbootstrap.com/" target="_blank" rel="external">Bootstrap</a><br><a href="http://github.com/wzpan/hexo-theme-freemind/" target="_blank" rel="external">Freemind</a></p>
-
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/03/21/test/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -291,7 +234,9 @@
 		<h4>分类</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/软件开发/">软件开发<span>2</span></a></li>
+			<li><a href="/categories/软件开发/">软件开发<span>1</span></a></li>
+		
+			<li><a href="/categories/金融/">金融<span>1</span></a></li>
 		
 			<li><a href="/categories/随笔/">随笔<span>1</span></a></li>
 		
@@ -304,11 +249,11 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+		
 			<li><a href="/tags/心情/">心情<span>1</span></a></li>
 		
 			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
 		
 		 
 		</ul>

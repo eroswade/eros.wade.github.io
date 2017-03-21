@@ -13,6 +13,7 @@
 <li>semi-strong 消息会连续的影响价值</li>
 <li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
 </ul>
+<a id="more"></a> 
 <p>认知偏差:<br>过度自信<br>过度应激<br>信息偏差</p>
 <h2 id="QSTK-处理事件"><a href="#QSTK-处理事件" class="headerlink" title="QSTK 处理事件"></a>QSTK 处理事件</h2><p>1 认为和大盘背离5% 都有事件发生.<br>2 </p>
 <h2 id="module-objectives"><a href="#module-objectives" class="headerlink" title="module objectives"></a>module objectives</h2><ul>
@@ -58,7 +59,7 @@
       
         <categories>
             
-            <category> 软件开发 </category>
+            <category> 金融 </category>
             
         </categories>
         
@@ -78,6 +79,7 @@
 <p>If Python cannot find the module, MATLAB displays a Python error message.</p>
 <p>To add mymod, in folder modpath, to the path, type:</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">P = py.sys.path;</div><div class="line"><span class="keyword">if</span> count(P,<span class="string">'modpath'</span>) == <span class="number">0</span></div><div class="line">    insert(P,int32(<span class="number">0</span>),<span class="string">'modpath'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<a id="more"></a> 
 <h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p><code>py.importlib.import_module(&#39;mymod&#39;)</code></p>
 <h2 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h2><p><code>py.reload(mod);</code></p>
 <h2 id="get-data"><a href="#get-data" class="headerlink" title="get data"></a>get data</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d=py.sys.path;</div><div class="line">d=cell(d);</div><div class="line">dat=char(d&#123;<span class="number">1</span>&#125;);</div></pre></td></tr></table></figure>
@@ -109,6 +111,7 @@
       <url>http://eroswade.github.io/2017/03/21/test/</url>
       <content type="html"><![CDATA[<h3 id="今天开始准备写写BLOG"><a href="#今天开始准备写写BLOG" class="headerlink" title="今天开始准备写写BLOG"></a>今天开始准备写写BLOG</h3><p>写了很多年日记，但就是不喜欢在网上写东西。文笔差是一部分，不愿意和陌生人分享也是一部分。</p>
 <h3 id="为什么开始写？"><a href="#为什么开始写？" class="headerlink" title="为什么开始写？"></a>为什么开始写？</h3><p>也许只是李笑来的影响。 想写写文字。 一来给自己一个锻炼文笔的地方。 二来也给自己一点压力吧。 还有很重要的一点，结婚，生子之后，确实成长了很多。 有很多东西，挺想和人说说。</p>
+<a id="more"></a> 
 <h3 id="写什么？"><a href="#写什么？" class="headerlink" title="写什么？"></a>写什么？</h3><p>可能主要还是写工作吧。 然后会写一些随想。这部分大概就是我的分类了。</p>
 <ul>
 <li>软件开发</li>

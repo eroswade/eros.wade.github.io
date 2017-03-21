@@ -108,74 +108,6 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2017-03-22 </div>
-			<div class="article-title"><a href="/2017/03/22/Computer-Investing-W4/" >Computer Investing W4</a></div>						
-		</h3>
-	
-
-
-	    	<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="看Cousera的Computer-Investing-的随笔"><a href="#看Cousera的Computer-Investing-的随笔" class="headerlink" title="看Cousera的Computer Investing 的随笔"></a>看Cousera的Computer Investing 的随笔</h1><h2 id="where-does-info-come-from"><a href="#where-does-info-come-from" class="headerlink" title="where does info come from"></a>where does info come from</h2><p>price/volume: from the markets  价格/成交量:从市场来 true value<br>fundamentals: sec filings  基本面:财务报表<br>news: exogenous sources 新闻: 外部生成.</p>
-<h2 id="3-versions-of-efficient-markets-hypothesis"><a href="#3-versions-of-efficient-markets-hypothesis" class="headerlink" title="3 versions of efficient markets hypothesis"></a>3 versions of efficient markets hypothesis</h2><p>3种 有效市场假设</p>
-<ul>
-<li>weak: 新闻不影响以后的价值, 只影响当前和以前的. 技术可分析的</li>
-<li>semi-strong 消息会连续的影响价值</li>
-<li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
-</ul>
-<p>认知偏差:<br>过度自信<br>过度应激<br>信息偏差</p>
-<h2 id="QSTK-处理事件"><a href="#QSTK-处理事件" class="headerlink" title="QSTK 处理事件"></a>QSTK 处理事件</h2><p>1 认为和大盘背离5% 都有事件发生.<br>2 </p>
-<h2 id="module-objectives"><a href="#module-objectives" class="headerlink" title="module objectives"></a>module objectives</h2><ul>
-<li>understand ‘risk’</li>
-<li>understand correlation and covariance 相关,和协方差</li>
-<li>understand mean variance optimization 均值方差优化</li>
-<li>understand the efficient frontier  有效边界</li>
-</ul>
-<h2 id="portfolio-optimization-投资策略优化"><a href="#portfolio-optimization-投资策略优化" class="headerlink" title="portfolio optimization  投资策略优化"></a>portfolio optimization  投资策略优化</h2><p>入: </p>
-<ul>
-<li>一组股票</li>
-<li>目标收益</li>
-</ul>
-<p>找出:<br>分配方式,使最小risk.</p>
-<h2 id="input-and-output-of-portfolio-optmizer"><a href="#input-and-output-of-portfolio-optmizer" class="headerlink" title="input and output of portfolio optmizer"></a>input and output of portfolio optmizer</h2><p>input:</p>
-<ul>
-<li>expected return for each equity</li>
-<li>volatility(rist) of each equity</li>
-<li>target return</li>
-<li>covariance matrix</li>
-</ul>
-<p>output:</p>
-<ul>
-<li>portfolio weights that minimize risk for target return</li>
-</ul>
-<h2 id="The-Efficient-Frontier-边界"><a href="#The-Efficient-Frontier-边界" class="headerlink" title="The Efficient Frontier(边界)"></a>The Efficient Frontier(边界)</h2><p>看evernote</p>
-<h2 id="How-Optimizers-Work"><a href="#How-Optimizers-Work" class="headerlink" title="How Optimizers Work"></a>How Optimizers Work</h2><p>qstk t8</p>
-<ul>
-<li>define variable: equity weights</li>
-<li>define constraints: min or max weight</li>
-<li>define optimization criteria: function of weights</li>
-<li>optimizer algorithm: <ul>
-<li>Tweak weights</li>
-<li>check constraints</li>
-<li>ok?</li>
-<li>call function</li>
-<li>repeat</li>
-</ul>
-</li>
-</ul>
-<p>里面有一个很重点的东西 cvxopt  convex optimization.<br>凸线优化 SIN函数可以找到高峰, 低谷能排除. 重点!!</p>
-
-	
-	</div>
-</div>
-
-	  
-	    	
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-22 </div>
 			<div class="article-title"><a href="/2017/03/22/matlab-call-python/" >matlab call python</a></div>						
 		</h3>
 	
@@ -189,16 +121,8 @@
 <p>If Python cannot find the module, MATLAB displays a Python error message.</p>
 <p>To add mymod, in folder modpath, to the path, type:</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">P = py.sys.path;</div><div class="line"><span class="keyword">if</span> count(P,<span class="string">'modpath'</span>) == <span class="number">0</span></div><div class="line">    insert(P,int32(<span class="number">0</span>),<span class="string">'modpath'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p><code>py.importlib.import_module(&#39;mymod&#39;)</code></p>
-<h2 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h2><p><code>py.reload(mod);</code></p>
-<h2 id="get-data"><a href="#get-data" class="headerlink" title="get data"></a>get data</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d=py.sys.path;</div><div class="line">d=cell(d);</div><div class="line">dat=char(d&#123;<span class="number">1</span>&#125;);</div></pre></td></tr></table></figure>
-<h2 id="data-trans"><a href="#data-trans" class="headerlink" title="data trans"></a>data trans</h2><ul>
-<li>时间  <code>py.datetime.date(int32(2011),int32(1),int32(1))</code></li>
-<li>string   <code>py.str(matlab char)</code></li>
-<li>list      <code>py.list(matlab cell)</code></li>
-</ul>
-<h2 id="matlab-python-std-差别"><a href="#matlab-python-std-差别" class="headerlink" title="matlab python std 差别"></a>matlab python std 差别</h2><p>MATLAB默认用无偏/N-1 PYTHON默认用总体/N</p>
-
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/03/22/matlab-call-python/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -238,7 +162,9 @@
 		<h4>分类</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/软件开发/">软件开发<span>2</span></a></li>
+			<li><a href="/categories/软件开发/">软件开发<span>1</span></a></li>
+		
+			<li><a href="/categories/金融/">金融<span>1</span></a></li>
 		
 			<li><a href="/categories/随笔/">随笔<span>1</span></a></li>
 		
@@ -251,11 +177,11 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
+		
 			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
 		
 			<li><a href="/tags/心情/">心情<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>1</span></a></li>
 		
 		 
 		</ul>
