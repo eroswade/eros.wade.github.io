@@ -3,20 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Computer Investing W4 | Eros.Wade&#39;s Blog</title>
+  <title>NRF51822 SPI | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
   
-  <meta name="description" content="看Cousera的Computer Investing 的随笔where does info come fromprice/volume: from the markets  价格/成交量:从市场来 true valuefundamentals: sec filings  基本面:财务报表news: exogenous sources 新闻: 外部生成.
-3 versions of efficient markets hypothesis3种 有效市场假设
-
-weak: 新闻不影响以后的价值, 只影响当前和以前的. 技术可分析的
-semi-strong 消息会连续的影响价值
-strong 1+2 还可能会对没有披露的信息产生响应.">
+  <meta name="description" content="调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 
+起因NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。找了很久代码的原因。依">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Computer Investing W4"/>
+  <meta property="og:title" content="NRF51822 SPI"/>
   <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
 
   
@@ -96,7 +92,7 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
 
 	
 		<div class="page-header ">		
-			<h1 class="title "> Computer Investing W4</h1>
+			<h1 class="title "> NRF51822 SPI</h1>
 		</div>		
 	
 
@@ -116,55 +112,8 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
 	<div class="mypage">		
 	  		
 
-	  <h1 id="看Cousera的Computer-Investing-的随笔"><a href="#看Cousera的Computer-Investing-的随笔" class="headerlink" title="看Cousera的Computer Investing 的随笔"></a>看Cousera的Computer Investing 的随笔</h1><h2 id="where-does-info-come-from"><a href="#where-does-info-come-from" class="headerlink" title="where does info come from"></a>where does info come from</h2><p>price/volume: from the markets  价格/成交量:从市场来 true value<br>fundamentals: sec filings  基本面:财务报表<br>news: exogenous sources 新闻: 外部生成.</p>
-<h2 id="3-versions-of-efficient-markets-hypothesis"><a href="#3-versions-of-efficient-markets-hypothesis" class="headerlink" title="3 versions of efficient markets hypothesis"></a>3 versions of efficient markets hypothesis</h2><p>3种 有效市场假设</p>
-<ul>
-<li>weak: 新闻不影响以后的价值, 只影响当前和以前的. 技术可分析的</li>
-<li>semi-strong 消息会连续的影响价值</li>
-<li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
-</ul>
-<a id="more"></a> 
-<p>认知偏差:<br>过度自信<br>过度应激<br>信息偏差</p>
-<h2 id="QSTK-处理事件"><a href="#QSTK-处理事件" class="headerlink" title="QSTK 处理事件"></a>QSTK 处理事件</h2><p>1 认为和大盘背离5% 都有事件发生.<br>2 </p>
-<h2 id="module-objectives"><a href="#module-objectives" class="headerlink" title="module objectives"></a>module objectives</h2><ul>
-<li>understand ‘risk’</li>
-<li>understand correlation and covariance 相关,和协方差</li>
-<li>understand mean variance optimization 均值方差优化</li>
-<li>understand the efficient frontier  有效边界</li>
-</ul>
-<h2 id="portfolio-optimization-投资策略优化"><a href="#portfolio-optimization-投资策略优化" class="headerlink" title="portfolio optimization  投资策略优化"></a>portfolio optimization  投资策略优化</h2><p>入: </p>
-<ul>
-<li>一组股票</li>
-<li>目标收益</li>
-</ul>
-<p>找出:<br>分配方式,使最小risk.</p>
-<h2 id="input-and-output-of-portfolio-optmizer"><a href="#input-and-output-of-portfolio-optmizer" class="headerlink" title="input and output of portfolio optmizer"></a>input and output of portfolio optmizer</h2><p>input:</p>
-<ul>
-<li>expected return for each equity</li>
-<li>volatility(rist) of each equity</li>
-<li>target return</li>
-<li>covariance matrix</li>
-</ul>
-<p>output:</p>
-<ul>
-<li>portfolio weights that minimize risk for target return</li>
-</ul>
-<h2 id="The-Efficient-Frontier-边界"><a href="#The-Efficient-Frontier-边界" class="headerlink" title="The Efficient Frontier(边界)"></a>The Efficient Frontier(边界)</h2><p>看evernote</p>
-<h2 id="How-Optimizers-Work"><a href="#How-Optimizers-Work" class="headerlink" title="How Optimizers Work"></a>How Optimizers Work</h2><p>qstk t8</p>
-<ul>
-<li>define variable: equity weights</li>
-<li>define constraints: min or max weight</li>
-<li>define optimization criteria: function of weights</li>
-<li>optimizer algorithm: <ul>
-<li>Tweak weights</li>
-<li>check constraints</li>
-<li>ok?</li>
-<li>call function</li>
-<li>repeat</li>
-</ul>
-</li>
-</ul>
-<p>里面有一个很重点的东西 cvxopt  convex optimization.<br>凸线优化 SIN函数可以找到高峰, 低谷能排除. 重点!!</p>
+	  <p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/source/img/SPI_NRF51.png" alt="SPI_NRF51"></p>
 	  
 	</div>
 
@@ -173,14 +122,14 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2017/03/23/NRF51822-SPI/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/03/22/matlab-call-python/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2017/03/22/Computer-Investing-W4/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -235,7 +184,7 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-03-22 
+	2017-03-23 
 	</div>
 	
 
@@ -246,7 +195,7 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/金融/">金融<span>1</span></a></li>
+    <li><a href="/categories/硬件开发/">硬件开发<span>1</span></a></li>
   </li>
 
     </ul>
@@ -259,18 +208,13 @@ strong 1+2 还可能会对没有披露的信息产生响应.">
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
+  <li><a href="/tags/NRF51822/">NRF51822<span>1</span></a></li> <li><a href="/tags/蓝牙/">蓝牙<span>1</span></a></li>
     </ul>
 	</div>
 		
 
 	<!-- toc -->
 	<div class="meta-widget">
-	
-	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
-	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#看Cousera的Computer-Investing-的随笔"><span class="toc-article-text">看Cousera的Computer Investing 的随笔</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#where-does-info-come-from"><span class="toc-article-text">where does info come from</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-versions-of-efficient-markets-hypothesis"><span class="toc-article-text">3 versions of efficient markets hypothesis</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#QSTK-处理事件"><span class="toc-article-text">QSTK 处理事件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#module-objectives"><span class="toc-article-text">module objectives</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#portfolio-optimization-投资策略优化"><span class="toc-article-text">portfolio optimization  投资策略优化</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#input-and-output-of-portfolio-optmizer"><span class="toc-article-text">input and output of portfolio optmizer</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#The-Efficient-Frontier-边界"><span class="toc-article-text">The Efficient Frontier(边界)</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#How-Optimizers-Work"><span class="toc-article-text">How Optimizers Work</span></a></li></ol></li></ol>
-		</div>
 	
 	</div>
 	

@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[NRF51822 SPI]]></title>
+      <url>http://eroswade.github.io/2017/03/23/NRF51822-SPI/</url>
+      <content type="html"><![CDATA[<p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/source/img/SPI_NRF51.png" alt="SPI_NRF51"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 硬件开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> NRF51822 </tag>
+            
+            <tag> 蓝牙 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Computer Investing W4]]></title>
       <url>http://eroswade.github.io/2017/03/22/Computer-Investing-W4/</url>
       <content type="html"><![CDATA[<h1 id="看Cousera的Computer-Investing-的随笔"><a href="#看Cousera的Computer-Investing-的随笔" class="headerlink" title="看Cousera的Computer Investing 的随笔"></a>看Cousera的Computer Investing 的随笔</h1><h2 id="where-does-info-come-from"><a href="#where-does-info-come-from" class="headerlink" title="where does info come from"></a>where does info come from</h2><p>price/volume: from the markets  价格/成交量:从市场来 true value<br>fundamentals: sec filings  基本面:财务报表<br>news: exogenous sources 新闻: 外部生成.</p>
