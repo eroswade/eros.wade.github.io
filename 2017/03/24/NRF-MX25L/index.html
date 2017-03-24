@@ -1,12 +1,137 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NRF51822操作MX25L4005 | Eros.Wade&#39;s Blog</title>
+  <meta name="author" content="Eros.Wade">
+  
+  <meta name="description" content="nrf51822操作MX25L4005指令集：12345678910111213141516171819#define SPI_Flash_Read_CMD			0x03#define SPI_Flash_Sector_Erase		0x20#define SPI_Flash_Block_Erase		0xD8#define SPI_Flash_Chip_Erase		0x60#define SPI_Flash_Page_Program		0x02#define SPI_Flash_Read_Status		0x05#define SPI_Flash_Write_Status		0x01#define SPI_Flash_Write_Enable		0x06#define SPI_Flash_Write_Disable		0x04#define SPI_Flash_Read_ID			0x9F#define SPI_Flash_Read				0x03#define SPI_Flash_Fast_Read			0x0B#define SPI_Flash_Power_Down		0xB9#define SPI_Flash_Release_DP		0xAB#define SPI_Flash_Enter_4K			0xA5#define SPI_Flash_Exit_4K			0xB5#define SPI_Flash_Read_ES			0xAB#define SPI_Flash_Read_EMS			0x90#define SPI_Flash_Parallel_Mode		0x55
+内存结构：">
   
   
-    
-    <entry>
-      <title><![CDATA[NRF51822操作MX25L4005]]></title>
-      <url>http://eroswade.github.io/2017/03/24/NRF-MX25L/</url>
-      <content type="html"><![CDATA[<h1 id="nrf51822操作MX25L4005"><a href="#nrf51822操作MX25L4005" class="headerlink" title="nrf51822操作MX25L4005"></a>nrf51822操作MX25L4005</h1><h3 id="指令集："><a href="#指令集：" class="headerlink" title="指令集："></a>指令集：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_CMD			0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Sector_Erase		0x20</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Block_Erase		0xD8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Chip_Erase		0x60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Page_Program		0x02</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_Status		0x05</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Status		0x01</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Enable		0x06</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Disable		0x04</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ID			0x9F</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read				0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Fast_Read			0x0B</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Power_Down		0xB9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Release_DP		0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Enter_4K			0xA5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Exit_4K			0xB5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ES			0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_EMS			0x90</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Parallel_Mode		0x55</span></div></pre></td></tr></table></figure>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="NRF51822操作MX25L4005"/>
+  <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/slate.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-96114910-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a6d0c457c72648f465429b8f7876336c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Eros.Wade&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>所有文章
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> NRF51822操作MX25L4005</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="nrf51822操作MX25L4005"><a href="#nrf51822操作MX25L4005" class="headerlink" title="nrf51822操作MX25L4005"></a>nrf51822操作MX25L4005</h1><h3 id="指令集："><a href="#指令集：" class="headerlink" title="指令集："></a>指令集：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_CMD			0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Sector_Erase		0x20</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Block_Erase		0xD8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Chip_Erase		0x60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Page_Program		0x02</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_Status		0x05</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Status		0x01</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Enable		0x06</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Disable		0x04</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ID			0x9F</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read				0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Fast_Read			0x0B</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Power_Down		0xB9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Release_DP		0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Enter_4K			0xA5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Exit_4K			0xB5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ES			0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_EMS			0x90</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Parallel_Mode		0x55</span></div></pre></td></tr></table></figure>
 <h3 id="内存结构："><a href="#内存结构：" class="headerlink" title="内存结构："></a>内存结构：</h3><p><img src="/2017/03/24/NRF-MX25L/mem_struct.png" alt="DATASTRUCT"></p>
 <a id="more"></a>
 <h3 id="CODE"><a href="#CODE" class="headerlink" title="CODE:"></a>CODE:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div></pre></td><td class="code"><pre><div class="line">#include &quot;M25L.h&quot;</div><div class="line">#include &lt;nrf51.h&gt;</div><div class="line">#include &quot;../Broad_Pin_config.h&quot;</div><div class="line">#include &quot;spi_master_config.h&quot;</div><div class="line">#include &quot;nrf_gpio.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">#define FLASH_ENABLE nrf_gpio_pin_clear(SPI_PSELSS1)</div><div class="line">#define FLASH_DISABLE nrf_gpio_pin_set(SPI_PSELSS1)</div><div class="line">#define SPI_BUFSIZE 8</div><div class="line">uint8_t   M25MasterBuffer[SPI_BUFSIZE];</div><div class="line">uint8_t   M25SlaveBuffer[SPI_BUFSIZE];</div><div class="line">uint8_t  M25ReadLength, M25WriteLength;</div><div class="line"></div><div class="line">#define SET			0x01</div><div class="line">#define	RESET		0x00</div><div class="line"></div><div class="line">uint8_t Flash_Init(void)</div><div class="line">&#123;</div><div class="line">	uint32_t *spi_base_address = spi_master_init(SPI1, SPI_MODE0, false);</div><div class="line">	if (spi_base_address == 0) &#123;</div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line">	return true;</div><div class="line">&#125;</div><div class="line"></div><div class="line">u8 SPI1_WriteRead_Data(u8 dat)</div><div class="line">&#123;</div><div class="line">	uint32_t counter = 0;</div><div class="line"></div><div class="line">	NRF_SPI_Type *spi_base = (NRF_SPI_Type *)NRF_SPI1;</div><div class="line"></div><div class="line"></div><div class="line">	spi_base-&gt;TXD = (uint32_t)(dat);</div><div class="line"></div><div class="line">	while ((spi_base-&gt;EVENTS_READY == 0U) &amp;&amp; (counter &lt; TIMEOUT_COUNTER))</div><div class="line">	&#123;</div><div class="line">		counter++;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if (counter == TIMEOUT_COUNTER) </div><div class="line">	&#123;</div><div class="line">		FLASH_DISABLE;</div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line">	else &#123;   /* clear the event to be ready to receive next messages */</div><div class="line">		spi_base-&gt;EVENTS_READY = 0U;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return (uint8_t)spi_base-&gt;RXD;							</div><div class="line">&#125;</div><div class="line"></div><div class="line">FLASH_ID Flash_Read_ID(void)</div><div class="line">&#123;</div><div class="line">	FLASH_ID  Flash_id;</div><div class="line"></div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Read_ID);</div><div class="line">	Flash_id.MXIC_ID = SPI1_WriteRead_Data(DummyData);</div><div class="line">	Flash_id.MemType_ID = SPI1_WriteRead_Data(DummyData);</div><div class="line">	Flash_id.MemDensity_ID = SPI1_WriteRead_Data(DummyData);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	return 	Flash_id;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">void Flash_Write_Enable(void)</div><div class="line">&#123;</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Write_Enable);</div><div class="line">	FLASH_DISABLE;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_Write_Disable(void)</div><div class="line">&#123;</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Write_Disable);</div><div class="line">	FLASH_DISABLE;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">u8 Flash_Read_Status_Register(void)</div><div class="line">&#123;</div><div class="line">	u8 data;</div><div class="line"></div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Read_Status);</div><div class="line">	data = SPI1_WriteRead_Data(DummyData);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	return data;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_Write_Status_Register(u8 dat)</div><div class="line">&#123;</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Write_Status);</div><div class="line">	SPI1_WriteRead_Data(dat);</div><div class="line">	FLASH_DISABLE;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_Sector_Erase(u16 Sector_idx)</div><div class="line">&#123;</div><div class="line">	u8 Sector_Addr_H;</div><div class="line">	u8 Sector_Addr_M;</div><div class="line">	u8 Sector_Addr_L;</div><div class="line"></div><div class="line">	Sector_Addr_H = (u8)(((Sector_idx * 0x1000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Sector_Addr_M = (u8)(((Sector_idx * 0x1000) &amp; 0x0000ff00) &gt;&gt; 8);</div><div class="line">	Sector_Addr_L = 0x00;</div><div class="line"></div><div class="line">	Flash_Write_Enable();</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Sector_Erase);</div><div class="line">	SPI1_WriteRead_Data(Sector_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Sector_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Sector_Addr_L);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	while (Flash_Read_Status_Register()&amp;C_Flash_Busy != RESET);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_Block_Erase(u16 Block_idx)</div><div class="line">&#123;</div><div class="line">	u8 Block_Addr_H;</div><div class="line">	u8 Block_Addr_M;</div><div class="line">	u8 Block_Addr_L;</div><div class="line"></div><div class="line">	Block_Addr_H = (u8)(((Block_idx * 0x10000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Block_Addr_M = 0x00;</div><div class="line">	Block_Addr_L = 0x00;</div><div class="line"></div><div class="line">	Flash_Write_Enable();</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Block_Erase);</div><div class="line">	SPI1_WriteRead_Data(Block_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Block_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Block_Addr_L);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	while (Flash_Read_Status_Register()&amp;C_Flash_Busy != RESET);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_Chip_Erase(void)</div><div class="line">&#123;</div><div class="line">	Flash_Write_Enable();</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Chip_Erase);</div><div class="line">	FLASH_DISABLE;</div><div class="line">	while (Flash_Read_Status_Register()&amp;C_Flash_Busy != RESET);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_WriteByte(uint32_t data_addr, u8 data)</div><div class="line">&#123;</div><div class="line">	u8 Data_Addr_H;</div><div class="line">	u8 Data_Addr_M;</div><div class="line">	u8 Data_Addr_L;</div><div class="line"></div><div class="line">	Data_Addr_H = (u8)(((data_addr * 0x10000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Data_Addr_M = (u8)(((data_addr * 0x10000) &amp; 0x0000ff00) &gt;&gt; 8);</div><div class="line">	Data_Addr_L = (u8)((data_addr * 0x10000) &amp; 0x000000ff);</div><div class="line"></div><div class="line">	Flash_Write_Enable();</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Page_Program);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_L);</div><div class="line">	SPI1_WriteRead_Data(data);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	while (Flash_Read_Status_Register()&amp;C_Flash_Busy != RESET);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_WriteBytes(uint32_t data_addr, u8* ptdata, u16 count)</div><div class="line">&#123;</div><div class="line">	u8 Data_Addr_H;</div><div class="line">	u8 Data_Addr_M;</div><div class="line">	u8 Data_Addr_L;</div><div class="line"></div><div class="line">	Data_Addr_H = (u8)(((data_addr * 0x10000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Data_Addr_M = (u8)(((data_addr * 0x10000) &amp; 0x0000ff00) &gt;&gt; 8);</div><div class="line">	Data_Addr_L = (u8)((data_addr * 0x10000) &amp; 0x000000ff);</div><div class="line"></div><div class="line">	Flash_Write_Enable();</div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Page_Program);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_L);</div><div class="line"></div><div class="line">	for (; count != 0; count--)</div><div class="line">	&#123;</div><div class="line">		SPI1_WriteRead_Data(*(ptdata++));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	while (Flash_Read_Status_Register()&amp;C_Flash_Busy != RESET);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void Flash_ReadBytes(uint32_t data_addr, u8* ptdata, u16 count)</div><div class="line">&#123;</div><div class="line">	u8 Data_Addr_H;</div><div class="line">	u8 Data_Addr_M;</div><div class="line">	u8 Data_Addr_L;</div><div class="line"></div><div class="line">	Data_Addr_H = (u8)(((data_addr * 0x10000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Data_Addr_M = (u8)(((data_addr * 0x10000) &amp; 0x0000ff00) &gt;&gt; 8);</div><div class="line">	Data_Addr_L = (u8)((data_addr * 0x10000) &amp; 0x000000ff);</div><div class="line"></div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Fast_Read);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_L);</div><div class="line">	SPI1_WriteRead_Data(DummyData);</div><div class="line"></div><div class="line">	for (; count != 0; count--)</div><div class="line">	&#123;</div><div class="line">		*(ptdata++) = SPI1_WriteRead_Data(DummyData);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	FLASH_DISABLE;</div><div class="line">&#125;</div><div class="line"></div><div class="line">u8 Flash_ReadByte(uint32_t data_addr)</div><div class="line">&#123;</div><div class="line">	u8 data;</div><div class="line">	u8 Data_Addr_H;</div><div class="line">	u8 Data_Addr_M;</div><div class="line">	u8 Data_Addr_L;</div><div class="line"></div><div class="line">	Data_Addr_H = (u8)(((data_addr * 0x10000) &amp; 0x00ff0000) &gt;&gt; 16);</div><div class="line">	Data_Addr_M = (u8)(((data_addr * 0x10000) &amp; 0x0000ff00) &gt;&gt; 8);</div><div class="line">	Data_Addr_L = (u8)((data_addr * 0x10000) &amp; 0x000000ff);</div><div class="line"></div><div class="line">	FLASH_ENABLE;</div><div class="line">	SPI1_WriteRead_Data(SPI_Flash_Read);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_H);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_M);</div><div class="line">	SPI1_WriteRead_Data(Data_Addr_L);</div><div class="line">	data = SPI1_WriteRead_Data(DummyData);</div><div class="line">	FLASH_DISABLE;</div><div class="line"></div><div class="line">	return data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -16,188 +141,174 @@
 <li>如果不是从0开始写，数量量超当前页的时候， 也会从<strong>当前页</strong>的0位开始覆盖数据。</li>
 </ul>
 <h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p><a href="http://blog.csdn.net/heshanxingzhe/article/details/6170087" target="_blank" rel="external">heshanxingzhe</a><br><a href="http://wenku.baidu.com/link?url=r44oXZ4HFg-nkf4GSwskH4Vf9uFw99e6XoFM4aLr6yF4YrcxkaxmvSyKJ2cTpvsywnbWX3QKow1sPrRnLS3QYT66EHiYcPu9zFq4ZVLtzYq" target="_blank" rel="external">jayjiang86</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 硬件开发 </category>
-            
-        </categories>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
         
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/03/23/NRF51822-SPI/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
-        <tags>
-            
-            <tag> NRF51822 </tag>
-            
-            <tag> 蓝牙 </tag>
-            
-        </tags>
-        
-    </entry>
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
     
-    <entry>
-      <title><![CDATA[NRF51822 SPI]]></title>
-      <url>http://eroswade.github.io/2017/03/23/NRF51822-SPI/</url>
-      <content type="html"><![CDATA[<p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/2017/03/23/NRF51822-SPI/SPI_NRF51.png" alt="SPI_NRF51"></p>
-<a id="more"></a>
-<h2 id="SPI-MASTER-0-ENABLE"><a href="#SPI-MASTER-0-ENABLE" class="headerlink" title="SPI_MASTER_0_ENABLE"></a>SPI_MASTER_0_ENABLE</h2><p>主要问题是在 components\drivers_nrf\spi_master\spi_master.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_0_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI0_TWI0_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI0-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI0-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI0-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_0);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_0_ENABLE</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_1_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI1_TWI1_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI1-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI1-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI1-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_1);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_1_ENABLE</span></span></div></pre></td></tr></table></figure></p>
-<h2 id="DEBUG-NRF-USER"><a href="#DEBUG-NRF-USER" class="headerlink" title="DEBUG_NRF_USER"></a>DEBUG_NRF_USER</h2><p>可能这个非必须， 只是因为我调用到了这个函数。<br>components\libraries\util\nrf_assert.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#if defined(DEBUG_NRF) || defined(DEBUG_NRF_USER)</div><div class="line"></div><div class="line">void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name);</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 硬件开发 </category>
-            
-        </categories>
         
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
         
-        <tags>
-            
-            <tag> NRF51822 </tag>
-            
-            <tag> 蓝牙 </tag>
-            
-        </tags>
-        
-    </entry>
+
     
-    <entry>
-      <title><![CDATA[Computer Investing W4]]></title>
-      <url>http://eroswade.github.io/2017/03/22/Computer-Investing-W4/</url>
-      <content type="html"><![CDATA[<h1 id="看Cousera的Computer-Investing-的随笔"><a href="#看Cousera的Computer-Investing-的随笔" class="headerlink" title="看Cousera的Computer Investing 的随笔"></a>看Cousera的Computer Investing 的随笔</h1><h2 id="where-does-info-come-from"><a href="#where-does-info-come-from" class="headerlink" title="where does info come from"></a>where does info come from</h2><p>price/volume: from the markets  价格/成交量:从市场来 true value<br>fundamentals: sec filings  基本面:财务报表<br>news: exogenous sources 新闻: 外部生成.</p>
-<h2 id="3-versions-of-efficient-markets-hypothesis"><a href="#3-versions-of-efficient-markets-hypothesis" class="headerlink" title="3 versions of efficient markets hypothesis"></a>3 versions of efficient markets hypothesis</h2><p>3种 有效市场假设</p>
-<ul>
-<li>weak: 新闻不影响以后的价值, 只影响当前和以前的. 技术可分析的</li>
-<li>semi-strong 消息会连续的影响价值</li>
-<li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
-</ul>
-<a id="more"></a> 
-<p>认知偏差:<br>过度自信<br>过度应激<br>信息偏差</p>
-<h2 id="QSTK-处理事件"><a href="#QSTK-处理事件" class="headerlink" title="QSTK 处理事件"></a>QSTK 处理事件</h2><p>1 认为和大盘背离5% 都有事件发生.<br>2 </p>
-<h2 id="module-objectives"><a href="#module-objectives" class="headerlink" title="module objectives"></a>module objectives</h2><ul>
-<li>understand ‘risk’</li>
-<li>understand correlation and covariance 相关,和协方差</li>
-<li>understand mean variance optimization 均值方差优化</li>
-<li>understand the efficient frontier  有效边界</li>
-</ul>
-<h2 id="portfolio-optimization-投资策略优化"><a href="#portfolio-optimization-投资策略优化" class="headerlink" title="portfolio optimization  投资策略优化"></a>portfolio optimization  投资策略优化</h2><p>入: </p>
-<ul>
-<li>一组股票</li>
-<li>目标收益</li>
-</ul>
-<p>找出:<br>分配方式,使最小risk.</p>
-<h2 id="input-and-output-of-portfolio-optmizer"><a href="#input-and-output-of-portfolio-optmizer" class="headerlink" title="input and output of portfolio optmizer"></a>input and output of portfolio optmizer</h2><p>input:</p>
-<ul>
-<li>expected return for each equity</li>
-<li>volatility(rist) of each equity</li>
-<li>target return</li>
-<li>covariance matrix</li>
-</ul>
-<p>output:</p>
-<ul>
-<li>portfolio weights that minimize risk for target return</li>
-</ul>
-<h2 id="The-Efficient-Frontier-边界"><a href="#The-Efficient-Frontier-边界" class="headerlink" title="The Efficient Frontier(边界)"></a>The Efficient Frontier(边界)</h2><p>看evernote</p>
-<h2 id="How-Optimizers-Work"><a href="#How-Optimizers-Work" class="headerlink" title="How Optimizers Work"></a>How Optimizers Work</h2><p>qstk t8</p>
-<ul>
-<li>define variable: equity weights</li>
-<li>define constraints: min or max weight</li>
-<li>define optimization criteria: function of weights</li>
-<li>optimizer algorithm: <ul>
-<li>Tweak weights</li>
-<li>check constraints</li>
-<li>ok?</li>
-<li>call function</li>
-<li>repeat</li>
-</ul>
-</li>
-</ul>
-<p>里面有一个很重点的东西 cvxopt  convex optimization.<br>凸线优化 SIN函数可以找到高峰, 低谷能排除. 重点!!</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 金融 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 程序化交易 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[matlab call python]]></title>
-      <url>http://eroswade.github.io/2017/03/22/matlab-call-python/</url>
-      <content type="html"><![CDATA[<h1 id="MATLAB-call-python"><a href="#MATLAB-call-python" class="headerlink" title="MATLAB call python"></a>MATLAB call python</h1><p>Make sure the Python module is on the Python search path. To test if module <code>mymod</code> is on the path, type:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">py.importlib.import_module(&apos;mymod&apos;)</div></pre></td></tr></table></figure></p>
-<p>If Python cannot find the module, MATLAB displays a Python error message.</p>
-<p>To add mymod, in folder modpath, to the path, type:</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">P = py.sys.path;</div><div class="line"><span class="keyword">if</span> count(P,<span class="string">'modpath'</span>) == <span class="number">0</span></div><div class="line">    insert(P,int32(<span class="number">0</span>),<span class="string">'modpath'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-<a id="more"></a> 
-<h2 id="load"><a href="#load" class="headerlink" title="load"></a>load</h2><p><code>py.importlib.import_module(&#39;mymod&#39;)</code></p>
-<h2 id="reload"><a href="#reload" class="headerlink" title="reload"></a>reload</h2><p><code>py.reload(mod);</code></p>
-<h2 id="get-data"><a href="#get-data" class="headerlink" title="get data"></a>get data</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d=py.sys.path;</div><div class="line">d=cell(d);</div><div class="line">dat=char(d&#123;<span class="number">1</span>&#125;);</div></pre></td></tr></table></figure>
-<h2 id="data-trans"><a href="#data-trans" class="headerlink" title="data trans"></a>data trans</h2><ul>
-<li>时间  <code>py.datetime.date(int32(2011),int32(1),int32(1))</code></li>
-<li>string   <code>py.str(matlab char)</code></li>
-<li>list      <code>py.list(matlab cell)</code></li>
-</ul>
-<h2 id="matlab-python-std-差别"><a href="#matlab-python-std-差别" class="headerlink" title="matlab python std 差别"></a>matlab python std 差别</h2><p>MATLAB默认用无偏/N-1 PYTHON默认用总体/N</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 软件开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> matlab </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[首弹]]></title>
-      <url>http://eroswade.github.io/2017/03/21/test/</url>
-      <content type="html"><![CDATA[<h3 id="今天开始准备写写BLOG"><a href="#今天开始准备写写BLOG" class="headerlink" title="今天开始准备写写BLOG"></a>今天开始准备写写BLOG</h3><p>写了很多年日记，但就是不喜欢在网上写东西。文笔差是一部分，不愿意和陌生人分享也是一部分。</p>
-<h3 id="为什么开始写？"><a href="#为什么开始写？" class="headerlink" title="为什么开始写？"></a>为什么开始写？</h3><p>也许只是李笑来的影响。 想写写文字。 一来给自己一个锻炼文笔的地方。 二来也给自己一点压力吧。 还有很重要的一点，结婚，生子之后，确实成长了很多。 有很多东西，挺想和人说说。</p>
-<a id="more"></a> 
-<h3 id="写什么？"><a href="#写什么？" class="headerlink" title="写什么？"></a>写什么？</h3><p>可能主要还是写工作吧。 然后会写一些随想。这部分大概就是我的分类了。</p>
-<ul>
-<li>软件开发</li>
-<li>硬件开发</li>
-<li>经管</li>
-<li>数学/AI</li>
-<li>自己的项目</li>
-<li>计划总结</li>
-</ul>
-<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p><a href="http://hexo.io/" target="_blank" rel="external">hexo</a><br><a href="http://getbootstrap.com/" target="_blank" rel="external">Bootstrap</a><br><a href="http://github.com/wzpan/hexo-theme-freemind/" target="_blank" rel="external">Freemind</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 随笔 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 心情 </tag>
-            
-        </tags>
-        
-    </entry>
-    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
   
+  	 <div id="disqus_thread">
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
   
-</search>
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-03-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/硬件开发/">硬件开发<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li> <li><a href="/tags/蓝牙/">蓝牙<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'erosblog';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Eros.Wade
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
