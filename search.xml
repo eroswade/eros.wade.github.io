@@ -4,6 +4,109 @@
   
     
     <entry>
+      <title><![CDATA[matlab to Python 官网未说的部分(持续更新)]]></title>
+      <url>http://eroswade.github.io/2017/03/27/matlabtopy/</url>
+      <content type="html"><![CDATA[<ol>
+<li>dot<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.sum(A.conj()*B), axis=0)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="附-官网的部分"><a href="#附-官网的部分" class="headerlink" title="附: 官网的部分"></a>附: 官网的部分</h2><p><a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html" target="_blank" rel="external">NUMPY FOR MATLAB USER</a></p>
+<table>
+<thead>
+<tr>
+<th>MATLAB</th>
+<th>numpy</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help func</td>
+<td>info(func) or help(func) or func? (in Ipython)</td>
+<td>get help on the function func</td>
+</tr>
+<tr>
+<td>which func</td>
+<td>see note HELP</td>
+<td>find out where func is defined</td>
+</tr>
+<tr>
+<td>type func</td>
+<td>source(func) or func?? (in Ipython)</td>
+<td>print source for func (if not a native function)</td>
+</tr>
+<tr>
+<td>a &amp;&amp; b</td>
+<td>a and b</td>
+<td>short-circuiting logical AND operator (Python native operator); scalar arguments only</td>
+</tr>
+<tr>
+<td>a &#124;&#124; b</td>
+<td>a or b</td>
+<td>short-circuiting logical OR operator (Python native operator); scalar arguments only</td>
+</tr>
+<tr>
+<td>1<em>i, 1</em>j, 1i, 1j</td>
+<td>1j</td>
+<td>complex numbers</td>
+</tr>
+<tr>
+<td>eps</td>
+<td>np.spacing(1)</td>
+<td>Distance between 1 and the nearest floating point number.</td>
+</tr>
+<tr>
+<td>ode45</td>
+<td>scipy.integrate.ode(f).set_integrator(‘dopri5’)</td>
+<td>integrate an ODE with Runge-Kutta 4,5</td>
+</tr>
+<tr>
+<td>ode15s</td>
+<td>scipy.integrate.ode(f).set_integrator(‘vode’, method=’bdf’, order=5)</td>
+<td>integrate an ODE with BDF method</td>
+</tr>
+<tr>
+<td>ndims(a)</td>
+<td>ndim(a) or a.ndim</td>
+<td>get the number of dimensions of an array</td>
+</tr>
+<tr>
+<td>numel(a)</td>
+<td>size(a) or a.size</td>
+<td>get the number of elements of an array</td>
+</tr>
+<tr>
+<td>size(a)</td>
+<td>shape(a) or a.shape</td>
+<td>get the “size” of the matrix</td>
+</tr>
+<tr>
+<td>size(a,n)</td>
+<td>a.shape[n-1]</td>
+<td>get the number of elements of the n-th dimension of array a. (Note that MATLAB® uses 1 based indexing while Python uses 0 based indexing, See note INDEXING)</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      
+        <categories>
+            
+            <category> 软件开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> matlab </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[NRF51822操作MX25L4005]]></title>
       <url>http://eroswade.github.io/2017/03/24/NRF-MX25L/</url>
       <content type="html"><![CDATA[<h1 id="nrf51822操作MX25L4005"><a href="#nrf51822操作MX25L4005" class="headerlink" title="nrf51822操作MX25L4005"></a>nrf51822操作MX25L4005</h1><h3 id="指令集："><a href="#指令集：" class="headerlink" title="指令集："></a>指令集：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_CMD			0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Sector_Erase		0x20</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Block_Erase		0xD8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Chip_Erase		0x60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Page_Program		0x02</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_Status		0x05</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Status		0x01</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Enable		0x06</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Disable		0x04</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ID			0x9F</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read				0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Fast_Read			0x0B</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Power_Down		0xB9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Release_DP		0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Enter_4K			0xA5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Exit_4K			0xB5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ES			0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_EMS			0x90</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Parallel_Mode		0x55</span></div></pre></td></tr></table></figure>
