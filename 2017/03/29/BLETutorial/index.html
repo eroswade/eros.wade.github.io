@@ -7,7 +7,16 @@
   <meta name="author" content="Eros.Wade">
   
   <meta name="description" content="重点要关注GAP, GATT。主要针对什么是Characteristics以下信息都可以由MASTER CONTROL PANEL googleplay读出来
-GAP和GATT的差别GAP: 通用访问协议(Generic Attribute Profile).官方说明用于广播(advertising">
+GAP和GATT的差别GAP: 通用访问协议(Generic Attribute Profile).官方说明用于广播(advertising)的协议.包含信息:
+
+RSSI
+Address
+Address Type (short or long)
+Advertising Data:
+ShortenedLocalName
+Flags (discoverable? can connent?)
+UUID
+ManufacturerSpecificData">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,7 +34,7 @@ GAP和GATT的差别GAP: 通用访问协议(Generic Attribute Profile).官方说�
   
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/css/themes/slate.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/themes/darkly.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
@@ -62,7 +71,7 @@ var _hmt = _hmt || [];
 </head>
 
  <body>  
-  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 	<span class="sr-only">Toggle navigation</span>
@@ -110,8 +119,8 @@ var _hmt = _hmt || [];
 
 
 	
-		<div class="page-header ">		
-			<h1 class="title "> 蓝牙协议说明</h1>
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 蓝牙协议说明</h1>
 		</div>		
 	
 
@@ -145,6 +154,7 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_FULL_NAME;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="keyword">ble_advdata_manuf_data_t</span>        manuf_data; <span class="comment">// Variable to hold manufacturer specific data</span></div><div class="line">    <span class="keyword">uint8_t</span> data[]                      = <span class="string">"SomeData!"</span>; <span class="comment">// Our data to adverise</span></div><div class="line">    manuf_data.company_identifier       = <span class="number">0x0059</span>; <span class="comment">// Nordics company ID</span></div><div class="line">    manuf_data.data.p_data              = data;     </div><div class="line">    manuf_data.data.size                = <span class="keyword">sizeof</span>(data);</div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_SHORT_NAME;</div><div class="line">    advdata.short_name_len          = <span class="number">6</span>;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line">    advdata.p_manuf_specific_data   = &amp;manuf_data;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="GATT-通用属性协议-Generic-Attribute-Profile"><a href="#GATT-通用属性协议-Generic-Attribute-Profile" class="headerlink" title="GATT: 通用属性协议(Generic Attribute Profile)"></a>GATT: 通用属性协议(Generic Attribute Profile)</h3><p><a href="https://devzone.nordicsemi.com/tutorials/17/ble-characteristics-a-beginners-tutorial/" target="_blank" rel="external">官方说明</a><br>通讯协议, 负责连接之后数据传送.<br>通用属性配置文件(GATT)在属性协议(ATT)的基础上构建，为属性协议传输和存储数据建立了一些通用操作和框架。<br>包括: UART/HRS/HID 等.</p>
@@ -160,6 +170,7 @@ var _hmt = _hmt || [];
 <li>Characteristic Value Declaration</li>
 <li>Descriptor Declaration</li>
 </ul>
+<h3 id="BLE-UART-S132"><a href="#BLE-UART-S132" class="headerlink" title="BLE UART S132"></a>BLE UART S132</h3><p><a href="http://blog.csdn.net/a369000753/article/details/51206309" target="_blank" rel="external">这篇文章说的很清楚</a></p>
 	  
 	</div>
 
@@ -264,7 +275,7 @@ var _hmt = _hmt || [];
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#GAP和GATT的差别"><span class="toc-article-text">GAP和GATT的差别</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GAP-通用访问协议-Generic-Attribute-Profile"><span class="toc-article-text">GAP: 通用访问协议(Generic Attribute Profile).</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GATT-通用属性协议-Generic-Attribute-Profile"><span class="toc-article-text">GATT: 通用属性协议(Generic Attribute Profile)</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#ATT-包含信息"><span class="toc-article-text">ATT 包含信息:</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#GATT-信息"><span class="toc-article-text">GATT 信息:</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#GAP和GATT的差别"><span class="toc-article-text">GAP和GATT的差别</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GAP-通用访问协议-Generic-Attribute-Profile"><span class="toc-article-text">GAP: 通用访问协议(Generic Attribute Profile).</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GATT-通用属性协议-Generic-Attribute-Profile"><span class="toc-article-text">GATT: 通用属性协议(Generic Attribute Profile)</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#ATT-包含信息"><span class="toc-article-text">ATT 包含信息:</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#GATT-信息"><span class="toc-article-text">GATT 信息:</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#BLE-UART-S132"><span class="toc-article-text">BLE UART S132</span></a></li></ol></li></ol>
 		</div>
 	
 	</div>

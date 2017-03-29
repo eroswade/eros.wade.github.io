@@ -17,14 +17,14 @@
 <li>Generate Insets</li>
 <li>Generate up/down skins areas</li>
 <li>Generate sparse infill areas</li>
-<li>Generate GCode for each layer</li>
-</ul>
-<p>我主要用到了它的二维规划子函数.</p>
-<ul>
+<li>Generate GCode for each layer<a id="more"></a>
+我主要用到了它的二维规划子函数.<ul>
 <li>infill.cpp 用来完成内部填充</li>
 <li>pathOrderOptimizer.cpp 内轮廓和外轮廓的规划</li>
 <li>intpoint.h 以上两个文件需要的数据结构</li>
 <li>clipper.cpp 对上面的数据结构体进行操作的库.可以区分内外边框</li>
+</ul>
+</li>
 </ul>
 <p>个人认为这是一个很好的路径规划和3D切片参考库.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">generateLineInfill(PGtmp,m_PG,<span class="number">1000</span>,m_ResolutionY*<span class="number">100</span>,m_ResolutionY,<span class="number">45</span>,PGtmp);</div><div class="line"><span class="comment">// 判断内外圈</span></div><div class="line"><span class="keyword">bool</span> mback = ClipperLib::Orientation(PGtmp[<span class="number">0</span>]);</div></pre></td></tr></table></figure>
@@ -65,6 +65,7 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_FULL_NAME;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="keyword">ble_advdata_manuf_data_t</span>        manuf_data; <span class="comment">// Variable to hold manufacturer specific data</span></div><div class="line">    <span class="keyword">uint8_t</span> data[]                      = <span class="string">"SomeData!"</span>; <span class="comment">// Our data to adverise</span></div><div class="line">    manuf_data.company_identifier       = <span class="number">0x0059</span>; <span class="comment">// Nordics company ID</span></div><div class="line">    manuf_data.data.p_data              = data;     </div><div class="line">    manuf_data.data.size                = <span class="keyword">sizeof</span>(data);</div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_SHORT_NAME;</div><div class="line">    advdata.short_name_len          = <span class="number">6</span>;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line">    advdata.p_manuf_specific_data   = &amp;manuf_data;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="GATT-通用属性协议-Generic-Attribute-Profile"><a href="#GATT-通用属性协议-Generic-Attribute-Profile" class="headerlink" title="GATT: 通用属性协议(Generic Attribute Profile)"></a>GATT: 通用属性协议(Generic Attribute Profile)</h3><p><a href="https://devzone.nordicsemi.com/tutorials/17/ble-characteristics-a-beginners-tutorial/" target="_blank" rel="external">官方说明</a><br>通讯协议, 负责连接之后数据传送.<br>通用属性配置文件(GATT)在属性协议(ATT)的基础上构建，为属性协议传输和存储数据建立了一些通用操作和框架。<br>包括: UART/HRS/HID 等.</p>
@@ -80,6 +81,7 @@
 <li>Characteristic Value Declaration</li>
 <li>Descriptor Declaration</li>
 </ul>
+<h3 id="BLE-UART-S132"><a href="#BLE-UART-S132" class="headerlink" title="BLE UART S132"></a>BLE UART S132</h3><p><a href="http://blog.csdn.net/a369000753/article/details/51206309" target="_blank" rel="external">这篇文章说的很清楚</a></p>
 ]]></content>
       
         <categories>
@@ -98,13 +100,14 @@
     </entry>
     
     <entry>
-      <title><![CDATA[matlab to Python 官网未说的部分(持续更新)]]></title>
+      <title><![CDATA[matlab to Python MATLAB转PYTHON(持续更新)]]></title>
       <url>http://eroswade.github.io/2017/03/27/matlabtopy/</url>
       <content type="html"><![CDATA[<ol>
 <li>dot<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.sum(A.conj()*B), axis=0)</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="附-官网的部分"><a href="#附-官网的部分" class="headerlink" title="附: 官网的部分"></a>附: 官网的部分</h2><p><a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html" target="_blank" rel="external">NUMPY FOR MATLAB USER</a></p>
+<h2 id="官网"><a href="#官网" class="headerlink" title="官网"></a>官网</h2><a id="more"></a>
+<p><a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html" target="_blank" rel="external">NUMPY FOR MATLAB USER</a></p>
 <table>
 <thead>
 <tr>
@@ -172,12 +175,12 @@
 <tr>
 <td>size(a)</td>
 <td>shape(a) or a.shape</td>
-<td>get the “size” of the matrix</td>
+<td>get the ??size?? of the matrix</td>
 </tr>
 <tr>
 <td>size(a,n)</td>
 <td>a.shape[n-1]</td>
-<td>get the number of elements of the n-th dimension of array a. (Note that MATLAB® uses 1 based indexing while Python uses 0 based indexing, See note INDEXING)</td>
+<td>get the number of elements of the n-th dimension of array a. (Note that MATLAB? uses 1 based indexing while Python uses 0 based indexing, See note INDEXING)</td>
 </tr>
 </tbody>
 </table>
