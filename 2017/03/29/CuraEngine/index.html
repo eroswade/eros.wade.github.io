@@ -3,16 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NRF51822 SPI | Eros.Wade&#39;s Blog</title>
+  <title>3D打印开源库--CuraEngine | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
   
-  <meta name="description" content="调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 
-起因NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。">
+  <meta name="description" content="CuraEngine
+这是一个3D打印切片和路经规划库.
+The slicing process follows the following global steps:
+
+Load 3D model
+Analize and fix 3D model
+Slice 3D model into 2D la">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="NRF51822 SPI"/>
+  <meta property="og:title" content="3D打印开源库--CuraEngine"/>
   <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
 
   
@@ -111,7 +116,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header ">		
-			<h1 class="title "> NRF51822 SPI</h1>
+			<h1 class="title "> 3D打印开源库--CuraEngine</h1>
 		</div>		
 	
 
@@ -131,11 +136,29 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/2017/03/23/NRF51822-SPI/SPI_NRF51.png" alt="SPI_NRF51"></p>
-<a id="more"></a>
-<h2 id="SPI-MASTER-0-ENABLE"><a href="#SPI-MASTER-0-ENABLE" class="headerlink" title="SPI_MASTER_0_ENABLE"></a>SPI_MASTER_0_ENABLE</h2><p>主要问题是在 components\drivers_nrf\spi_master\spi_master.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_0_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI0_TWI0_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI0-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI0-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI0-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_0);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_0_ENABLE</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_1_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI1_TWI1_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI1-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI1-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI1-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_1);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_1_ENABLE</span></span></div></pre></td></tr></table></figure></p>
-<h2 id="DEBUG-NRF-USER"><a href="#DEBUG-NRF-USER" class="headerlink" title="DEBUG_NRF_USER"></a>DEBUG_NRF_USER</h2><p>可能这个非必须， 只是因为我调用到了这个函数。<br>components\libraries\util\nrf_assert.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#if defined(DEBUG_NRF) || defined(DEBUG_NRF_USER)</div><div class="line"></div><div class="line">void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name);</div></pre></td></tr></table></figure></p>
+	  <p><a href="https://github.com/Ultimaker/CuraEngine" target="_blank" rel="external">CuraEngine</a></p>
+<p>这是一个3D打印切片和路经规划库.</p>
+<p>The slicing process follows the following global steps:</p>
+<ul>
+<li>Load 3D model</li>
+<li>Analize and fix 3D model</li>
+<li>Slice 3D model into 2D layers</li>
+<li>Build LayerParts from sliced layers</li>
+<li>Generate Insets</li>
+<li>Generate up/down skins areas</li>
+<li>Generate sparse infill areas</li>
+<li>Generate GCode for each layer</li>
+</ul>
+<p>我主要用到了它的二维规划子函数.</p>
+<ul>
+<li>infill.cpp 用来完成内部填充</li>
+<li>pathOrderOptimizer.cpp 内轮廓和外轮廓的规划</li>
+<li>intpoint.h 以上两个文件需要的数据结构</li>
+<li>clipper.cpp 对上面的数据结构体进行操作的库.可以区分内外边框</li>
+</ul>
+<p>个人认为这是一个很好的路径规划和3D切片参考库.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">generateLineInfill(PGtmp,m_PG,<span class="number">1000</span>,m_ResolutionY*<span class="number">100</span>,m_ResolutionY,<span class="number">45</span>,PGtmp);</div><div class="line"><span class="comment">// 判断内外圈</span></div><div class="line"><span class="keyword">bool</span> mback = ClipperLib::Orientation(PGtmp[<span class="number">0</span>]);</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//hierarchy  next and previous, first child contour and the parent contour</div><div class="line">cv::findContours(phrone ,contours ,hierarchy, CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );</div><div class="line">cv::Mat dst = cv::Mat::zeros(phrone.rows,phrone.cols,CV_8UC3);</div><div class="line">if (contours.size()==0)</div><div class="line">&#123;</div><div class="line">    continue;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 遍历外框排序</div><div class="line">PathOptimizer pathOptimize(ClipperLib::IntPoint(0,0));// 增加入口点</div><div class="line">ClipperLib::Polygons plogs;</div><div class="line">vector&lt;int&gt; orderid;</div><div class="line">for( int idx = 0; idx &gt;= 0; idx = hierarchy[idx][0] )//外框遍历</div><div class="line">&#123;</div><div class="line">    if (contours[idx].size() &lt; 3)</div><div class="line">    &#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">    ClipperLib::Polygon plog;</div><div class="line">    for (int i=0; i&lt;contours[idx].size(); i++)</div><div class="line">    &#123;</div><div class="line">        plog.push_back(ClipperLib::IntPoint(contours[idx][i].x,contours[idx][i].y));</div><div class="line">    &#125;</div><div class="line">    plogs.push_back(plog);</div><div class="line">    orderid.push_back(idx);</div><div class="line">&#125;</div><div class="line">pathOptimize.addPolygons(plogs);</div><div class="line">pathOptimize.optimize();</div></pre></td></tr></table></figure>
 	  
 	</div>
 
@@ -144,14 +167,14 @@ var _hmt = _hmt || [];
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2017/03/24/NRF-MX25L/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/03/22/Computer-Investing-W4/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2017/03/29/BLETutorial/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -206,7 +229,7 @@ var _hmt = _hmt || [];
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-03-23 
+	2017-03-29 
 	</div>
 	
 
@@ -217,7 +240,7 @@ var _hmt = _hmt || [];
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
+    <li><a href="/categories/3D打印/">3D打印<span>1</span></a></li>
   </li>
 
     </ul>
@@ -230,13 +253,18 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li> <li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+  <li><a href="/tags/3D/">3D<span>1</span></a></li> <li><a href="/tags/算法/">算法<span>1</span></a></li>
     </ul>
 	</div>
 		
 
 	<!-- toc -->
 	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			
+		</div>
 	
 	</div>
 	

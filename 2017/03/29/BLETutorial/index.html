@@ -3,13 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>硬件开发 | Eros.Wade&#39;s Blog</title>
+  <title>蓝牙协议说明 | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
+  
+  <meta name="description" content="重点要关注GAP, GATT。主要针对什么是Characteristics以下信息都可以由MASTER CONTROL PANEL googleplay读出来
+GAP和GATT的差别GAP: 通用访问协议(Generic Attribute Profile).官方说明用于广播(advertising">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="蓝牙协议说明"/>
   <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
 
   
@@ -105,38 +108,30 @@ var _hmt = _hmt || [];
   	<div class="content">
     	 
 
-<!-- title -->
-<div class="page-header ">
-  <h1 class="archive-title-category title ">硬件开发</h1>
-</div>
 
-<div class="row page">
-  <!-- cols -->
-  
-  <div class="col-md-9">
 	
-
-	  <div id="top_search"></div>
-
-      
-
-      <div class="mypage">
-	  
-	    	
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-29 </div>
-			<div class="article-title"><a href="/2017/03/29/BLETutorial/" >蓝牙协议说明</a></div>						
-		</h3>
+		<div class="page-header ">		
+			<h1 class="title "> 蓝牙协议说明</h1>
+		</div>		
 	
 
 
-	    	<div class="entry">
-  <div class="row">
+
+
+
+
+<div class="row post">
+	<!-- cols -->
 	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
 	
-		<p>重点要关注GAP, GATT。<br>主要针对什么是Characteristics<br>以下信息都可以由<a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="_blank" rel="external">MASTER CONTROL PANEL</a> <a href="https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp" target="_blank" rel="external">googleplay</a>读出来</p>
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>重点要关注GAP, GATT。<br>主要针对什么是Characteristics<br>以下信息都可以由<a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="_blank" rel="external">MASTER CONTROL PANEL</a> <a href="https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp" target="_blank" rel="external">googleplay</a>读出来</p>
 <h2 id="GAP和GATT的差别"><a href="#GAP和GATT的差别" class="headerlink" title="GAP和GATT的差别"></a>GAP和GATT的差别</h2><h3 id="GAP-通用访问协议-Generic-Attribute-Profile"><a href="#GAP-通用访问协议-Generic-Attribute-Profile" class="headerlink" title="GAP: 通用访问协议(Generic Attribute Profile)."></a>GAP: 通用访问协议(Generic Attribute Profile).</h3><p><a href="https://devzone.nordicsemi.com/tutorials/5/ble-advertising-a-beginners-tutorial/" target="_blank" rel="external">官方说明</a><br>用于广播(advertising)的协议.<br>包含信息:</p>
 <ul>
 <li>RSSI</li>
@@ -165,179 +160,134 @@ var _hmt = _hmt || [];
 <li>Characteristic Value Declaration</li>
 <li>Descriptor Declaration</li>
 </ul>
-
-	
-	</div>
-</div>
-
 	  
-	    	
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-24 </div>
-			<div class="article-title"><a href="/2017/03/24/NRF-MX25L/" >NRF51822操作MX25L4005</a></div>						
-		</h3>
-	
-
-
-	    	<div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="nrf51822操作MX25L4005"><a href="#nrf51822操作MX25L4005" class="headerlink" title="nrf51822操作MX25L4005"></a>nrf51822操作MX25L4005</h1><h3 id="指令集："><a href="#指令集：" class="headerlink" title="指令集："></a>指令集：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_CMD			0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Sector_Erase		0x20</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Block_Erase		0xD8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Chip_Erase		0x60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Page_Program		0x02</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_Status		0x05</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Status		0x01</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Enable		0x06</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Disable		0x04</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ID			0x9F</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read				0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Fast_Read			0x0B</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Power_Down		0xB9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Release_DP		0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Enter_4K			0xA5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Exit_4K			0xB5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ES			0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_EMS			0x90</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Parallel_Mode		0x55</span></div></pre></td></tr></table></figure>
-<h3 id="内存结构："><a href="#内存结构：" class="headerlink" title="内存结构："></a>内存结构：</h3><p><img src="/2017/03/24/NRF-MX25L/mem_struct.png" alt="DATASTRUCT"></p>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/24/NRF-MX25L/#more" class="btn btn-default more">阅读此文</a>
-	
 	</div>
-</div>
 
-	  
-	    	
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-23 </div>
-			<div class="article-title"><a href="/2017/03/23/NRF51822-SPI/" >NRF51822 SPI</a></div>						
-		</h3>
-	
-
-
-	    	<div class="entry">
-  <div class="row">
-	
-	
-		<p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/2017/03/23/NRF51822-SPI/SPI_NRF51.png" alt="SPI_NRF51"></p>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/23/NRF51822-SPI/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-	  
-      </div>
-	  <div>
-	    <center>
-	    <div class="pagination">
+	<div>
+  	<center>
+	<div class="pagination">
 <ul class="pagination">
 	 
+				
+    	<li class="prev"><a href="/2017/03/29/CuraEngine/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/03/27/matlabtopy/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
 </ul>
 </div>
 
-        </center>
-	    </div>	
-      
-
-</div> <!-- col-md-9/col-md-12 -->
-
-
-<div class="col-md-3">
-	<div id="sidebar">
-	
-			
-  <div id="site_search">
-   <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
-   </div>  
-  <div id="local-search-result"></div>
-  </div>
-
-
-		
-			
-	<div class="widget">
-		<h4>分类</h4>
-		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="/categories/3D打印/">3D打印<span>1</span></a></li>
-		
-			<li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
-		
-			<li><a href="/categories/软件开发/">软件开发<span>2</span></a></li>
-		
-			<li><a href="/categories/金融/">金融<span>1</span></a></li>
-		
-			<li><a href="/categories/随笔/">随笔<span>1</span></a></li>
-		
-		</ul>
+    </center>
 	</div>
 
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
 		
-			
-	<div class="widget">
-		<h4>标签云</h4>
-		<ul class="tag_box inline list-unstyled">		
-		
-			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
-		
-			<li><a href="/tags/心情/">心情<span>1</span></a></li>
-		
-			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
-		
-			<li><a href="/tags/3D/">3D<span>1</span></a></li>
-		
-			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
-		
-			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
-		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
-		
-			<li><a href="/tags/算法/">算法<span>1</span></a></li>
-		
-		 
-		</ul>
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-03-29 
 	</div>
-
-
-		
-			
-<div class="widget">
-  <h4>最新文章</h4>
-  <ul class="entry list-unstyled">
-    
-      <li>
-        <a href="/2017/03/29/CuraEngine/" ><i class="fa fa-file-o"></i>3D打印开源库--CuraEngine</a>
-      </li>
-    
-      <li>
-        <a href="/2017/03/29/BLETutorial/" ><i class="fa fa-file-o"></i>蓝牙协议说明</a>
-      </li>
-    
-      <li>
-        <a href="/2017/03/27/matlabtopy/" ><i class="fa fa-file-o"></i>matlab to Python 官网未说的部分(持续...</a>
-      </li>
-    
-      <li>
-        <a href="/2017/03/24/NRF-MX25L/" ><i class="fa fa-file-o"></i>NRF51822操作MX25L4005</a>
-      </li>
-    
-      <li>
-        <a href="/2017/03/23/NRF51822-SPI/" ><i class="fa fa-file-o"></i>NRF51822 SPI</a>
-      </li>
-    
-  </ul>
-</div>
-
-		
-			
-<div class="widget">
-	<h4>链接</h4>
-	<ul class="blogroll list-unstyled">
 	
-		<li><i class="fa fa-github"></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank"]);">Freemind</a></li>
-	
-		<li><i class="fa fa-github"></i><a href="http://blog.csdn.net/qingrun" title="青润的CSDN BLOG" target="_blank"]);">青润</a></li>
-	
-	</ul>
-</div>
 
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
+  </li>
 
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+    </ul>
+	</div>
 		
-	</div> <!-- sidebar -->
-</div> <!-- col-md-3 -->
 
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#GAP和GATT的差别"><span class="toc-article-text">GAP和GATT的差别</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GAP-通用访问协议-Generic-Attribute-Profile"><span class="toc-article-text">GAP: 通用访问协议(Generic Attribute Profile).</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GATT-通用属性协议-Generic-Attribute-Profile"><span class="toc-article-text">GATT: 通用属性协议(Generic Attribute Profile)</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#ATT-包含信息"><span class="toc-article-text">ATT 包含信息:</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#GATT-信息"><span class="toc-article-text">GATT 信息:</span></a></li></ol></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'erosblog';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
 
 
 

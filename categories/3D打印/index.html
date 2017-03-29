@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>心情 | Eros.Wade&#39;s Blog</title>
+  <title>3D打印 | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
   
   
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 
 <!-- title -->
 <div class="page-header ">
-  <h1 class="archive-title-tag title ">心情</h1>
+  <h1 class="archive-title-category title ">3D打印</h1>
 </div>
 
 <div class="row page">
@@ -120,27 +120,63 @@ var _hmt = _hmt || [];
 
       
 
-	  <div class="archive">
-		
-		
-		
-			
-			
-			<h4 class="archive-ul" data-toggle="collapse" data-target="#2017">2017<b class="caret"></b></h4>
-			<ul id="2017" class="collapse in">
-			
-		
-		<li class="listing-item">
-		<span class="date_class"> 2017-03-21 </span> &raquo;
-		
-		   <span class="title"><a href="/2017/03/21/test/" >首弹</a></span>
-		
-		</li>			
-		
-		</ul>
-		</div>
+      <div class="mypage">
+	  
+	    	
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-03-29 </div>
+			<div class="article-title"><a href="/2017/03/29/CuraEngine/" >3D打印开源库--CuraEngine</a></div>						
+		</h3>
+	
 
-       
+
+	    	<div class="entry">
+  <div class="row">
+	
+	
+		<p><a href="https://github.com/Ultimaker/CuraEngine" target="_blank" rel="external">CuraEngine</a></p>
+<p>这是一个3D打印切片和路经规划库.</p>
+<p>The slicing process follows the following global steps:</p>
+<ul>
+<li>Load 3D model</li>
+<li>Analize and fix 3D model</li>
+<li>Slice 3D model into 2D layers</li>
+<li>Build LayerParts from sliced layers</li>
+<li>Generate Insets</li>
+<li>Generate up/down skins areas</li>
+<li>Generate sparse infill areas</li>
+<li>Generate GCode for each layer</li>
+</ul>
+<p>我主要用到了它的二维规划子函数.</p>
+<ul>
+<li>infill.cpp 用来完成内部填充</li>
+<li>pathOrderOptimizer.cpp 内轮廓和外轮廓的规划</li>
+<li>intpoint.h 以上两个文件需要的数据结构</li>
+<li>clipper.cpp 对上面的数据结构体进行操作的库.可以区分内外边框</li>
+</ul>
+<p>个人认为这是一个很好的路径规划和3D切片参考库.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">generateLineInfill(PGtmp,m_PG,<span class="number">1000</span>,m_ResolutionY*<span class="number">100</span>,m_ResolutionY,<span class="number">45</span>,PGtmp);</div><div class="line"><span class="comment">// 判断内外圈</span></div><div class="line"><span class="keyword">bool</span> mback = ClipperLib::Orientation(PGtmp[<span class="number">0</span>]);</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//hierarchy  next and previous, first child contour and the parent contour</div><div class="line">cv::findContours(phrone ,contours ,hierarchy, CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );</div><div class="line">cv::Mat dst = cv::Mat::zeros(phrone.rows,phrone.cols,CV_8UC3);</div><div class="line">if (contours.size()==0)</div><div class="line">&#123;</div><div class="line">    continue;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 遍历外框排序</div><div class="line">PathOptimizer pathOptimize(ClipperLib::IntPoint(0,0));// 增加入口点</div><div class="line">ClipperLib::Polygons plogs;</div><div class="line">vector&lt;int&gt; orderid;</div><div class="line">for( int idx = 0; idx &gt;= 0; idx = hierarchy[idx][0] )//外框遍历</div><div class="line">&#123;</div><div class="line">    if (contours[idx].size() &lt; 3)</div><div class="line">    &#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">    ClipperLib::Polygon plog;</div><div class="line">    for (int i=0; i&lt;contours[idx].size(); i++)</div><div class="line">    &#123;</div><div class="line">        plog.push_back(ClipperLib::IntPoint(contours[idx][i].x,contours[idx][i].y));</div><div class="line">    &#125;</div><div class="line">    plogs.push_back(plog);</div><div class="line">    orderid.push_back(idx);</div><div class="line">&#125;</div><div class="line">pathOptimize.addPolygons(plogs);</div><div class="line">pathOptimize.optimize();</div></pre></td></tr></table></figure>
+
+	
+	</div>
+</div>
+
+	  
+      </div>
+	  <div>
+	    <center>
+	    <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+        </center>
+	    </div>	
+      
 
 </div> <!-- col-md-9/col-md-12 -->
 
@@ -182,21 +218,21 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
-		
-			<li><a href="/tags/心情/">心情<span>1</span></a></li>
-		
 			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
 		
 			<li><a href="/tags/3D/">3D<span>1</span></a></li>
 		
-			<li><a href="/tags/算法/">算法<span>1</span></a></li>
-		
-			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
 		
 			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
 		
-			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
+			<li><a href="/tags/心情/">心情<span>1</span></a></li>
+		
+			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>1</span></a></li>
+		
+			<li><a href="/tags/算法/">算法<span>1</span></a></li>
 		
 		 
 		</ul>

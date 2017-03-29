@@ -4,6 +4,100 @@
   
     
     <entry>
+      <title><![CDATA[3D打印开源库--CuraEngine]]></title>
+      <url>http://eroswade.github.io/2017/03/29/CuraEngine/</url>
+      <content type="html"><![CDATA[<p><a href="https://github.com/Ultimaker/CuraEngine" target="_blank" rel="external">CuraEngine</a></p>
+<p>这是一个3D打印切片和路经规划库.</p>
+<p>The slicing process follows the following global steps:</p>
+<ul>
+<li>Load 3D model</li>
+<li>Analize and fix 3D model</li>
+<li>Slice 3D model into 2D layers</li>
+<li>Build LayerParts from sliced layers</li>
+<li>Generate Insets</li>
+<li>Generate up/down skins areas</li>
+<li>Generate sparse infill areas</li>
+<li>Generate GCode for each layer</li>
+</ul>
+<p>我主要用到了它的二维规划子函数.</p>
+<ul>
+<li>infill.cpp 用来完成内部填充</li>
+<li>pathOrderOptimizer.cpp 内轮廓和外轮廓的规划</li>
+<li>intpoint.h 以上两个文件需要的数据结构</li>
+<li>clipper.cpp 对上面的数据结构体进行操作的库.可以区分内外边框</li>
+</ul>
+<p>个人认为这是一个很好的路径规划和3D切片参考库.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">generateLineInfill(PGtmp,m_PG,<span class="number">1000</span>,m_ResolutionY*<span class="number">100</span>,m_ResolutionY,<span class="number">45</span>,PGtmp);</div><div class="line"><span class="comment">// 判断内外圈</span></div><div class="line"><span class="keyword">bool</span> mback = ClipperLib::Orientation(PGtmp[<span class="number">0</span>]);</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//hierarchy  next and previous, first child contour and the parent contour</div><div class="line">cv::findContours(phrone ,contours ,hierarchy, CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );</div><div class="line">cv::Mat dst = cv::Mat::zeros(phrone.rows,phrone.cols,CV_8UC3);</div><div class="line">if (contours.size()==0)</div><div class="line">&#123;</div><div class="line">    continue;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 遍历外框排序</div><div class="line">PathOptimizer pathOptimize(ClipperLib::IntPoint(0,0));// 增加入口点</div><div class="line">ClipperLib::Polygons plogs;</div><div class="line">vector&lt;int&gt; orderid;</div><div class="line">for( int idx = 0; idx &gt;= 0; idx = hierarchy[idx][0] )//外框遍历</div><div class="line">&#123;</div><div class="line">    if (contours[idx].size() &lt; 3)</div><div class="line">    &#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">    ClipperLib::Polygon plog;</div><div class="line">    for (int i=0; i&lt;contours[idx].size(); i++)</div><div class="line">    &#123;</div><div class="line">        plog.push_back(ClipperLib::IntPoint(contours[idx][i].x,contours[idx][i].y));</div><div class="line">    &#125;</div><div class="line">    plogs.push_back(plog);</div><div class="line">    orderid.push_back(idx);</div><div class="line">&#125;</div><div class="line">pathOptimize.addPolygons(plogs);</div><div class="line">pathOptimize.optimize();</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 3D打印 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 3D </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[蓝牙协议说明]]></title>
+      <url>http://eroswade.github.io/2017/03/29/BLETutorial/</url>
+      <content type="html"><![CDATA[<p>重点要关注GAP, GATT。<br>主要针对什么是Characteristics<br>以下信息都可以由<a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="_blank" rel="external">MASTER CONTROL PANEL</a> <a href="https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp" target="_blank" rel="external">googleplay</a>读出来</p>
+<h2 id="GAP和GATT的差别"><a href="#GAP和GATT的差别" class="headerlink" title="GAP和GATT的差别"></a>GAP和GATT的差别</h2><h3 id="GAP-通用访问协议-Generic-Attribute-Profile"><a href="#GAP-通用访问协议-Generic-Attribute-Profile" class="headerlink" title="GAP: 通用访问协议(Generic Attribute Profile)."></a>GAP: 通用访问协议(Generic Attribute Profile).</h3><p><a href="https://devzone.nordicsemi.com/tutorials/5/ble-advertising-a-beginners-tutorial/" target="_blank" rel="external">官方说明</a><br>用于广播(advertising)的协议.<br>包含信息:</p>
+<ul>
+<li>RSSI</li>
+<li>Address</li>
+<li>Address Type (short or long)</li>
+<li>Advertising Data:<ul>
+<li>ShortenedLocalName</li>
+<li>Flags (discoverable? can connent?)</li>
+<li>UUID</li>
+<li>ManufacturerSpecificData</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_FULL_NAME;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">advertising_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">uint32_t</span>      err_code;</div><div class="line">    <span class="keyword">ble_advdata_t</span> advdata;  <span class="comment">// Struct containing advertising parameters</span></div><div class="line"></div><div class="line">    <span class="keyword">ble_advdata_manuf_data_t</span>        manuf_data; <span class="comment">// Variable to hold manufacturer specific data</span></div><div class="line">    <span class="keyword">uint8_t</span> data[]                      = <span class="string">"SomeData!"</span>; <span class="comment">// Our data to adverise</span></div><div class="line">    manuf_data.company_identifier       = <span class="number">0x0059</span>; <span class="comment">// Nordics company ID</span></div><div class="line">    manuf_data.data.p_data              = data;     </div><div class="line">    manuf_data.data.size                = <span class="keyword">sizeof</span>(data);</div><div class="line"></div><div class="line">    <span class="comment">// Build advertising data struct to pass into @ref ble_advertising_init.</span></div><div class="line">    <span class="built_in">memset</span>(&amp;advdata, <span class="number">0</span>, <span class="keyword">sizeof</span>(advdata));</div><div class="line"></div><div class="line">    advdata.name_type               = BLE_ADVDATA_SHORT_NAME;</div><div class="line">    advdata.short_name_len          = <span class="number">6</span>;</div><div class="line">    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;</div><div class="line">    advdata.p_manuf_specific_data   = &amp;manuf_data;</div><div class="line"></div><div class="line">    <span class="keyword">ble_adv_modes_config_t</span> options = &#123;<span class="number">0</span>&#125;;</div><div class="line">    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;</div><div class="line">    options.ble_adv_fast_interval = APP_ADV_INTERVAL;</div><div class="line">    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;</div><div class="line"></div><div class="line">    err_code = ble_advertising_init(&amp;advdata, <span class="literal">NULL</span>, &amp;options, on_adv_evt, <span class="literal">NULL</span>);</div><div class="line">    APP_ERROR_CHECK(err_code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="GATT-通用属性协议-Generic-Attribute-Profile"><a href="#GATT-通用属性协议-Generic-Attribute-Profile" class="headerlink" title="GATT: 通用属性协议(Generic Attribute Profile)"></a>GATT: 通用属性协议(Generic Attribute Profile)</h3><p><a href="https://devzone.nordicsemi.com/tutorials/17/ble-characteristics-a-beginners-tutorial/" target="_blank" rel="external">官方说明</a><br>通讯协议, 负责连接之后数据传送.<br>通用属性配置文件(GATT)在属性协议(ATT)的基础上构建，为属性协议传输和存储数据建立了一些通用操作和框架。<br>包括: UART/HRS/HID 等.</p>
+<h4 id="ATT-包含信息"><a href="#ATT-包含信息" class="headerlink" title="ATT 包含信息:"></a>ATT 包含信息:</h4><ul>
+<li>Attribute Handles</li>
+<li>Attribute Types (UUIDs)</li>
+<li>Attribute Permissions</li>
+<li>Attribute Values</li>
+</ul>
+<h4 id="GATT-信息"><a href="#GATT-信息" class="headerlink" title="GATT 信息:"></a>GATT 信息:</h4><ul>
+<li>Service Declaration attribute</li>
+<li>Characteristic Declaration</li>
+<li>Characteristic Value Declaration</li>
+<li>Descriptor Declaration</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 硬件开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 蓝牙 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[matlab to Python 官网未说的部分(持续更新)]]></title>
       <url>http://eroswade.github.io/2017/03/27/matlabtopy/</url>
       <content type="html"><![CDATA[<ol>
