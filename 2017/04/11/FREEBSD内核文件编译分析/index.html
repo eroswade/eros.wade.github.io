@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>FREEBSD内核文件编译分析 | Eros.Wade&#39;s Blog</title>
+  <meta name="author" content="Eros.Wade">
+  
+  <meta name="description" content="本文不是叫大家怎么做FreeBSD内核，做内核太简单了，不管是Linux和Unix。在网上找了好久，一点可用的文章都没有找到，FreeBSD的官网的文章也没有给出说法，只能自己在/usr/src和/usr/src/sys和/usr/src/sys/conf下面疯狂的grep，找文件，找引用，才有了自己的一些理解。先说说Linux的内核文件的编译关联吧，Linux的每个文件的编译和是 kconfig配置关联在一起的，kconfig在经过make menuconfig之后，得到一个.config文件，然后每个文件夹下面的Makefile，会check这个全局的.config文件，来决定哪些 文件该编译，哪些不用编译。多说无益，参考代码即可。FreeBSD的做法有些不一样了，Linux把哪些文件要编译分散到了每个文件夹，然后check Makefile。FreeBSD是做两个总的文件，决定哪些文件该编译哪些不该，这两个文件分别是这个路径下：ztz0223@BTazuo:/usr/src/sys/conf % pwd/usr/src/sys/conf的两个文件：files，files.i386">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="FREEBSD内核文件编译分析"/>
+  <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/darkly.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-96114910-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a6d0c457c72648f465429b8f7876336c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Eros.Wade&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>所有文章
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> FREEBSD内核文件编译分析</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>本文不是叫大家怎么做FreeBSD内核，做内核太简单了，不管是Linux和Unix。<br>在网上找了好久，一点可用的文章都没有找到，FreeBSD的官网的文章也没有给出说法，只能自己在/usr/src和/usr/src/sys和/usr/src/sys/conf下面疯狂的grep，找文件，找引用，才有了自己的一些理解。<br>先说说Linux的内核文件的编译关联吧，Linux的每个文件的编译和是 kconfig配置关联在一起的，kconfig在经过make menuconfig之后，得到一个.config文件，然后每个文件夹下面的Makefile，会check这个全局的.config文件，来决定哪些 文件该编译，哪些不用编译。多说无益，参考代码即可。<br>FreeBSD的做法有些不一样了，Linux把哪些文件要编译分散到了每个文件夹，然后check Makefile。FreeBSD是做两个总的文件，决定哪些文件该编译哪些不该，这两个文件分别是这个路径下：<br>ztz0223@BTazuo:/usr/src/sys/conf % pwd<br>/usr/src/sys/conf<br>的两个文件：files，files.i386<br><a id="more"></a><br>files是与架构无关的，也就是不管代码在什么平台上面编译，i386或者power pc上面都靠这个文件控制编译。对应的files.i386，就是特定平台的编译控制。<br>我们来看一下，这两个文件里面是什么吧，首先是files：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">2082 dev/xe/if_xe.c          optional xe</div><div class="line">2083 dev/xe/if_xe_pccard.c       optional xe pccard</div><div class="line">2084 dev/xl/if_xl.c          optional xl pci</div><div class="line">2085 dev/xl/xlphy.c          optional xl pci</div><div class="line">2086 fs/coda/coda_fbsd.c     optional vcoda</div><div class="line">2087 fs/coda/coda_psdev.c        optional vcoda</div><div class="line">2088 fs/coda/coda_subr.c     optional vcoda</div><div class="line">2089 fs/coda/coda_venus.c        optional vcoda</div><div class="line">2090 fs/coda/coda_vfsops.c       optional vcoda</div><div class="line">2091 fs/coda/coda_vnops.c        optional vcoda</div><div class="line">2092 fs/deadfs/dead_vnops.c      standard</div><div class="line">2093 fs/devfs/devfs_devs.c       standard</div><div class="line">2094 fs/devfs/devfs_dir.c        standard</div><div class="line">2095 fs/devfs/devfs_rule.c       standard</div><div class="line">2096 fs/devfs/devfs_vfsops.c     standard</div><div class="line">2097 fs/devfs/devfs_vnops.c      standard</div><div class="line">2098 fs/fdescfs/fdesc_vfsops.c   optional fdescfs</div><div class="line">2099 fs/fdescfs/fdesc_vnops.c    optional fdescfs</div><div class="line">2100 fs/fifofs/fifo_vnops.c      standard</div><div class="line">2101 fs/hpfs/hpfs_alsubr.c       optional hpfs</div><div class="line">2102 fs/hpfs/hpfs_lookup.c       optional hpfs</div><div class="line">&quot;files&quot; [readonly] 3544 lines --57%--</div></pre></td></tr></table></figure></p>
+<p>再看files.i386：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">417 i386/i386/minidump_machdep.c    standard</div><div class="line">418 i386/i386/mp_clock.c        optional smp</div><div class="line">419 i386/i386/mp_machdep.c      optional native smp</div><div class="line">420 i386/xen/mp_machdep.c       optional xen smp</div><div class="line">421 i386/i386/mp_watchdog.c     optional mp_watchdog smp</div><div class="line">422 i386/i386/mpboot.s      optional smp native</div><div class="line">423 i386/xen/mptable.c      optional apic xen</div><div class="line">424 i386/i386/perfmon.c     optional perfmon</div><div class="line">425 i386/i386/pmap.c        optional native</div><div class="line">426 i386/xen/pmap.c         optional xen</div><div class="line">427 i386/i386/ptrace_machdep.c  standard</div><div class="line">428 i386/i386/stack_machdep.c   optional ddb | stack</div><div class="line">429 i386/i386/support.s     standard</div><div class="line">430 i386/i386/swtch.s       standard</div><div class="line">431 i386/i386/sys_machdep.c     standard</div><div class="line">432 i386/i386/trap.c        standard</div><div class="line">433 i386/i386/uio_machdep.c     standard</div><div class="line">434 i386/i386/vm86.c        standard</div><div class="line">435 i386/i386/vm_machdep.c      standard</div><div class="line">436 i386/ibcs2/ibcs2_errno.c    optional ibcs2</div><div class="line">437 i386/ibcs2/ibcs2_fcntl.c    optional ibcs2</div><div class="line">438 i386/ibcs2/ibcs2_ioctl.c    optional ibcs2</div><div class="line">439 i386/ibcs2/ibcs2_ipc.c      optional ibcs2</div><div class="line">440 i386/ibcs2/ibcs2_isc.c      optional ibcs2</div><div class="line">&quot;files.i386&quot; [readonly] 537 lines --71%--</div></pre></td></tr></table></figure></p>
+<p>对于上面的files，我要说的就是，后面带有standard的表明该文件 一定会编译，不管是快速编译指定模块，还是全部完全编译。 二 optional xxx标识当xxx选项开启的时候，才会编译对应的文件。如果内核里指定了options，就会编译到内核文件里，而不是以模块方式可以动态加载的了，一 般都会建议采用模块方式。<br>上面files.i386可以看出：<br>436 i386/ibcs2/ibcs2_errno.c    optional ibcs2  只有在ibcs2选项开启的时候才会编译<br>而：<br>432 i386/i386/trap.c        standard                 在i386架构平台下编译的话，一定要编译的。<br>OK，说到这里，已经知道文件如何编译的了，那么在指定快速编译的时候，就是在make.conf里面指定编译的模块，就如官网文档所示：</p>
+<h2 id="联编内核"><a href="#联编内核" class="headerlink" title="联编内核"></a>联编内核</h2><ol>
+<li><p>进入 /usr/src 目录</p>
+<blockquote>
+<p>cd /usr/src</p>
+</blockquote>
+</li>
+<li><p>编译内核:</p>
+</li>
+</ol>
+<blockquote>
+<p>make buildkernel KERNCONF=MYKERNEL</p>
+</blockquote>
+<ol>
+<li>安装新内核：</li>
+</ol>
+<blockquote>
+<p>make installkernel KERNCONF=MYKERNEL</p>
+</blockquote>
+<p>注意: 使用这种方法联编内核时， 需要安装完整的 FreeBSD 源代码。<br>提示: 默认情况下， 在联编您所定制的内核时， 全部 内核模块也会同时参与构建。 如果您希望更快地升级内核， 或者只希望联编您所需要的模块， 则应在联编之前编辑 /etc/make.conf：<br>MODULES_OVERRIDE = linux acpi sound/sound sound/driver/ds1 ntfs<br>这个变量的内容是所希望构建的模块列表。<br>WITHOUT_MODULES = linux acpi sound ntfs<br>这个变量的内容是将不在联编过程中编译的顶级模块列表。 如果希望了解更多与构建内核有关的变量， 请参见 make.conf(5) 联机手册。</p>
+<p>比如，我在/etc/make.conf里面指定：<br>MODULES_OVERRIDE = xfs<br>那么是不是仅仅编译xfs的文件吗？<br>当然不是，当我们执行</p>
+<blockquote>
+<p>make buildkernel KERNCONF=MYKERNEL</p>
+</blockquote>
+<p>开始编译的时候，会发现打印里面有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cc -c -O -pipe  -std=c99 -g -Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes  -Wmissing-prototypes -Wpointer-arith -Winline -Wcast-qual  -Wundef -Wno-pointer-sign -fformat-extensions  -Wmissing-include-dirs -fdiagnostics-show-option   -nostdinc  -I. -I/usr/src/sys -I/usr/src/sys/contrib/altq -D_KERNEL -DHAVE_KERNEL_OPTION_HEADERS -include opt_global.h -fno-common -finline-limit=8000 --param inline-unit-growth=100 --param large-function-growth=1000  -mno-align-long-strings -mpreferred-stack-boundary=2 -mno-mmx -mno-sse -msoft-float -ffreestanding -fstack-protector -Werror  /usr/src/sys/cam/ata/ata_all.c</div></pre></td></tr></table></figure>
+<p>但是我们可以从files里面看出来：</p>
+<blockquote>
+<p>110 cam/ata/ata_all.c       optional scbus</p>
+</blockquote>
+<p>scbus开启才会编译这个文件。<br>为什么他会编译？<br>很简单，我们看</p>
+<blockquote>
+<p>make buildkernel KERNCONF=MYKERNEL</p>
+</blockquote>
+<p>的最开始有一些打印，是删除中间文件的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">--------------------------------------------------------------</div><div class="line">&gt;&gt;&gt; stage 2.1: cleaning up the object tree</div><div class="line">--------------------------------------------------------------</div><div class="line">cd /usr/obj/usr/src/sys/GENERIC_20130217; MAKEOBJDIRPREFIX=/usr/obj  MACHINE_ARCH=i386  MACHINE=i386  CPUTYPE= GROFF_BIN_PATH=/usr/obj/usr/src/tmp/legacy/usr/bin  GROFF_FONT_PATH=/usr/obj/usr/src/tmp/legacy/usr/share/groff_font  GROFF_TMAC_PATH=/usr/obj/usr/src/tmp/legacy/usr/share/tmac  _SHLIBDIRPREFIX=/usr/obj/usr/src/tmp  _LDSCRIPTROOT=  VERSION=&quot;FreeBSD 9.1-RELEASE i386 901000&quot;  INSTALL=&quot;sh /usr/src/tools/install.sh&quot;  PATH=/usr/obj/usr/src/tmp/legacy/usr/sbin:/usr/obj/usr/src/tmp/legacy/usr/bin:/usr/obj/usr/src/tmp/legacy/usr/games:/usr/obj/usr/src/tmp/usr/sbin:/usr/obj/usr/src/tmp/usr/bin:/usr/obj/usr/src/tmp/usr/games:/sbin:/bin:/usr/sbin:/usr/bin make KERNEL=kernel cleandir</div><div class="line">rm -f *.o *.so *.So *.ko *.s eddep errs  kernel.debug kernel kernel.symbols  linterrs makelinks tags vers.c  vnode_if.c vnode_if.h vnode_if_newproto.h vnode_if_typedef.h  agp_if.c ata_if.c eisa_if.c miibus_if.c mmcbr_if.c mmcbus_if.c mvs_if.c card_if.c power_if.c pci_if.c pcib_if.c ppbus_if.c hdac_if.c ac97_if.c channel_if.c feeder_if.c mixer_if.c mpu_if.c mpufoi_if.c synth_if.c uart_if.c usb_if.c g_part_if.c g_raid_md_if.c g_raid_tr_if.c isa_if.c bus_if.c clock_if.c cpufreq_if.c device_if.c linker_if.c serdev_if.c acpi_if.c acpi_wmi_if.c agp_if.h ata_if.h eisa_if.h miibus_if.h mmcbr_if.h mmcbus_if.h mvs_if.h card_if.h power_if.h pci_if.h pcib_if.h ppbus_if.h hdac_if.h ac97_if.h channel_if.h feeder_if.h mixer_if.h mpu_if.h mpufoi_if.h synth_if.h uart_if.h usb_if.h g_part_if.h g_raid_md_if.h g_raid_tr_if.h isa_if.h bus_if.h clock_if.h cpufreq_if.h device_if.h linker_if.h serdev_if.h acpi_if.h acpi_wmi_if.h  acpi_quirks.h aicasm* y.tab.h aic7xxx_seq.h aic7xxx_reg.h  aic7xxx_reg_print.c aic79xx_seq.h aic79xx_reg.h  aic79xx_reg_print.c feeder_eq_gen.h feeder_rate_gen.h  snd_fxdiv_gen.h miidevs.h pccarddevs.h teken_state.h usbdevs.h  usbdevs_data.h acpi_wakecode.o acpi_wakecode.bin acpi_wakecode.h  acpi_wakedata.h</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>rm -f .depend machine x86</p>
+</blockquote>
+<p>会删除一些生成的临时文件，和一些头文件，再生成这些头文件，FreeBSD的内核编译的时候，头文件变了，相关的c文件都是要重新编译过的。这就解释上面的增量编译xfs的时候，会要编译一些不相关的文件。<br>再回到上面的：</p>
+<blockquote>
+<p>110 cam/ata/ata_all.c       optional scbus</p>
+</blockquote>
+<p>这个scbus option是在哪里开的？<br>很简单了，就是在文件夹/usr/src/sys/i386/conf/下面<br>ztz0223@BTazuo:/usr/src/sys/i386/conf %<br>打开GENERIC文件看就知道了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">19 # $FreeBSD: release/9.1.0/sys/i386/conf/GENERIC 235877 2012-05-24 03:45:13Z mav $</div><div class="line">20</div><div class="line">21 cpu     I486_CPU</div><div class="line">22 cpu     I586_CPU</div><div class="line">23 cpu     I686_CPU</div><div class="line">24 ident       GENERIC</div><div class="line">25</div><div class="line">26 makeoptions DEBUG=-g        # Build kernel with gdb(1) debug symbols</div><div class="line">27</div><div class="line">28 options     SCHED_ULE       # ULE scheduler</div><div class="line">29 options     PREEMPTION      # Enable kernel thread preemption</div><div class="line">30 options     INET            # InterNETworking</div><div class="line">31 options     INET6           # IPv6 communications protocols</div><div class="line">32 options     SCTP            # Stream Control Transmission Protocol</div><div class="line">33 options     FFS         # Berkeley Fast Filesystem</div><div class="line">34 options     SOFTUPDATES     # Enable FFS soft updates support</div><div class="line">35 options     UFS_ACL         # Support for access control lists</div><div class="line">36 options     UFS_DIRHASH     # Improve performance on big directories</div><div class="line">37 options     UFS_GJOURNAL        # Enable gjournal-based UFS journaling</div><div class="line">38 options     MD_ROOT         # MD is a potential root device</div><div class="line">39 options     NFSCL           # New Network Filesystem Client</div><div class="line">40 options     NFSD            # New Network Filesystem Server</div><div class="line">41 options     NFSLOCKD        # Network Lock Manager</div><div class="line">42 options     NFS_ROOT        # NFS usable as /, requires NFSCL</div><div class="line">43 options     MSDOSFS         # MSDOS Filesystem</div><div class="line">44 options     CD9660          # ISO 9660 Filesystem</div><div class="line">45 options     PROCFS          # Process filesystem (requires PSEUDOFS)</div><div class="line">46 options     PSEUDOFS        # Pseudo-filesystem framework</div><div class="line">47 options     GEOM_PART_GPT       # GUID Partition Tables.</div><div class="line">48 options     GEOM_RAID       # Soft RAID functionality.</div><div class="line">49 options     GEOM_LABEL      # Provides labelization</div><div class="line">50 options     COMPAT_FREEBSD4     # Compatible with FreeBSD4</div><div class="line">51 options     COMPAT_FREEBSD5     # Compatible with FreeBSD5</div><div class="line">52 options     COMPAT_FREEBSD6     # Compatible with FreeBSD6</div><div class="line">53 options     COMPAT_FREEBSD7     # Compatible with FreeBSD7</div><div class="line">54 options     SCSI_DELAY=5000     # Delay (in ms) before probing SCSI</div><div class="line">55 options     KTRACE          # ktrace(1) support</div><div class="line">56 options     STACK           # stack(9) support</div><div class="line">&quot;GENERIC&quot; [readonly] 361L, 14505C</div></pre></td></tr></table></figure></p>
+<p>这里有options，标识对应的选项开启了。<br>还有一个问题，就是代码里面有一些：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">137 #ifdef INET</div><div class="line">138 int (*carp_iamatch_p)(struct ifnet *, struct in_ifaddr *, struct in_addr *,</div><div class="line">139     u_int8_t **);</div><div class="line">140 #endif</div><div class="line">141 #ifdef INET6</div><div class="line">142 struct ifaddr *(*carp_iamatch6_p)(struct ifnet *ifp, struct in6_addr *taddr6);</div><div class="line">143 caddr_t (*carp_macmatch6_p)(struct ifnet *ifp, struct mbuf *m,</div><div class="line">144     const struct in6_addr *taddr);</div><div class="line">145 #endif</div><div class="line">146</div><div class="line">147 struct mbuf *(*tbr_dequeue_ptr)(struct ifaltq *, int) = NULL;</div><div class="line">148</div><div class="line">&quot;net/if.c&quot; [readonly] 3419 lines --2%--</div></pre></td></tr></table></figure></p>
+<p>这个INET在哪里定义的呢？<br>回到路径::/usr/src/sys/conf ,查看两个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-rw-r--r--  1 root  wheel   23377 Dec  4 06:11 options</div><div class="line">-rw-r--r--  1 root  wheel    1563 Dec  4 06:11 options.i386</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">ztz0223@BTazuo:/usr/src/sys/conf % less options</div><div class="line">388 DEVICE_POLLING</div><div class="line">389 DEV_ENC         opt_enc.h</div><div class="line">390 DEV_PF          opt_pf.h</div><div class="line">391 DEV_PFLOG       opt_pf.h</div><div class="line">392 DEV_PFSYNC      opt_pf.h</div><div class="line">393 DEV_VLAN        opt_vlan.h</div><div class="line">394 DUMMYNET        opt_ipdn.h</div><div class="line">395 ETHER_8022      opt_ef.h</div><div class="line">396 ETHER_8023      opt_ef.h</div><div class="line">397 ETHER_II        opt_ef.h</div><div class="line">398 ETHER_SNAP      opt_ef.h</div><div class="line">399 INET            opt_inet.h</div><div class="line">400 INET6           opt_inet6.h</div></pre></td></tr></table></figure>
+<p>则可以知道INET就定义在opt_inet.h中，而在编译过FreeBSD内核之后，在/usr/obj/usr/src/sys/GENERIC生成的临时文件路径下面，就有这个opt_inet.h文件了，查看一下：<br>ztz0223@BTazuo:/usr/obj/usr/src/sys/GENERIC_20130217 % vim opt_inet.h<br> 1 #define INET 1<br>同样options.i386里面也会指定一些平台代码需要的头文件和宏定义。<br>最后一个问题，就是在/etc/make.conf指定：<br>MODULES_OVERRIDE = xfs<br>标识增量编译xfs，那么xfs就是一个模块，该模块在哪里指定？在/usr/src/sys/modules下面，有很多文件夹：</p>
+<blockquote>
+<p>/usr/src/sys/modules % ls -la  | grep xfs</p>
+</blockquote>
+<p>drwxr-xr-x    2 root  wheel    512 Dec  4 05:09 xfs</p>
+<p>这个下面的文件夹里面只有Makefile，没有其他的东西的，这些Makefile就是指定编译模块增量编译内核的时候，指定编译的Makefile了。<br>这里看一下xfs下面的Makefile内容了：</p>
+<blockquote>
+<p>/usr/src/sys/modules % cat xfs/Makefile</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"># $FreeBSD: release/9.1.0/sys/modules/xfs/Makefile 229734 2012-01-06 21:23:00Z dim $</div><div class="line">.PATH:  $&#123;.CURDIR&#125;/../../gnu/fs/xfs \</div><div class="line">        $&#123;.CURDIR&#125;/../../gnu/fs/xfs/FreeBSD \</div><div class="line">        $&#123;.CURDIR&#125;/../../gnu/fs/xfs/FreeBSD/support</div><div class="line">KMOD=    xfs</div><div class="line">WERROR=</div><div class="line">SRCS =  vnode_if.h \</div><div class="line">        xfs_alloc.c \</div><div class="line">        xfs_alloc_btree.c \</div><div class="line">        xfs_bit.c \</div><div class="line">        xfs_bmap.c \</div><div class="line">        xfs_bmap_btree.c \</div><div class="line">        xfs_btree.c \</div><div class="line">        xfs_buf_item.c \</div><div class="line">        xfs_da_btree.c \</div><div class="line">        xfs_dir.c \</div><div class="line">        xfs_dir2.c \</div><div class="line">        xfs_dir2_block.c \</div><div class="line">        xfs_dir2_data.c \</div><div class="line">        xfs_dir2_leaf.c \</div><div class="line">        xfs_dir2_node.c \</div><div class="line">        xfs_dir2_sf.c \</div><div class="line">        xfs_dir2_trace.c \</div><div class="line">        xfs_dir_leaf.c \</div><div class="line">        xfs_error.c \</div><div class="line">        xfs_extfree_item.c \</div><div class="line">        xfs_freebsd_iget.c \</div><div class="line">        xfs_fsops.c \</div><div class="line">        xfs_ialloc.c \</div><div class="line">        xfs_ialloc_btree.c \</div><div class="line">        xfs_inode.c \</div><div class="line">        xfs_inode_item.c \</div><div class="line">        xfs_iocore.c \</div><div class="line">        xfs_itable.c \</div><div class="line">        xfs_dfrag.c \</div><div class="line">        xfs_log.c \</div><div class="line">        xfs_log_recover.c \</div><div class="line">        xfs_mount.c \</div><div class="line">        xfs_rename.c \</div><div class="line">        xfs_trans.c \</div><div class="line">        xfs_trans_ail.c \</div><div class="line">        xfs_trans_buf.c \</div><div class="line">        xfs_trans_extfree.c \</div><div class="line">        xfs_trans_inode.c \</div><div class="line">        xfs_trans_item.c \</div><div class="line">        xfs_utils.c \</div><div class="line">        xfs_vfsops.c \</div><div class="line">        xfs_vnodeops.c \</div><div class="line">        xfs_rw.c \</div><div class="line">        xfs_iget.c \</div><div class="line">        xfs_attr_leaf.c \</div><div class="line">        xfs_attr.c \</div><div class="line">        xfs_dmops.c \</div><div class="line">        xfs_qmops.c \</div><div class="line">        xfs_mountops.c \</div><div class="line">        xfs_vnops.c \</div><div class="line">        xfs_frw.c \</div><div class="line">        xfs_iomap.c \</div><div class="line">        xfs_buf.c \</div><div class="line">        xfs_globals.c \</div><div class="line">        xfs_dmistubs.c \</div><div class="line">        xfs_behavior.c \</div><div class="line">        xfs_super.c \</div><div class="line">        xfs_stats.c \</div><div class="line">        xfs_sysctl.c \</div><div class="line">        xfs_vfs.c \</div><div class="line">        xfs_vnode.c \</div><div class="line">        xfs_fs_subr.c \</div><div class="line">        xfs_ioctl.c \</div><div class="line">        debug.c \</div><div class="line">        ktrace.c \</div><div class="line">        mrlock.c \</div><div class="line">        uuid.c \</div><div class="line">        kmem.c \</div><div class="line">        kdb.c</div><div class="line">SRCS+=  opt_ddb.h</div><div class="line">.include &lt;bsd.kmod.mk&gt;</div><div class="line">CFLAGS+= -I$&#123;.CURDIR&#125;/../../gnu/fs/xfs/FreeBSD \</div><div class="line">         -I$&#123;.CURDIR&#125;/../../gnu/fs/xfs/FreeBSD/support \</div><div class="line">         -I$&#123;.CURDIR&#125;/../../gnu/fs/xfs</div><div class="line">CWARNFLAGS.xfs_ioctl.c=         $&#123;NO_WSELF_ASSIGN&#125;</div><div class="line">CWARNFLAGS+=                    $&#123;CWARNFLAGS.$&#123;.IMPSRC:T&#125;&#125;</div></pre></td></tr></table></figure>
+<p>ztz0223@BTazuo:/usr/src/sys/modules %<br>再看一下，增量编译的过程打印，这里只附上xfs链接的相关的部分：<br>ld  -d -warn-common -r -d -o xfs.kld xfs_alloc.o xfs_alloc_btree.o xfs_bit.o xfs_bmap.o xfs_bmap_btree.o xfs_btree.o xfs_buf_item.o xfs_da_btree.o xfs_dir.o xfs_dir2.o xfs_dir2_block.o xfs_dir2_data.o xfs_dir2_leaf.o xfs_dir2_node.o xfs_dir2_sf.o xfs_dir2_trace.o xfs_dir_leaf.o xfs_error.o xfs_extfree_item.o xfs_freebsd_iget.o xfs_fsops.o xfs_ialloc.o xfs_ialloc_btree.o xfs_inode.o xfs_inode_item.o xfs_iocore.o xfs_itable.o xfs_dfrag.o xfs_log.o xfs_log_recover.o xfs_mount.o xfs_rename.o xfs_trans.o xfs_trans_ail.o xfs_trans_buf.o xfs_trans_extfree.o xfs_trans_inode.o xfs_trans_item.o xfs_utils.o xfs_vfsops.o xfs_vnodeops.o xfs_rw.o xfs_iget.o xfs_attr_leaf.o xfs_attr.o xfs_dmops.o xfs_qmops.o xfs_mountops.o xfs_vnops.o xfs_frw.o xfs_iomap.o xfs_buf.o xfs_globals.o xfs_dmistubs.o xfs_behavior.o xfs_super.o xfs_stats.o xfs_sysctl.o xfs_vfs.o xfs_vnode.o xfs_fs_subr.o xfs_ioctl.o debug.o ktrace.o mrlock.o uuid.o kmem.o kdb.o<br>有这么多，我想足够理解了。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/04/11/linux内核文件编译分析/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/04/09/海龟法则/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-11 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/软件开发/">软件开发<span>6</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/freebsd/">freebsd<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'erosblog';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Eros.Wade
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

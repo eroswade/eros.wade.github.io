@@ -126,6 +126,181 @@ var _hmt = _hmt || [];
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2017-04-13 </div>
+			<div class="article-title"><a href="/2017/04/13/嵌入式LINUX-RPI3/" >嵌入式LINUX_RPI3</a></div>						
+		</h3>
+	
+
+
+	    	<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>用默认配置编译.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/raspberrypi/linux</div><div class="line"></div><div class="line">KERNEL=kernel</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfig</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs </div><div class="line"></div><div class="line">sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_install</div><div class="line"></div><div class="line">sudo cp arch/arm/boot/zImage mnt/fat32/<span class="variable">$KERNEL</span>.img</div><div class="line">sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/</div></pre></td></tr></table></figure></p>
+<p>可以把交叉编译工具路径设置到PATH(每次使用都要设置):</p>
+<blockquote>
+<p>$export PATH=$PATH:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin</p>
+</blockquote>
+<p>为了方便. 可以设置环境变量/etc/environment里设置PATH<br>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/sbin:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin”</p>
+<ul>
+<li>如果需要配置编译选项,最好安装ncurses. 图形化配置的时候需要它.”make menuconfig”</li>
+<li>如果要编译自己的交叉编译工具. 参考<a href="http://kegel.com/crosstool/" target="_blank" rel="external">crosstool</a></li>
+</ul>
+<h2 id="编译解析"><a href="#编译解析" class="headerlink" title="编译解析"></a>编译解析</h2><ul>
+<li>顶层MAKEFILE 是所有MAKEFILE文件的核心. 从总体上控制内核编译.</li>
+<li>.config 配置文件, 由第一次执行bcm2709_defconfig 生成. 所有的MAKEFILE都是根据.config来决定使用哪些文件 包含类似CONFIG_PLAT_SUNXI 这种参数</li>
+<li>arch/arm/Makefile 对应体系(arm/i386)的Makefile.用来决定哪些体系结构相关的文件参与内核的生成. </li>
+<li>scripts/Makefile Makefile共用的通用规则,脚本等.</li>
+<li>kbuild Makefiles 各级子目录下的Makefile 它们相对简单, 被上一层Makefile调用来编译当前目录下的文件 .</li>
+</ul>
+<p>/arch/arm/Kconfig 定义了自编译内核配置文件 Kconfig会被MAKEFILE调用生成内核.<br>CONFIG_PLAT<em>SUNXI<br>在调用的时候会省略CONFIG</em> . 变成PLAT_SUNXI<br>config PLAT_SUNXI</p>
+<h2 id="内核启动过程"><a href="#内核启动过程" class="headerlink" title="内核启动过程"></a>内核启动过程</h2><ul>
+<li>bootloader </li>
+<li>head.o 从bootloader接过控制权</li>
+</ul>
+<h2 id="编译内容"><a href="#编译内容" class="headerlink" title="编译内容"></a>编译内容</h2><ul>
+<li>init  main mounts init_task</li>
+<li>arch/arm/vfp</li>
+<li>arch/arm/vdso</li>
+<li>arch/arm/kernel</li>
+<li>arch/arm/mm</li>
+<li>arch/arm/common</li>
+<li>arch/arm/probes</li>
+<li>arch/arm/net</li>
+<li>arch/arm/crypto</li>
+<li>arch/arm/firmware</li>
+<li>arch/arm/mach-bcm</li>
+<li>kernel</li>
+<li>kernel/bpf</li>
+<li>kernel/debug</li>
+<li>kernel/events</li>
+<li>kernel/irq</li>
+<li>kernel/locking</li>
+<li>kernel/power</li>
+<li>kernel/printk</li>
+<li>kernel/rcu</li>
+<li>kernel/sched</li>
+<li>kernel/time</li>
+<li>kernel/trace</li>
+<li>mm</li>
+<li>fs</li>
+<li>fs/9p</li>
+<li>fs/autofs4</li>
+<li>fs/btrfs</li>
+<li>fs/cachefiles</li>
+<li>fs/cifs</li>
+<li>fs/configfs</li>
+<li>fs/debugfs</li>
+<li>fs/devpts</li>
+<li>fs/dlm</li>
+<li>fs/ecryptfs</li>
+<li>fs/exportfs</li>
+<li>fs/ext4</li>
+<li>fs/f2fs</li>
+<li>fs/fat</li>
+<li>fs/fuse</li>
+<li>fs/gfs2</li>
+<li>….</li>
+<li>ipc</li>
+<li>security/keys</li>
+<li>crypto</li>
+<li>block</li>
+<li>drivers/base</li>
+<li>drivers/block</li>
+<li>drivers/bluetooth</li>
+<li>drivers/char</li>
+<li>drivers/cdrom</li>
+<li>drivers/bus</li>
+<li>drivers/clk  clocksource  connector  cpufreq  dma extcon firemware gpio gpu hid i2c iio input irqchip leds md mailbox media net </li>
+<li>sound</li>
+<li>net ipv4 ipv6 netfilter wireless …</li>
+<li>arch/arm/lib</li>
+<li>lib</li>
+<li>arch/arm/boot</li>
+</ul>
+
+	
+	</div>
+</div>
+
+	  
+	    	
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-11 </div>
+			<div class="article-title"><a href="/2017/04/11/linux内核文件编译分析/" >linux内核文件编译分析</a></div>						
+		</h3>
+	
+
+
+	    	<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="MAKEFILE"><a href="#MAKEFILE" class="headerlink" title="MAKEFILE"></a>MAKEFILE</h2><p>内核配置完成后，在顶层目录中执行“#make uImage”便开始编译内核。但是，uImage却不是在顶层Makefile中定义，而是在arch/$(ARCH)/Makefile中定义。</p>
+<p>顶层Makefile Line 452:<br>include $(srctree)/arch/$(SRCARCH)/Makefile<br>其中srctree为源码绝对路径，</p>
+<p>即该变量等于架构名称，我们以arm为例进行说明。 </p>
+<p>arch/arm/Makefile Line 230:<br>zImage Image xipImage bootpImage uImage: vmlinux<br>可见uImage依赖于vmlinux，要先生成vmlinux，然后执行下边这条指令完成编译。<br>arch/arm/Makefile Line 231:<br>$(Q)$(MAKE) $(build)=$(boot) MACHINE=$(MACHINE) $(boot)/$@</p>
+<p>Q的定义：选择静态编译与否（是否打印编译信息）<br>MAKE: 系统环境变量，值为make<br>build:　值为“-f scripts/Makefile.build obj=”实际上就是调用子Makefile–scripts/Makefile.build，然后传递参数目标文件夹。<br>Kbuild.include被顶层Makefile所包含</p>
+<h2 id="源代码定位"><a href="#源代码定位" class="headerlink" title="源代码定位"></a>源代码定位</h2><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>/arch/arm/Kconfig 定义了自编译内核配置文件<br>/arch/arm/configs 和上面的一起.定义不同的CHIP的配置(其实就是定义上面哪些配置要打开. 所以重点还是在Kconfig)</p>
+<p>在Kconfig的1080行开始,定义了 source “arch/arm/mach-at91/Kconfig” 也就是不同的芯片会调用各自目录下的Kconfig</p>
+<h4 id="通过配置找代码"><a href="#通过配置找代码" class="headerlink" title="通过配置找代码"></a>通过配置找代码</h4><p>在MAKEFILE里找到对应配置的代码<br>plat-$(CONFIG_PLAT_SUNXI)    := sunxi<br>对应的就是plat-sunxi<br>有的时候对应的源代码很难找. 只能用GREP来了.<br>比如CONFIG_CSI_OV7670 ,处理它的MAKEFILE在 drivers\media\video\sun4icsi\device\MAKEFILE</p>
+
+	
+	</div>
+</div>
+
+	  
+	    	
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-11 </div>
+			<div class="article-title"><a href="/2017/04/11/FREEBSD内核文件编译分析/" >FREEBSD内核文件编译分析</a></div>						
+		</h3>
+	
+
+
+	    	<div class="entry">
+  <div class="row">
+	
+	
+		<p>本文不是叫大家怎么做FreeBSD内核，做内核太简单了，不管是Linux和Unix。<br>在网上找了好久，一点可用的文章都没有找到，FreeBSD的官网的文章也没有给出说法，只能自己在/usr/src和/usr/src/sys和/usr/src/sys/conf下面疯狂的grep，找文件，找引用，才有了自己的一些理解。<br>先说说Linux的内核文件的编译关联吧，Linux的每个文件的编译和是 kconfig配置关联在一起的，kconfig在经过make menuconfig之后，得到一个.config文件，然后每个文件夹下面的Makefile，会check这个全局的.config文件，来决定哪些 文件该编译，哪些不用编译。多说无益，参考代码即可。<br>FreeBSD的做法有些不一样了，Linux把哪些文件要编译分散到了每个文件夹，然后check Makefile。FreeBSD是做两个总的文件，决定哪些文件该编译哪些不该，这两个文件分别是这个路径下：<br>ztz0223@BTazuo:/usr/src/sys/conf % pwd<br>/usr/src/sys/conf<br>的两个文件：files，files.i386<br></p>
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/11/FREEBSD内核文件编译分析/#more" class="btn btn-default more">阅读此文</a>
+	
+	</div>
+</div>
+
+	  
+	    	
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-09 </div>
+			<div class="article-title"><a href="/2017/04/09/Ubuntu-CODE/" >Ubuntu代码分析</a></div>						
+		</h3>
+	
+
+
+	    	<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h2><p>执行 sudo apt-get install linux-source 才会获取到源代码. 否则只有HEADER文件.<br>执行完安装后. 代码依然会在/usr/src下 位置和BSD是一样的.</p>
+<p>也可以从GITHUB下载. 比如要编译特定的系统的话.<br></p>
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/09/Ubuntu-CODE/#more" class="btn btn-default more">阅读此文</a>
+	
+	</div>
+</div>
+
+	  
+	    	
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2017-03-27 </div>
 			<div class="article-title"><a href="/2017/03/27/matlabtopy/" >matlab to Python MATLAB转PYTHON(持续更新)</a></div>						
 		</h3>
@@ -209,17 +384,13 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/categories/3D打印/">3D打印<span>1</span></a></li>
 		
-			<li><a href="/categories//">????????<span>0</span></a></li>
-		
 			<li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
 		
-			<li><a href="/categories/软件开发/">软件开发<span>2</span></a></li>
+			<li><a href="/categories/软件开发/">软件开发<span>6</span></a></li>
 		
-			<li><a href="/categories/金融/">金融<span>1</span></a></li>
+			<li><a href="/categories/金融/">金融<span>2</span></a></li>
 		
 			<li><a href="/categories/随笔/">随笔<span>1</span></a></li>
-		
-			<li><a href="/categories/��������/">��������<span>0</span></a></li>
 		
 		</ul>
 	</div>
@@ -230,21 +401,33 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/算法/">算法<span>1</span></a></li>
+			<li><a href="/tags/LINUX/">LINUX<span>1</span></a></li>
 		
-			<li><a href="/tags/python/">python<span>1</span></a></li>
-		
-			<li><a href="/tags/3D/">3D<span>1</span></a></li>
-		
-			<li><a href="/tags/心情/">心情<span>1</span></a></li>
-		
-			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
+			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
 		
 			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
 		
+			<li><a href="/tags/UBUNTU/">UBUNTU<span>1</span></a></li>
+		
 			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
 		
-			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
+		
+			<li><a href="/tags/心情/">心情<span>1</span></a></li>
+		
+			<li><a href="/tags/量化/">量化<span>1</span></a></li>
+		
+			<li><a href="/tags/freebsd/">freebsd<span>1</span></a></li>
+		
+			<li><a href="/tags/3D/">3D<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>1</span></a></li>
+		
+			<li><a href="/tags/RPI3/">RPI3<span>1</span></a></li>
+		
+			<li><a href="/tags/算法/">算法<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -258,23 +441,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2017/03/29/CuraEngine/" ><i class="fa fa-file-o"></i>3D打印开源库--CuraEngine</a>
+        <a href="/2017/04/17/HDEVELOP/" ><i class="fa fa-file-o"></i>HDEVELOP函数算法解析</a>
       </li>
     
       <li>
-        <a href="/2017/03/29/BLETutorial/" ><i class="fa fa-file-o"></i>蓝牙协议说明</a>
+        <a href="/2017/04/13/嵌入式LINUX-RPI3/" ><i class="fa fa-file-o"></i>嵌入式LINUX_RPI3</a>
       </li>
     
       <li>
-        <a href="/2017/03/27/matlabtopy/" ><i class="fa fa-file-o"></i>matlab to Python MATLAB转PYT...</a>
+        <a href="/2017/04/11/linux内核文件编译分析/" ><i class="fa fa-file-o"></i>linux内核文件编译分析</a>
       </li>
     
       <li>
-        <a href="/2017/03/24/NRF-MX25L/" ><i class="fa fa-file-o"></i>NRF51822操作MX25L4005</a>
+        <a href="/2017/04/11/FREEBSD内核文件编译分析/" ><i class="fa fa-file-o"></i>FREEBSD内核文件编译分析</a>
       </li>
     
       <li>
-        <a href="/2017/03/23/NRF51822-SPI/" ><i class="fa fa-file-o"></i>NRF51822 SPI</a>
+        <a href="/2017/04/09/海龟法则/" ><i class="fa fa-file-o"></i>海龟法则</a>
       </li>
     
   </ul>

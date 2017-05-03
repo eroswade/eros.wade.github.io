@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HDEVELOP函数算法解析 | Eros.Wade&#39;s Blog</title>
+  <meta name="author" content="Eros.Wade">
+  
+  <meta name="description" content="threshold(Image : Region : MinGray, MaxGray : )图像的GRAY THRESHOLD. 从MIN 到MAX的像素点留下来 O(A)
+* image 输入图像
+* region 输出图像
+* mingray GRAY 最小值
+* maxgray GRAY 最">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="HDEVELOP函数算法解析"/>
+  <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/darkly.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-96114910-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a6d0c457c72648f465429b8f7876336c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Eros.Wade&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>所有文章
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> HDEVELOP函数算法解析</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h4 id="threshold-Image-Region-MinGray-MaxGray"><a href="#threshold-Image-Region-MinGray-MaxGray" class="headerlink" title="threshold(Image : Region : MinGray, MaxGray : )"></a>threshold(Image : Region : MinGray, MaxGray : )</h4><p>图像的GRAY THRESHOLD. 从MIN 到MAX的像素点留下来 O(A)</p>
+<pre><code>* image 输入图像
+* region 输出图像
+* mingray GRAY 最小值
+* maxgray GRAY 最大值
+</code></pre><h4 id="difference-Region-Sub-RegionDifference"><a href="#difference-Region-Sub-RegionDifference" class="headerlink" title="difference(Region, Sub : RegionDifference : : )"></a>difference(Region, Sub : RegionDifference : : )</h4><p>减法运算</p>
+<pre><code>* REGION 原图
+* sub SUB图
+* RegionDifference 输出图
+</code></pre><h4 id="connection-Region-ConnectedRegions"><a href="#connection-Region-ConnectedRegions" class="headerlink" title="connection(Region : ConnectedRegions : : )"></a>connection(Region : ConnectedRegions : : )</h4><p>联通区域. 8点联通. neighborhood 算法.  F be the area of the input region and N be the number of generated connected components O(sqrt(F) * sqrt(N))</p>
+<pre><code>* Region 原图
+* ConnectedRegions 区域.
+</code></pre><h4 id="select-shape-Regions-SelectedRegions-Features-Operation-Min-Max"><a href="#select-shape-Regions-SelectedRegions-Features-Operation-Min-Max" class="headerlink" title="select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )"></a>select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )</h4><p>选择区域算法</p>
+<pre><code>* Regions 原图
+* SelectedRegions 输出
+* Features 什么类型的选择方式.
+    * area 面积
+    * row 所在行
+    * column 所在列
+    * width 长
+    * height 高
+    * convexity 凸性 参数为百分比
+* Operation &apos;and&apos; &apos;or&apos;
+* min 最小值
+* max 最大值
+</code></pre><h4 id="shape-trans-Region-RegionTrans-Type"><a href="#shape-trans-Region-RegionTrans-Type" class="headerlink" title="shape_trans(Region : RegionTrans : Type : )"></a>shape_trans(Region : RegionTrans : Type : )</h4><p>转换图形为规则图形</p>
+<pre><code>* Region 输入
+* RegionTrans 输出
+* Type 转换类型
+    * convex 凸边形
+    * ellipse 椭圆
+    * outer_circle 外圆
+    * inner_circle 内圆
+    * rectangle 方形
+</code></pre><h4 id="smooth-image-Image-ImageSmooth-Filter-Alpha"><a href="#smooth-image-Image-ImageSmooth-Filter-Alpha" class="headerlink" title="smooth_image(Image : ImageSmooth : Filter, Alpha : )"></a>smooth_image(Image : ImageSmooth : Filter, Alpha : )</h4><p>模糊处理</p>
+<pre><code>* 原图
+* 输出
+* 滤波方式
+    * gauss
+    * shen
+    * deriche
+* 参数
+</code></pre><h4 id="invert-image-Image-ImageInvert"><a href="#invert-image-Image-ImageInvert" class="headerlink" title="invert_image(Image : ImageInvert : : )"></a>invert_image(Image : ImageInvert : : )</h4><p>正负全值反转.</p>
+<h4 id="watersheds-Image-Basins-Watersheds"><a href="#watersheds-Image-Basins-Watersheds" class="headerlink" title="watersheds(Image : Basins, Watersheds : : )"></a>watersheds(Image : Basins, Watersheds : : )</h4><p>单图处理出峰和谷</p>
+<h4 id="decompose3"><a href="#decompose3" class="headerlink" title="decompose3"></a>decompose3</h4><p>取出RGB 3色</p>
+<h4 id="sobel-amp-Image-EdgeAmplitude-FilterType-Size"><a href="#sobel-amp-Image-EdgeAmplitude-FilterType-Size" class="headerlink" title="sobel_amp(Image : EdgeAmplitude : FilterType, Size : )"></a>sobel_amp(Image : EdgeAmplitude : FilterType, Size : )</h4><p>SOBEL算子边缘检测</p>
+<pre><code>* FilterType 算子
+* size 算子大小
+</code></pre><h4 id="dilation-rectangle1-Region-RegionDilation-Width-Height"><a href="#dilation-rectangle1-Region-RegionDilation-Width-Height" class="headerlink" title="dilation_rectangle1(Region : RegionDilation : Width, Height : )"></a>dilation_rectangle1(Region : RegionDilation : Width, Height : )</h4><p>使用一个矩形的结构元素来膨胀图像</p>
+<pre><code>* Region IN 带一定的标志,表示这个区域要扩展
+* RegionDilation OUT
+</code></pre><h4 id="reduce-domain-Image-Region-ImageReduced"><a href="#reduce-domain-Image-Region-ImageReduced" class="headerlink" title="reduce_domain(Image, Region : ImageReduced : : )"></a>reduce_domain(Image, Region : ImageReduced : : )</h4><p>根据REGION 删除不在REGION的点</p>
+<pre><code>* Image 原图
+* Region MASK 
+* ImageReduced 取Region之后的图
+</code></pre><h4 id="fill-up-Region-RegionFillUp"><a href="#fill-up-Region-RegionFillUp" class="headerlink" title="fill_up(Region : RegionFillUp : : )"></a>fill_up(Region : RegionFillUp : : )</h4><p>填充点孔心 算法依然是neighborhood 8点</p>
+<h2 id="几个读过的例子"><a href="#几个读过的例子" class="headerlink" title="几个读过的例子"></a>几个读过的例子</h2><ul>
+<li>autobahn 检测道路线</li>
+<li>board_components 立体视觉检测(带立体标定)</li>
+<li></li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/04/13/嵌入式LINUX-RPI3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-04-17 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'erosblog';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Eros.Wade
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

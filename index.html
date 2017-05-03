@@ -140,9 +140,322 @@ var _hmt = _hmt || [];
 		
             
 		
+            
+		
+            
+		
+            
+		
+            
+		
+            
+		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-17 </div>
+			<div class="article-title"><a href="/2017/04/17/HDEVELOP/" >HDEVELOP函数算法解析</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h4 id="threshold-Image-Region-MinGray-MaxGray"><a href="#threshold-Image-Region-MinGray-MaxGray" class="headerlink" title="threshold(Image : Region : MinGray, MaxGray : )"></a>threshold(Image : Region : MinGray, MaxGray : )</h4><p>图像的GRAY THRESHOLD. 从MIN 到MAX的像素点留下来 O(A)</p>
+<pre><code>* image 输入图像
+* region 输出图像
+* mingray GRAY 最小值
+* maxgray GRAY 最大值
+</code></pre><h4 id="difference-Region-Sub-RegionDifference"><a href="#difference-Region-Sub-RegionDifference" class="headerlink" title="difference(Region, Sub : RegionDifference : : )"></a>difference(Region, Sub : RegionDifference : : )</h4><p>减法运算</p>
+<pre><code>* REGION 原图
+* sub SUB图
+* RegionDifference 输出图
+</code></pre><h4 id="connection-Region-ConnectedRegions"><a href="#connection-Region-ConnectedRegions" class="headerlink" title="connection(Region : ConnectedRegions : : )"></a>connection(Region : ConnectedRegions : : )</h4><p>联通区域. 8点联通. neighborhood 算法.  F be the area of the input region and N be the number of generated connected components O(sqrt(F) * sqrt(N))</p>
+<pre><code>* Region 原图
+* ConnectedRegions 区域.
+</code></pre><h4 id="select-shape-Regions-SelectedRegions-Features-Operation-Min-Max"><a href="#select-shape-Regions-SelectedRegions-Features-Operation-Min-Max" class="headerlink" title="select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )"></a>select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )</h4><p>选择区域算法</p>
+<pre><code>* Regions 原图
+* SelectedRegions 输出
+* Features 什么类型的选择方式.
+    * area 面积
+    * row 所在行
+    * column 所在列
+    * width 长
+    * height 高
+    * convexity 凸性 参数为百分比
+* Operation &apos;and&apos; &apos;or&apos;
+* min 最小值
+* max 最大值
+</code></pre><h4 id="shape-trans-Region-RegionTrans-Type"><a href="#shape-trans-Region-RegionTrans-Type" class="headerlink" title="shape_trans(Region : RegionTrans : Type : )"></a>shape_trans(Region : RegionTrans : Type : )</h4><p>转换图形为规则图形</p>
+<pre><code>* Region 输入
+* RegionTrans 输出
+* Type 转换类型
+    * convex 凸边形
+    * ellipse 椭圆
+    * outer_circle 外圆
+    * inner_circle 内圆
+    * rectangle 方形
+</code></pre><h4 id="smooth-image-Image-ImageSmooth-Filter-Alpha"><a href="#smooth-image-Image-ImageSmooth-Filter-Alpha" class="headerlink" title="smooth_image(Image : ImageSmooth : Filter, Alpha : )"></a>smooth_image(Image : ImageSmooth : Filter, Alpha : )</h4><p>模糊处理</p>
+<pre><code>* 原图
+* 输出
+* 滤波方式
+    * gauss
+    * shen
+    * deriche
+* 参数
+</code></pre><h4 id="invert-image-Image-ImageInvert"><a href="#invert-image-Image-ImageInvert" class="headerlink" title="invert_image(Image : ImageInvert : : )"></a>invert_image(Image : ImageInvert : : )</h4><p>正负全值反转.</p>
+<h4 id="watersheds-Image-Basins-Watersheds"><a href="#watersheds-Image-Basins-Watersheds" class="headerlink" title="watersheds(Image : Basins, Watersheds : : )"></a>watersheds(Image : Basins, Watersheds : : )</h4><p>单图处理出峰和谷</p>
+<h4 id="decompose3"><a href="#decompose3" class="headerlink" title="decompose3"></a>decompose3</h4><p>取出RGB 3色</p>
+<h4 id="sobel-amp-Image-EdgeAmplitude-FilterType-Size"><a href="#sobel-amp-Image-EdgeAmplitude-FilterType-Size" class="headerlink" title="sobel_amp(Image : EdgeAmplitude : FilterType, Size : )"></a>sobel_amp(Image : EdgeAmplitude : FilterType, Size : )</h4><p>SOBEL算子边缘检测</p>
+<pre><code>* FilterType 算子
+* size 算子大小
+</code></pre><h4 id="dilation-rectangle1-Region-RegionDilation-Width-Height"><a href="#dilation-rectangle1-Region-RegionDilation-Width-Height" class="headerlink" title="dilation_rectangle1(Region : RegionDilation : Width, Height : )"></a>dilation_rectangle1(Region : RegionDilation : Width, Height : )</h4><p>使用一个矩形的结构元素来膨胀图像</p>
+<pre><code>* Region IN 带一定的标志,表示这个区域要扩展
+* RegionDilation OUT
+</code></pre><h4 id="reduce-domain-Image-Region-ImageReduced"><a href="#reduce-domain-Image-Region-ImageReduced" class="headerlink" title="reduce_domain(Image, Region : ImageReduced : : )"></a>reduce_domain(Image, Region : ImageReduced : : )</h4><p>根据REGION 删除不在REGION的点</p>
+<pre><code>* Image 原图
+* Region MASK 
+* ImageReduced 取Region之后的图
+</code></pre><h4 id="fill-up-Region-RegionFillUp"><a href="#fill-up-Region-RegionFillUp" class="headerlink" title="fill_up(Region : RegionFillUp : : )"></a>fill_up(Region : RegionFillUp : : )</h4><p>填充点孔心 算法依然是neighborhood 8点</p>
+<h2 id="几个读过的例子"><a href="#几个读过的例子" class="headerlink" title="几个读过的例子"></a>几个读过的例子</h2><ul>
+<li>autobahn 检测道路线</li>
+<li>board_components 立体视觉检测(带立体标定)</li>
+<li></li>
+</ul>
+
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-13 </div>
+			<div class="article-title"><a href="/2017/04/13/嵌入式LINUX-RPI3/" >嵌入式LINUX_RPI3</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>用默认配置编译.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/raspberrypi/linux</div><div class="line"></div><div class="line">KERNEL=kernel</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfig</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs </div><div class="line"></div><div class="line">sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_install</div><div class="line"></div><div class="line">sudo cp arch/arm/boot/zImage mnt/fat32/<span class="variable">$KERNEL</span>.img</div><div class="line">sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/</div></pre></td></tr></table></figure></p>
+<p>可以把交叉编译工具路径设置到PATH(每次使用都要设置):</p>
+<blockquote>
+<p>$export PATH=$PATH:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin</p>
+</blockquote>
+<p>为了方便. 可以设置环境变量/etc/environment里设置PATH<br>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/sbin:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin”</p>
+<ul>
+<li>如果需要配置编译选项,最好安装ncurses. 图形化配置的时候需要它.”make menuconfig”</li>
+<li>如果要编译自己的交叉编译工具. 参考<a href="http://kegel.com/crosstool/" target="_blank" rel="external">crosstool</a></li>
+</ul>
+<h2 id="编译解析"><a href="#编译解析" class="headerlink" title="编译解析"></a>编译解析</h2><ul>
+<li>顶层MAKEFILE 是所有MAKEFILE文件的核心. 从总体上控制内核编译.</li>
+<li>.config 配置文件, 由第一次执行bcm2709_defconfig 生成. 所有的MAKEFILE都是根据.config来决定使用哪些文件 包含类似CONFIG_PLAT_SUNXI 这种参数</li>
+<li>arch/arm/Makefile 对应体系(arm/i386)的Makefile.用来决定哪些体系结构相关的文件参与内核的生成. </li>
+<li>scripts/Makefile Makefile共用的通用规则,脚本等.</li>
+<li>kbuild Makefiles 各级子目录下的Makefile 它们相对简单, 被上一层Makefile调用来编译当前目录下的文件 .</li>
+</ul>
+<p>/arch/arm/Kconfig 定义了自编译内核配置文件 Kconfig会被MAKEFILE调用生成内核.<br>CONFIG_PLAT<em>SUNXI<br>在调用的时候会省略CONFIG</em> . 变成PLAT_SUNXI<br>config PLAT_SUNXI</p>
+<h2 id="内核启动过程"><a href="#内核启动过程" class="headerlink" title="内核启动过程"></a>内核启动过程</h2><ul>
+<li>bootloader </li>
+<li>head.o 从bootloader接过控制权</li>
+</ul>
+<h2 id="编译内容"><a href="#编译内容" class="headerlink" title="编译内容"></a>编译内容</h2><ul>
+<li>init  main mounts init_task</li>
+<li>arch/arm/vfp</li>
+<li>arch/arm/vdso</li>
+<li>arch/arm/kernel</li>
+<li>arch/arm/mm</li>
+<li>arch/arm/common</li>
+<li>arch/arm/probes</li>
+<li>arch/arm/net</li>
+<li>arch/arm/crypto</li>
+<li>arch/arm/firmware</li>
+<li>arch/arm/mach-bcm</li>
+<li>kernel</li>
+<li>kernel/bpf</li>
+<li>kernel/debug</li>
+<li>kernel/events</li>
+<li>kernel/irq</li>
+<li>kernel/locking</li>
+<li>kernel/power</li>
+<li>kernel/printk</li>
+<li>kernel/rcu</li>
+<li>kernel/sched</li>
+<li>kernel/time</li>
+<li>kernel/trace</li>
+<li>mm</li>
+<li>fs</li>
+<li>fs/9p</li>
+<li>fs/autofs4</li>
+<li>fs/btrfs</li>
+<li>fs/cachefiles</li>
+<li>fs/cifs</li>
+<li>fs/configfs</li>
+<li>fs/debugfs</li>
+<li>fs/devpts</li>
+<li>fs/dlm</li>
+<li>fs/ecryptfs</li>
+<li>fs/exportfs</li>
+<li>fs/ext4</li>
+<li>fs/f2fs</li>
+<li>fs/fat</li>
+<li>fs/fuse</li>
+<li>fs/gfs2</li>
+<li>….</li>
+<li>ipc</li>
+<li>security/keys</li>
+<li>crypto</li>
+<li>block</li>
+<li>drivers/base</li>
+<li>drivers/block</li>
+<li>drivers/bluetooth</li>
+<li>drivers/char</li>
+<li>drivers/cdrom</li>
+<li>drivers/bus</li>
+<li>drivers/clk  clocksource  connector  cpufreq  dma extcon firemware gpio gpu hid i2c iio input irqchip leds md mailbox media net </li>
+<li>sound</li>
+<li>net ipv4 ipv6 netfilter wireless …</li>
+<li>arch/arm/lib</li>
+<li>lib</li>
+<li>arch/arm/boot</li>
+</ul>
+
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-11 </div>
+			<div class="article-title"><a href="/2017/04/11/linux内核文件编译分析/" >linux内核文件编译分析</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="MAKEFILE"><a href="#MAKEFILE" class="headerlink" title="MAKEFILE"></a>MAKEFILE</h2><p>内核配置完成后，在顶层目录中执行“#make uImage”便开始编译内核。但是，uImage却不是在顶层Makefile中定义，而是在arch/$(ARCH)/Makefile中定义。</p>
+<p>顶层Makefile Line 452:<br>include $(srctree)/arch/$(SRCARCH)/Makefile<br>其中srctree为源码绝对路径，</p>
+<p>即该变量等于架构名称，我们以arm为例进行说明。 </p>
+<p>arch/arm/Makefile Line 230:<br>zImage Image xipImage bootpImage uImage: vmlinux<br>可见uImage依赖于vmlinux，要先生成vmlinux，然后执行下边这条指令完成编译。<br>arch/arm/Makefile Line 231:<br>$(Q)$(MAKE) $(build)=$(boot) MACHINE=$(MACHINE) $(boot)/$@</p>
+<p>Q的定义：选择静态编译与否（是否打印编译信息）<br>MAKE: 系统环境变量，值为make<br>build:　值为“-f scripts/Makefile.build obj=”实际上就是调用子Makefile–scripts/Makefile.build，然后传递参数目标文件夹。<br>Kbuild.include被顶层Makefile所包含</p>
+<h2 id="源代码定位"><a href="#源代码定位" class="headerlink" title="源代码定位"></a>源代码定位</h2><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>/arch/arm/Kconfig 定义了自编译内核配置文件<br>/arch/arm/configs 和上面的一起.定义不同的CHIP的配置(其实就是定义上面哪些配置要打开. 所以重点还是在Kconfig)</p>
+<p>在Kconfig的1080行开始,定义了 source “arch/arm/mach-at91/Kconfig” 也就是不同的芯片会调用各自目录下的Kconfig</p>
+<h4 id="通过配置找代码"><a href="#通过配置找代码" class="headerlink" title="通过配置找代码"></a>通过配置找代码</h4><p>在MAKEFILE里找到对应配置的代码<br>plat-$(CONFIG_PLAT_SUNXI)    := sunxi<br>对应的就是plat-sunxi<br>有的时候对应的源代码很难找. 只能用GREP来了.<br>比如CONFIG_CSI_OV7670 ,处理它的MAKEFILE在 drivers\media\video\sun4icsi\device\MAKEFILE</p>
+
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-11 </div>
+			<div class="article-title"><a href="/2017/04/11/FREEBSD内核文件编译分析/" >FREEBSD内核文件编译分析</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>本文不是叫大家怎么做FreeBSD内核，做内核太简单了，不管是Linux和Unix。<br>在网上找了好久，一点可用的文章都没有找到，FreeBSD的官网的文章也没有给出说法，只能自己在/usr/src和/usr/src/sys和/usr/src/sys/conf下面疯狂的grep，找文件，找引用，才有了自己的一些理解。<br>先说说Linux的内核文件的编译关联吧，Linux的每个文件的编译和是 kconfig配置关联在一起的，kconfig在经过make menuconfig之后，得到一个.config文件，然后每个文件夹下面的Makefile，会check这个全局的.config文件，来决定哪些 文件该编译，哪些不用编译。多说无益，参考代码即可。<br>FreeBSD的做法有些不一样了，Linux把哪些文件要编译分散到了每个文件夹，然后check Makefile。FreeBSD是做两个总的文件，决定哪些文件该编译哪些不该，这两个文件分别是这个路径下：<br>ztz0223@BTazuo:/usr/src/sys/conf % pwd<br>/usr/src/sys/conf<br>的两个文件：files，files.i386<br></p>
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/11/FREEBSD内核文件编译分析/#more" class="btn btn-default more">阅读此文</a>
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-09 </div>
+			<div class="article-title"><a href="/2017/04/09/海龟法则/" >海龟法则</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="什么是TR-True-Range"><a href="#什么是TR-True-Range" class="headerlink" title="什么是TR(True Range)"></a>什么是TR(True Range)</h2><p>TR = max(H-L, H-PDC, PDC-L);<br>H high<br>L low<br>PDC last close. REF(c,1)</p>
+<h2 id="ATR-average-True-Range"><a href="#ATR-average-True-Range" class="headerlink" title="ATR (average True Range)"></a>ATR (average True Range)</h2><p>ATR = ((T-1)*PDN +TR)/T<br>T=average days<br>PDN = last ATR ==&gt; REF(ATR,1)</p>
+<h2 id="风险承受率"><a href="#风险承受率" class="headerlink" title="风险承受率"></a>风险承受率</h2><p>比如1% 设为R<br>总资金 100000 设为M<br>承受亏损量为: N=M*R </p>
+<p>头寸为: M*R/ATRV 做为一个UNIT</p>
+<p>ATRV为资金波动: 比如股市. 1手100股,假设股票价格为15. 一天的震浮为10% 也就是0.1, ATRV=0.1 <em> 100 </em> 15 = 150</p>
+<p>头寸为: 100000*0.01/150 = 6.7手</p>
+<p>如果亏损:<br>也就是6.7手 .总资金为 10050 元<br>回撤震动10%: 15<em>0.1 = 1.5元 /手<br>亏损量为: 1.5 </em> 6.7 * 100 = 1005元</p>
+<p>如果盈利:<br>以0.5个UNIT增加</p>
+<h2 id="进场"><a href="#进场" class="headerlink" title="进场"></a>进场</h2><p>10日线上穿20日线. 以1个UNIT进场. </p>
+<h2 id="加仓"><a href="#加仓" class="headerlink" title="加仓"></a>加仓</h2><p>如果上涨了0.5ATR 增加1个UNIT 不建议加仓超过4次. 其实就是每盈利500, 增加 6.7手</p>
+<h2 id="止损"><a href="#止损" class="headerlink" title="止损"></a>止损</h2><p>如果亏损超过2UNIT 止损. 止损随着加减仓, 动态修正的. 亏损2000 止损.</p>
+<h2 id="止盈"><a href="#止盈" class="headerlink" title="止盈"></a>止盈</h2><p>10日下穿20日</p>
+<h2 id="期货"><a href="#期货" class="headerlink" title="期货"></a>期货</h2><p>假设价格为3000 ATR为1500 也就是150个点. 这样的话. 一天浮动为0.5  ATRV = 0.5<em>3000 = 1500<br>资金6W 容忍亏损0.05 也就是3000<br>头寸为: 60000</em>0.05/1500 = 2手<br>加仓为: 每上涨75个点, 加一次. 2手.<br>如果全加完: 4*2 = 8手. 占资金为 24000以上.</p>
+
+	
+	</div>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-04-09 </div>
+			<div class="article-title"><a href="/2017/04/09/Ubuntu-CODE/" >Ubuntu代码分析</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h2><p>执行 sudo apt-get install linux-source 才会获取到源代码. 否则只有HEADER文件.<br>执行完安装后. 代码依然会在/usr/src下 位置和BSD是一样的.</p>
+<p>也可以从GITHUB下载. 比如要编译特定的系统的话.<br></p>
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/09/Ubuntu-CODE/#more" class="btn btn-default more">阅读此文</a>
+	
+	</div>
+</div>
+
+           
+		
            
 			  
 	
@@ -268,113 +581,6 @@ var _hmt = _hmt || [];
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-23 </div>
-			<div class="article-title"><a href="/2017/03/23/NRF51822-SPI/" >NRF51822 SPI</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/2017/03/23/NRF51822-SPI/SPI_NRF51.png" alt="SPI_NRF51"></p>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/23/NRF51822-SPI/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-22 </div>
-			<div class="article-title"><a href="/2017/03/22/Computer-Investing-W4/" >Computer Investing W4</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="看Cousera的Computer-Investing-的随笔"><a href="#看Cousera的Computer-Investing-的随笔" class="headerlink" title="看Cousera的Computer Investing 的随笔"></a>看Cousera的Computer Investing 的随笔</h1><h2 id="where-does-info-come-from"><a href="#where-does-info-come-from" class="headerlink" title="where does info come from"></a>where does info come from</h2><p>price/volume: from the markets  价格/成交量:从市场来 true value<br>fundamentals: sec filings  基本面:财务报表<br>news: exogenous sources 新闻: 外部生成.</p>
-<h2 id="3-versions-of-efficient-markets-hypothesis"><a href="#3-versions-of-efficient-markets-hypothesis" class="headerlink" title="3 versions of efficient markets hypothesis"></a>3 versions of efficient markets hypothesis</h2><p>3种 有效市场假设</p>
-<ul>
-<li>weak: 新闻不影响以后的价值, 只影响当前和以前的. 技术可分析的</li>
-<li>semi-strong 消息会连续的影响价值</li>
-<li>strong 1+2 还可能会对没有披露的信息产生响应.</li>
-</ul>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/22/Computer-Investing-W4/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-22 </div>
-			<div class="article-title"><a href="/2017/03/22/matlab-call-python/" >matlab call python</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="MATLAB-call-python"><a href="#MATLAB-call-python" class="headerlink" title="MATLAB call python"></a>MATLAB call python</h1><p>Make sure the Python module is on the Python search path. To test if module <code>mymod</code> is on the path, type:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">py.importlib.import_module(&apos;mymod&apos;)</div></pre></td></tr></table></figure></p>
-<p>If Python cannot find the module, MATLAB displays a Python error message.</p>
-<p>To add mymod, in folder modpath, to the path, type:</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">P = py.sys.path;</div><div class="line"><span class="keyword">if</span> count(P,<span class="string">'modpath'</span>) == <span class="number">0</span></div><div class="line">    insert(P,int32(<span class="number">0</span>),<span class="string">'modpath'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/22/matlab-call-python/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-21 </div>
-			<div class="article-title"><a href="/2017/03/21/test/" >首弹</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="今天开始准备写写BLOG"><a href="#今天开始准备写写BLOG" class="headerlink" title="今天开始准备写写BLOG"></a>今天开始准备写写BLOG</h3><p>写了很多年日记，但就是不喜欢在网上写东西。文笔差是一部分，不愿意和陌生人分享也是一部分。</p>
-<h3 id="为什么开始写？"><a href="#为什么开始写？" class="headerlink" title="为什么开始写？"></a>为什么开始写？</h3><p>也许只是李笑来的影响。 想写写文字。 一来给自己一个锻炼文笔的地方。 二来也给自己一点压力吧。 还有很重要的一点，结婚，生子之后，确实成长了很多。 有很多东西，挺想和人说说。</p>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/21/test/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-           
-		
 
 		</div>
 
@@ -384,6 +590,16 @@ var _hmt = _hmt || [];
 		<div class="pagination">
 <ul class="pagination">
 	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/page/2/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
 </ul>
 </div>
 
@@ -415,17 +631,13 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/categories/3D打印/">3D打印<span>1</span></a></li>
 		
-			<li><a href="/categories//">????????<span>0</span></a></li>
-		
 			<li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
 		
-			<li><a href="/categories/软件开发/">软件开发<span>2</span></a></li>
+			<li><a href="/categories/软件开发/">软件开发<span>6</span></a></li>
 		
-			<li><a href="/categories/金融/">金融<span>1</span></a></li>
+			<li><a href="/categories/金融/">金融<span>2</span></a></li>
 		
 			<li><a href="/categories/随笔/">随笔<span>1</span></a></li>
-		
-			<li><a href="/categories/��������/">��������<span>0</span></a></li>
 		
 		</ul>
 	</div>
@@ -436,21 +648,33 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
-		
-			<li><a href="/tags/3D/">3D<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
-		
 			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
 		
 			<li><a href="/tags/心情/">心情<span>1</span></a></li>
 		
-			<li><a href="/tags/算法/">算法<span>1</span></a></li>
+			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
+		
+			<li><a href="/tags/RPI3/">RPI3<span>1</span></a></li>
+		
+			<li><a href="/tags/LINUX/">LINUX<span>1</span></a></li>
+		
+			<li><a href="/tags/freebsd/">freebsd<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/3D/">3D<span>1</span></a></li>
 		
 			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
 		
+			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+		
+			<li><a href="/tags/算法/">算法<span>1</span></a></li>
+		
+			<li><a href="/tags/UBUNTU/">UBUNTU<span>1</span></a></li>
+		
 			<li><a href="/tags/python/">python<span>1</span></a></li>
+		
+			<li><a href="/tags/量化/">量化<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -464,23 +688,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2017/03/29/CuraEngine/" ><i class="fa fa-file-o"></i>3D打印开源库--CuraEngine</a>
+        <a href="/2017/04/17/HDEVELOP/" ><i class="fa fa-file-o"></i>HDEVELOP函数算法解析</a>
       </li>
     
       <li>
-        <a href="/2017/03/29/BLETutorial/" ><i class="fa fa-file-o"></i>蓝牙协议说明</a>
+        <a href="/2017/04/13/嵌入式LINUX-RPI3/" ><i class="fa fa-file-o"></i>嵌入式LINUX_RPI3</a>
       </li>
     
       <li>
-        <a href="/2017/03/27/matlabtopy/" ><i class="fa fa-file-o"></i>matlab to Python MATLAB转PYT...</a>
+        <a href="/2017/04/11/linux内核文件编译分析/" ><i class="fa fa-file-o"></i>linux内核文件编译分析</a>
       </li>
     
       <li>
-        <a href="/2017/03/24/NRF-MX25L/" ><i class="fa fa-file-o"></i>NRF51822操作MX25L4005</a>
+        <a href="/2017/04/11/FREEBSD内核文件编译分析/" ><i class="fa fa-file-o"></i>FREEBSD内核文件编译分析</a>
       </li>
     
       <li>
-        <a href="/2017/03/23/NRF51822-SPI/" ><i class="fa fa-file-o"></i>NRF51822 SPI</a>
+        <a href="/2017/04/09/海龟法则/" ><i class="fa fa-file-o"></i>海龟法则</a>
       </li>
     
   </ul>
