@@ -3,15 +3,46 @@
 <head>
   <meta charset="utf-8">
   
-  <title>嵌入式LINUX_RPI3 | Eros.Wade&#39;s Blog</title>
+  <title>开源深度学习库 | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
   
-  <meta name="description" content="编译过程用默认配置编译.1234567891011121314git clone --depth=1 https://github.com/raspberrypi/linuxKERNEL=kernelmake ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfigmake ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_installsudo cp arch/arm/boot/zImage mnt/fat32/$KERNEL.imgsudo cp arch/arm/boot/dts/*.dtb mnt/fat32/sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/">
+  <meta name="description" content="开源深度学习库汇总:
+mxnet 亚马逊主推
+caffe FACEBOOK主推
+tensorflow GOOGLE
+CNTK 微软
+Theano 
+Torch
+
+低层库
+
+
+调用库
+mxnet
+caffe
+tf
+cntk
+theano
+torch
+
+
+
+
+blas
+y
+y
+
+
+
+y
+
+
+opencv">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="嵌入式LINUX_RPI3"/>
+  <meta property="og:title" content="开源深度学习库"/>
   <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
 
   
@@ -110,7 +141,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> 嵌入式LINUX_RPI3</h1>
+			<h1 class="title title-inverse "> 开源深度学习库</h1>
 		</div>		
 	
 
@@ -130,89 +161,84 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>用默认配置编译.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/raspberrypi/linux</div><div class="line"></div><div class="line">KERNEL=kernel</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfig</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs </div><div class="line"></div><div class="line">sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_install</div><div class="line"></div><div class="line">sudo cp arch/arm/boot/zImage mnt/fat32/<span class="variable">$KERNEL</span>.img</div><div class="line">sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>可以把交叉编译工具路径设置到PATH(每次使用都要设置):</p>
-<blockquote>
-<p>$export PATH=$PATH:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin</p>
-</blockquote>
-<p>为了方便. 可以设置环境变量/etc/environment里设置PATH<br>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/sbin:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin”</p>
-<ul>
-<li>如果需要配置编译选项,最好安装ncurses. 图形化配置的时候需要它.”make menuconfig”</li>
-<li>如果要编译自己的交叉编译工具. 参考<a href="http://kegel.com/crosstool/" target="_blank" rel="external">crosstool</a></li>
+	  <h2 id="开源深度学习库汇总"><a href="#开源深度学习库汇总" class="headerlink" title="开源深度学习库汇总:"></a>开源深度学习库汇总:</h2><ul>
+<li>mxnet 亚马逊主推</li>
+<li>caffe FACEBOOK主推</li>
+<li>tensorflow GOOGLE</li>
+<li>CNTK 微软</li>
+<li>Theano </li>
+<li>Torch</li>
 </ul>
-<h2 id="编译解析"><a href="#编译解析" class="headerlink" title="编译解析"></a>编译解析</h2><ul>
-<li>顶层MAKEFILE 是所有MAKEFILE文件的核心. 从总体上控制内核编译.</li>
-<li>.config 配置文件, 由第一次执行bcm2709_defconfig 生成. 所有的MAKEFILE都是根据.config来决定使用哪些文件 包含类似CONFIG_PLAT_SUNXI 这种参数</li>
-<li>arch/arm/Makefile 对应体系(arm/i386)的Makefile.用来决定哪些体系结构相关的文件参与内核的生成. </li>
-<li>scripts/Makefile Makefile共用的通用规则,脚本等.</li>
-<li>kbuild Makefiles 各级子目录下的Makefile 它们相对简单, 被上一层Makefile调用来编译当前目录下的文件 .</li>
-</ul>
-<p>/arch/arm/Kconfig 定义了自编译内核配置文件 Kconfig会被MAKEFILE调用生成内核.<br>CONFIG_PLAT<em>SUNXI<br>在调用的时候会省略CONFIG</em> . 变成PLAT_SUNXI<br>config PLAT_SUNXI</p>
-<h2 id="内核启动过程"><a href="#内核启动过程" class="headerlink" title="内核启动过程"></a>内核启动过程</h2><ul>
-<li>bootloader </li>
-<li>head.o 从bootloader接过控制权</li>
-</ul>
-<h2 id="编译内容"><a href="#编译内容" class="headerlink" title="编译内容"></a>编译内容</h2><ul>
-<li>init  main mounts init_task</li>
-<li>arch/arm/vfp</li>
-<li>arch/arm/vdso</li>
-<li>arch/arm/kernel</li>
-<li>arch/arm/mm</li>
-<li>arch/arm/common</li>
-<li>arch/arm/probes</li>
-<li>arch/arm/net</li>
-<li>arch/arm/crypto</li>
-<li>arch/arm/firmware</li>
-<li>arch/arm/mach-bcm</li>
-<li>kernel</li>
-<li>kernel/bpf</li>
-<li>kernel/debug</li>
-<li>kernel/events</li>
-<li>kernel/irq</li>
-<li>kernel/locking</li>
-<li>kernel/power</li>
-<li>kernel/printk</li>
-<li>kernel/rcu</li>
-<li>kernel/sched</li>
-<li>kernel/time</li>
-<li>kernel/trace</li>
-<li>mm</li>
-<li>fs</li>
-<li>fs/9p</li>
-<li>fs/autofs4</li>
-<li>fs/btrfs</li>
-<li>fs/cachefiles</li>
-<li>fs/cifs</li>
-<li>fs/configfs</li>
-<li>fs/debugfs</li>
-<li>fs/devpts</li>
-<li>fs/dlm</li>
-<li>fs/ecryptfs</li>
-<li>fs/exportfs</li>
-<li>fs/ext4</li>
-<li>fs/f2fs</li>
-<li>fs/fat</li>
-<li>fs/fuse</li>
-<li>fs/gfs2</li>
-<li>….</li>
-<li>ipc</li>
-<li>security/keys</li>
-<li>crypto</li>
-<li>block</li>
-<li>drivers/base</li>
-<li>drivers/block</li>
-<li>drivers/bluetooth</li>
-<li>drivers/char</li>
-<li>drivers/cdrom</li>
-<li>drivers/bus</li>
-<li>drivers/clk  clocksource  connector  cpufreq  dma extcon firemware gpio gpu hid i2c iio input irqchip leds md mailbox media net </li>
-<li>sound</li>
-<li>net ipv4 ipv6 netfilter wireless …</li>
-<li>arch/arm/lib</li>
-<li>lib</li>
-<li>arch/arm/boot</li>
-</ul>
+<h2 id="低层库"><a href="#低层库" class="headerlink" title="低层库"></a>低层库</h2><table>
+<thead>
+<tr>
+<th>调用库</th>
+<th>mxnet</th>
+<th>caffe</th>
+<th>tf</th>
+<th>cntk</th>
+<th>theano</th>
+<th>torch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blas</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>opencv</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cuda</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>opencl</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LAPACK</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>FFTW</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+</tbody>
+</table>
+<p>caffe<br>math_functions.cu gpu blas<br>otherwise using blas.<br>opencl –&gt; greentea –&gt;greentea_math_functions.cpp</p>
 	  
 	</div>
 
@@ -221,14 +247,14 @@ var _hmt = _hmt || [];
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2017/04/17/HDEVELOP/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/04/11/linux内核文件编译分析/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2017/04/17/HDEVELOP/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -283,7 +309,7 @@ var _hmt = _hmt || [];
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-04-13 
+	2017-05-05 
 	</div>
 	
 
@@ -307,7 +333,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/RPI3/">RPI3<span>1</span></a></li> <li><a href="/tags/LINUX/">LINUX<span>1</span></a></li>
+  <li><a href="/tags/深度学习/">深度学习<span>1</span></a></li>
     </ul>
 	</div>
 		
@@ -317,7 +343,7 @@ var _hmt = _hmt || [];
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译过程"><span class="toc-article-text">编译过程</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译解析"><span class="toc-article-text">编译解析</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#内核启动过程"><span class="toc-article-text">内核启动过程</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译内容"><span class="toc-article-text">编译内容</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#开源深度学习库汇总"><span class="toc-article-text">开源深度学习库汇总:</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#低层库"><span class="toc-article-text">低层库</span></a></li></ol>
 		</div>
 	
 	</div>

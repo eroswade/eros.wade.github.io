@@ -152,9 +152,111 @@ var _hmt = _hmt || [];
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-05-05 </div>
+			<div class="article-title"><a href="/2017/05/05/开源深度学习库/" >开源深度学习库</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="开源深度学习库汇总"><a href="#开源深度学习库汇总" class="headerlink" title="开源深度学习库汇总:"></a>开源深度学习库汇总:</h2><ul>
+<li>mxnet 亚马逊主推</li>
+<li>caffe FACEBOOK主推</li>
+<li>tensorflow GOOGLE</li>
+<li>CNTK 微软</li>
+<li>Theano </li>
+<li>Torch</li>
+</ul>
+<h2 id="低层库"><a href="#低层库" class="headerlink" title="低层库"></a>低层库</h2><table>
+<thead>
+<tr>
+<th>调用库</th>
+<th>mxnet</th>
+<th>caffe</th>
+<th>tf</th>
+<th>cntk</th>
+<th>theano</th>
+<th>torch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blas</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>opencv</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cuda</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>opencl</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LAPACK</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>FFTW</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+</tbody>
+</table>
+<p>caffe<br>math_functions.cu gpu blas<br>otherwise using blas.<br>opencl –&gt; greentea –&gt;greentea_math_functions.cpp</p>
+
+	
+	</div>
+</div>
+
+           
+		
            
 			  
 	
@@ -179,59 +281,9 @@ var _hmt = _hmt || [];
 <pre><code>* REGION 原图
 * sub SUB图
 * RegionDifference 输出图
-</code></pre><h4 id="connection-Region-ConnectedRegions"><a href="#connection-Region-ConnectedRegions" class="headerlink" title="connection(Region : ConnectedRegions : : )"></a>connection(Region : ConnectedRegions : : )</h4><p>联通区域. 8点联通. neighborhood 算法.  F be the area of the input region and N be the number of generated connected components O(sqrt(F) * sqrt(N))</p>
-<pre><code>* Region 原图
-* ConnectedRegions 区域.
-</code></pre><h4 id="select-shape-Regions-SelectedRegions-Features-Operation-Min-Max"><a href="#select-shape-Regions-SelectedRegions-Features-Operation-Min-Max" class="headerlink" title="select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )"></a>select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )</h4><p>选择区域算法</p>
-<pre><code>* Regions 原图
-* SelectedRegions 输出
-* Features 什么类型的选择方式.
-    * area 面积
-    * row 所在行
-    * column 所在列
-    * width 长
-    * height 高
-    * convexity 凸性 参数为百分比
-* Operation &apos;and&apos; &apos;or&apos;
-* min 最小值
-* max 最大值
-</code></pre><h4 id="shape-trans-Region-RegionTrans-Type"><a href="#shape-trans-Region-RegionTrans-Type" class="headerlink" title="shape_trans(Region : RegionTrans : Type : )"></a>shape_trans(Region : RegionTrans : Type : )</h4><p>转换图形为规则图形</p>
-<pre><code>* Region 输入
-* RegionTrans 输出
-* Type 转换类型
-    * convex 凸边形
-    * ellipse 椭圆
-    * outer_circle 外圆
-    * inner_circle 内圆
-    * rectangle 方形
-</code></pre><h4 id="smooth-image-Image-ImageSmooth-Filter-Alpha"><a href="#smooth-image-Image-ImageSmooth-Filter-Alpha" class="headerlink" title="smooth_image(Image : ImageSmooth : Filter, Alpha : )"></a>smooth_image(Image : ImageSmooth : Filter, Alpha : )</h4><p>模糊处理</p>
-<pre><code>* 原图
-* 输出
-* 滤波方式
-    * gauss
-    * shen
-    * deriche
-* 参数
-</code></pre><h4 id="invert-image-Image-ImageInvert"><a href="#invert-image-Image-ImageInvert" class="headerlink" title="invert_image(Image : ImageInvert : : )"></a>invert_image(Image : ImageInvert : : )</h4><p>正负全值反转.</p>
-<h4 id="watersheds-Image-Basins-Watersheds"><a href="#watersheds-Image-Basins-Watersheds" class="headerlink" title="watersheds(Image : Basins, Watersheds : : )"></a>watersheds(Image : Basins, Watersheds : : )</h4><p>单图处理出峰和谷</p>
-<h4 id="decompose3"><a href="#decompose3" class="headerlink" title="decompose3"></a>decompose3</h4><p>取出RGB 3色</p>
-<h4 id="sobel-amp-Image-EdgeAmplitude-FilterType-Size"><a href="#sobel-amp-Image-EdgeAmplitude-FilterType-Size" class="headerlink" title="sobel_amp(Image : EdgeAmplitude : FilterType, Size : )"></a>sobel_amp(Image : EdgeAmplitude : FilterType, Size : )</h4><p>SOBEL算子边缘检测</p>
-<pre><code>* FilterType 算子
-* size 算子大小
-</code></pre><h4 id="dilation-rectangle1-Region-RegionDilation-Width-Height"><a href="#dilation-rectangle1-Region-RegionDilation-Width-Height" class="headerlink" title="dilation_rectangle1(Region : RegionDilation : Width, Height : )"></a>dilation_rectangle1(Region : RegionDilation : Width, Height : )</h4><p>使用一个矩形的结构元素来膨胀图像</p>
-<pre><code>* Region IN 带一定的标志,表示这个区域要扩展
-* RegionDilation OUT
-</code></pre><h4 id="reduce-domain-Image-Region-ImageReduced"><a href="#reduce-domain-Image-Region-ImageReduced" class="headerlink" title="reduce_domain(Image, Region : ImageReduced : : )"></a>reduce_domain(Image, Region : ImageReduced : : )</h4><p>根据REGION 删除不在REGION的点</p>
-<pre><code>* Image 原图
-* Region MASK 
-* ImageReduced 取Region之后的图
-</code></pre><h4 id="fill-up-Region-RegionFillUp"><a href="#fill-up-Region-RegionFillUp" class="headerlink" title="fill_up(Region : RegionFillUp : : )"></a>fill_up(Region : RegionFillUp : : )</h4><p>填充点孔心 算法依然是neighborhood 8点</p>
-<h2 id="几个读过的例子"><a href="#几个读过的例子" class="headerlink" title="几个读过的例子"></a>几个读过的例子</h2><ul>
-<li>autobahn 检测道路线</li>
-<li>board_components 立体视觉检测(带立体标定)</li>
-<li></li>
-</ul>
-
+</code></pre>
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/17/HDEVELOP/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -254,88 +306,8 @@ var _hmt = _hmt || [];
 	
 	
 		<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>用默认配置编译.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/raspberrypi/linux</div><div class="line"></div><div class="line">KERNEL=kernel</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfig</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs </div><div class="line"></div><div class="line">sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_install</div><div class="line"></div><div class="line">sudo cp arch/arm/boot/zImage mnt/fat32/<span class="variable">$KERNEL</span>.img</div><div class="line">sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/</div></pre></td></tr></table></figure></p>
-<p>可以把交叉编译工具路径设置到PATH(每次使用都要设置):</p>
-<blockquote>
-<p>$export PATH=$PATH:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin</p>
-</blockquote>
-<p>为了方便. 可以设置环境变量/etc/environment里设置PATH<br>PATH=”/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:/sbin:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin”</p>
-<ul>
-<li>如果需要配置编译选项,最好安装ncurses. 图形化配置的时候需要它.”make menuconfig”</li>
-<li>如果要编译自己的交叉编译工具. 参考<a href="http://kegel.com/crosstool/" target="_blank" rel="external">crosstool</a></li>
-</ul>
-<h2 id="编译解析"><a href="#编译解析" class="headerlink" title="编译解析"></a>编译解析</h2><ul>
-<li>顶层MAKEFILE 是所有MAKEFILE文件的核心. 从总体上控制内核编译.</li>
-<li>.config 配置文件, 由第一次执行bcm2709_defconfig 生成. 所有的MAKEFILE都是根据.config来决定使用哪些文件 包含类似CONFIG_PLAT_SUNXI 这种参数</li>
-<li>arch/arm/Makefile 对应体系(arm/i386)的Makefile.用来决定哪些体系结构相关的文件参与内核的生成. </li>
-<li>scripts/Makefile Makefile共用的通用规则,脚本等.</li>
-<li>kbuild Makefiles 各级子目录下的Makefile 它们相对简单, 被上一层Makefile调用来编译当前目录下的文件 .</li>
-</ul>
-<p>/arch/arm/Kconfig 定义了自编译内核配置文件 Kconfig会被MAKEFILE调用生成内核.<br>CONFIG_PLAT<em>SUNXI<br>在调用的时候会省略CONFIG</em> . 变成PLAT_SUNXI<br>config PLAT_SUNXI</p>
-<h2 id="内核启动过程"><a href="#内核启动过程" class="headerlink" title="内核启动过程"></a>内核启动过程</h2><ul>
-<li>bootloader </li>
-<li>head.o 从bootloader接过控制权</li>
-</ul>
-<h2 id="编译内容"><a href="#编译内容" class="headerlink" title="编译内容"></a>编译内容</h2><ul>
-<li>init  main mounts init_task</li>
-<li>arch/arm/vfp</li>
-<li>arch/arm/vdso</li>
-<li>arch/arm/kernel</li>
-<li>arch/arm/mm</li>
-<li>arch/arm/common</li>
-<li>arch/arm/probes</li>
-<li>arch/arm/net</li>
-<li>arch/arm/crypto</li>
-<li>arch/arm/firmware</li>
-<li>arch/arm/mach-bcm</li>
-<li>kernel</li>
-<li>kernel/bpf</li>
-<li>kernel/debug</li>
-<li>kernel/events</li>
-<li>kernel/irq</li>
-<li>kernel/locking</li>
-<li>kernel/power</li>
-<li>kernel/printk</li>
-<li>kernel/rcu</li>
-<li>kernel/sched</li>
-<li>kernel/time</li>
-<li>kernel/trace</li>
-<li>mm</li>
-<li>fs</li>
-<li>fs/9p</li>
-<li>fs/autofs4</li>
-<li>fs/btrfs</li>
-<li>fs/cachefiles</li>
-<li>fs/cifs</li>
-<li>fs/configfs</li>
-<li>fs/debugfs</li>
-<li>fs/devpts</li>
-<li>fs/dlm</li>
-<li>fs/ecryptfs</li>
-<li>fs/exportfs</li>
-<li>fs/ext4</li>
-<li>fs/f2fs</li>
-<li>fs/fat</li>
-<li>fs/fuse</li>
-<li>fs/gfs2</li>
-<li>….</li>
-<li>ipc</li>
-<li>security/keys</li>
-<li>crypto</li>
-<li>block</li>
-<li>drivers/base</li>
-<li>drivers/block</li>
-<li>drivers/bluetooth</li>
-<li>drivers/char</li>
-<li>drivers/cdrom</li>
-<li>drivers/bus</li>
-<li>drivers/clk  clocksource  connector  cpufreq  dma extcon firemware gpio gpu hid i2c iio input irqchip leds md mailbox media net </li>
-<li>sound</li>
-<li>net ipv4 ipv6 netfilter wireless …</li>
-<li>arch/arm/lib</li>
-<li>lib</li>
-<li>arch/arm/boot</li>
-</ul>
-
+		<!-- only display read_more button if there's more to display -->
+		<a type="button" href="/2017/04/13/嵌入式LINUX-RPI3/#more" class="btn btn-default more">阅读此文</a>
 	
 	</div>
 </div>
@@ -556,31 +528,6 @@ var _hmt = _hmt || [];
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-03-24 </div>
-			<div class="article-title"><a href="/2017/03/24/NRF-MX25L/" >NRF51822操作MX25L4005</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="nrf51822操作MX25L4005"><a href="#nrf51822操作MX25L4005" class="headerlink" title="nrf51822操作MX25L4005"></a>nrf51822操作MX25L4005</h1><h3 id="指令集："><a href="#指令集：" class="headerlink" title="指令集："></a>指令集：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_CMD			0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Sector_Erase		0x20</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Block_Erase		0xD8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Chip_Erase		0x60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Page_Program		0x02</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_Status		0x05</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Status		0x01</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Enable		0x06</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Write_Disable		0x04</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ID			0x9F</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read				0x03</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Fast_Read			0x0B</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Power_Down		0xB9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Release_DP		0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Enter_4K			0xA5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Exit_4K			0xB5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_ES			0xAB</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Read_EMS			0x90</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_Flash_Parallel_Mode		0x55</span></div></pre></td></tr></table></figure>
-<h3 id="内存结构："><a href="#内存结构：" class="headerlink" title="内存结构："></a>内存结构：</h3><p><img src="/2017/03/24/NRF-MX25L/mem_struct.png" alt="DATASTRUCT"></p>
-		<!-- only display read_more button if there's more to display -->
-		<a type="button" href="/2017/03/24/NRF-MX25L/#more" class="btn btn-default more">阅读此文</a>
-	
-	</div>
-</div>
-
-           
-		
 
 		</div>
 
@@ -633,7 +580,7 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
 		
-			<li><a href="/categories/软件开发/">软件开发<span>6</span></a></li>
+			<li><a href="/categories/软件开发/">软件开发<span>7</span></a></li>
 		
 			<li><a href="/categories/金融/">金融<span>2</span></a></li>
 		
@@ -648,31 +595,33 @@ var _hmt = _hmt || [];
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
-		
-			<li><a href="/tags/心情/">心情<span>1</span></a></li>
-		
-			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
-		
-			<li><a href="/tags/RPI3/">RPI3<span>1</span></a></li>
-		
-			<li><a href="/tags/LINUX/">LINUX<span>1</span></a></li>
-		
-			<li><a href="/tags/freebsd/">freebsd<span>1</span></a></li>
-		
 			<li><a href="/tags/linux/">linux<span>1</span></a></li>
 		
-			<li><a href="/tags/3D/">3D<span>1</span></a></li>
-		
-			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
-		
-			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+			<li><a href="/tags/freebsd/">freebsd<span>1</span></a></li>
 		
 			<li><a href="/tags/算法/">算法<span>1</span></a></li>
 		
 			<li><a href="/tags/UBUNTU/">UBUNTU<span>1</span></a></li>
 		
 			<li><a href="/tags/python/">python<span>1</span></a></li>
+		
+			<li><a href="/tags/matlab/">matlab<span>2</span></a></li>
+		
+			<li><a href="/tags/3D/">3D<span>1</span></a></li>
+		
+			<li><a href="/tags/RPI3/">RPI3<span>1</span></a></li>
+		
+			<li><a href="/tags/LINUX/">LINUX<span>1</span></a></li>
+		
+			<li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li>
+		
+			<li><a href="/tags/心情/">心情<span>1</span></a></li>
+		
+			<li><a href="/tags/程序化交易/">程序化交易<span>1</span></a></li>
+		
+			<li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
+		
+			<li><a href="/tags/深度学习/">深度学习<span>1</span></a></li>
 		
 			<li><a href="/tags/量化/">量化<span>1</span></a></li>
 		
@@ -688,6 +637,10 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2017/05/05/开源深度学习库/" ><i class="fa fa-file-o"></i>开源深度学习库</a>
+      </li>
+    
+      <li>
         <a href="/2017/04/17/HDEVELOP/" ><i class="fa fa-file-o"></i>HDEVELOP函数算法解析</a>
       </li>
     
@@ -701,10 +654,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2017/04/11/FREEBSD内核文件编译分析/" ><i class="fa fa-file-o"></i>FREEBSD内核文件编译分析</a>
-      </li>
-    
-      <li>
-        <a href="/2017/04/09/海龟法则/" ><i class="fa fa-file-o"></i>海龟法则</a>
       </li>
     
   </ul>

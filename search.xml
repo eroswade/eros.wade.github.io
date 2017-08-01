@@ -4,6 +4,104 @@
   
     
     <entry>
+      <title><![CDATA[开源深度学习库]]></title>
+      <url>http://eroswade.github.io/2017/05/05/%E5%BC%80%E6%BA%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%BA%93/</url>
+      <content type="html"><![CDATA[<h2 id="开源深度学习库汇总"><a href="#开源深度学习库汇总" class="headerlink" title="开源深度学习库汇总:"></a>开源深度学习库汇总:</h2><ul>
+<li>mxnet 亚马逊主推</li>
+<li>caffe FACEBOOK主推</li>
+<li>tensorflow GOOGLE</li>
+<li>CNTK 微软</li>
+<li>Theano </li>
+<li>Torch</li>
+</ul>
+<h2 id="低层库"><a href="#低层库" class="headerlink" title="低层库"></a>低层库</h2><table>
+<thead>
+<tr>
+<th>调用库</th>
+<th>mxnet</th>
+<th>caffe</th>
+<th>tf</th>
+<th>cntk</th>
+<th>theano</th>
+<th>torch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blas</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>opencv</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cuda</td>
+<td>y</td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>opencl</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LAPACK</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+<tr>
+<td>FFTW</td>
+<td></td>
+<td>y</td>
+<td></td>
+<td></td>
+<td></td>
+<td>y</td>
+</tr>
+</tbody>
+</table>
+<p>caffe<br>math_functions.cu gpu blas<br>otherwise using blas.<br>opencl –&gt; greentea –&gt;greentea_math_functions.cpp</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 软件开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[HDEVELOP函数算法解析]]></title>
       <url>http://eroswade.github.io/2017/04/17/HDEVELOP/</url>
       <content type="html"><![CDATA[<h4 id="threshold-Image-Region-MinGray-MaxGray"><a href="#threshold-Image-Region-MinGray-MaxGray" class="headerlink" title="threshold(Image : Region : MinGray, MaxGray : )"></a>threshold(Image : Region : MinGray, MaxGray : )</h4><p>图像的GRAY THRESHOLD. 从MIN 到MAX的像素点留下来 O(A)</p>
@@ -15,7 +113,8 @@
 <pre><code>* REGION 原图
 * sub SUB图
 * RegionDifference 输出图
-</code></pre><h4 id="connection-Region-ConnectedRegions"><a href="#connection-Region-ConnectedRegions" class="headerlink" title="connection(Region : ConnectedRegions : : )"></a>connection(Region : ConnectedRegions : : )</h4><p>联通区域. 8点联通. neighborhood 算法.  F be the area of the input region and N be the number of generated connected components O(sqrt(F) * sqrt(N))</p>
+</code></pre><a id="more"></a>
+<h4 id="connection-Region-ConnectedRegions"><a href="#connection-Region-ConnectedRegions" class="headerlink" title="connection(Region : ConnectedRegions : : )"></a>connection(Region : ConnectedRegions : : )</h4><p>联通区域. 8点联通. neighborhood 算法.  F be the area of the input region and N be the number of generated connected components O(sqrt(F) * sqrt(N))</p>
 <pre><code>* Region 原图
 * ConnectedRegions 区域.
 </code></pre><h4 id="select-shape-Regions-SelectedRegions-Features-Operation-Min-Max"><a href="#select-shape-Regions-SelectedRegions-Features-Operation-Min-Max" class="headerlink" title="select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )"></a>select_shape(Regions : SelectedRegions : Features, Operation, Min, Max : )</h4><p>选择区域算法</p>
@@ -76,6 +175,7 @@
       <title><![CDATA[嵌入式LINUX_RPI3]]></title>
       <url>http://eroswade.github.io/2017/04/13/%E5%B5%8C%E5%85%A5%E5%BC%8FLINUX-RPI3/</url>
       <content type="html"><![CDATA[<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>用默认配置编译.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/raspberrypi/linux</div><div class="line"></div><div class="line">KERNEL=kernel</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- bcm2709_defconfig</div><div class="line"></div><div class="line">make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- -j4 zImage modules dtbs </div><div class="line"></div><div class="line">sudo make ARCH=arm CROSS_COMPILE=../tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf- INSTALL_MOD_PATH=mnt/ext4 modules_install</div><div class="line"></div><div class="line">sudo cp arch/arm/boot/zImage mnt/fat32/<span class="variable">$KERNEL</span>.img</div><div class="line">sudo cp arch/arm/boot/dts/*.dtb mnt/fat32/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* mnt/fat32/overlays/</div><div class="line">sudo cp arch/arm/boot/dts/overlays/README mnt/fat32/overlays/</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>可以把交叉编译工具路径设置到PATH(每次使用都要设置):</p>
 <blockquote>
 <p>$export PATH=$PATH:/xxxxx/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin</p>
@@ -448,6 +548,9 @@
 <h5 id="2017-04-30"><a href="#2017-04-30" class="headerlink" title="2017.04.30"></a>2017.04.30</h5><ul>
 <li>如果用STATIC, 在KEIL里,不同的C文件调用, 会生成不同的实例. 所以必须用extern 的方式.</li>
 </ul>
+<h5 id="2017-05-05"><a href="#2017-05-05" class="headerlink" title="2017.05.05"></a>2017.05.05</h5><ul>
+<li>manuf_data 长度自定义.</li>
+</ul>
 ]]></content>
       
         <categories>
@@ -593,9 +696,9 @@
         
         <tags>
             
-            <tag> 蓝牙 </tag>
-            
             <tag> NRF51822 </tag>
+            
+            <tag> 蓝牙 </tag>
             
         </tags>
         
@@ -620,9 +723,9 @@
         
         <tags>
             
-            <tag> 蓝牙 </tag>
-            
             <tag> NRF51822 </tag>
+            
+            <tag> 蓝牙 </tag>
             
         </tags>
         
