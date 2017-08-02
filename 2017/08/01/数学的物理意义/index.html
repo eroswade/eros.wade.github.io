@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NRF51822 SPI | Eros.Wade&#39;s Blog</title>
+  <title>大学三大数学关系 | Eros.Wade&#39;s Blog</title>
   <meta name="author" content="Eros.Wade">
   
-  <meta name="description" content="调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 
-起因NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。">
+  <meta name="description" content="高中数学参考http://www.sohu.com/a/142139848_228459?loc=2&amp;amp;cate_id=16
+大学数学三大分支微积分:我们在初中高中的时候, 学到的是一些简单的图形的面积, 周长.比如三角,圆.但如果要求更复杂的图形. 比如正态分布, 椭圆, 贝塞尔曲线,我们就需要借助微积分.这只是一个数学的进化过程,从简单的线性到复杂的线性. 
+线性代数目的是用来求解行列式(方程组). 或者空间向量转换.
+概率统计这应该是最有用的一门课. 不论是金融、人工智能、都逃不开它。个人理解：其实微积分几乎完全为它服务。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="NRF51822 SPI"/>
+  <meta property="og:title" content="大学三大数学关系"/>
   <meta property="og:site_name" content="Eros.Wade&#39;s Blog"/>
 
   
@@ -111,7 +113,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> NRF51822 SPI</h1>
+			<h1 class="title title-inverse "> 大学三大数学关系</h1>
 		</div>		
 	
 
@@ -131,11 +133,14 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  		
 
-	  <p>调试NRF51822 SPI 和LIS3DH通讯， 碰到一个很奇葩的问题，做一下记录。以免自己忘记。 测试了10多个小时。 </p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>NRF51822 和 LIS3DH通讯， 并把数据通过ble_uart协议发送到手机上。 之前已经做过一次。 代码基本现成。 但就是在读取不到数据。<br>找了很久代码的原因。依然没有找到。 后来突然想起来。工程文件好像之前清理过。 因为之前的项目用不到SPI， 把SPI相关的信息清了。<br><img src="/2017/03/23/NRF51822-SPI/SPI_NRF51.png" alt="SPI_NRF51"></p>
+	  <h2 id="高中数学参考"><a href="#高中数学参考" class="headerlink" title="高中数学参考"></a>高中数学参考</h2><p><a href="http://www.sohu.com/a/142139848_228459?loc=2&amp;cate_id=16" target="_blank" rel="external">http://www.sohu.com/a/142139848_228459?loc=2&amp;cate_id=16</a></p>
+<h2 id="大学数学三大分支"><a href="#大学数学三大分支" class="headerlink" title="大学数学三大分支"></a>大学数学三大分支</h2><h4 id="微积分"><a href="#微积分" class="headerlink" title="微积分:"></a>微积分:</h4><p>我们在初中高中的时候, 学到的是一些简单的图形的面积, 周长.比如三角,圆.<br>但如果要求更复杂的图形. 比如正态分布, 椭圆, 贝塞尔曲线,我们就需要借助微积分.<br>这只是一个数学的进化过程,从简单的线性到复杂的线性. </p>
+<h4 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h4><p>目的是用来求解行列式(方程组). 或者空间向量转换.</p>
+<h4 id="概率统计"><a href="#概率统计" class="headerlink" title="概率统计"></a>概率统计</h4><p>这应该是最有用的一门课. 不论是金融、人工智能、都逃不开它。<br>个人理解：其实微积分几乎完全为它服务。</p>
 <a id="more"></a>
-<h2 id="SPI-MASTER-0-ENABLE"><a href="#SPI-MASTER-0-ENABLE" class="headerlink" title="SPI_MASTER_0_ENABLE"></a>SPI_MASTER_0_ENABLE</h2><p>主要问题是在 components\drivers_nrf\spi_master\spi_master.c<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_0_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI0_TWI0_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI0-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI0-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI0-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_0);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_0_ENABLE</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SPI_MASTER_1_ENABLE</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @brief SPI0 interrupt handler.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SPI1_TWI1_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ((NRF_SPI1-&gt;EVENTS_READY == <span class="number">1</span>) &amp;&amp; (NRF_SPI1-&gt;INTENSET &amp; SPI_INTENSET_READY_Msk))</div><div class="line">    &#123;</div><div class="line">        NRF_SPI1-&gt;EVENTS_READY = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">volatile</span> <span class="keyword">spi_master_instance_t</span> * p_spi_instance = spi_master_get_instance(SPI_MASTER_1);</div><div class="line"></div><div class="line">        spi_master_send_recv_irq(p_spi_instance);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//SPI_MASTER_1_ENABLE</span></span></div></pre></td></tr></table></figure></p>
-<h2 id="DEBUG-NRF-USER"><a href="#DEBUG-NRF-USER" class="headerlink" title="DEBUG_NRF_USER"></a>DEBUG_NRF_USER</h2><p>可能这个非必须， 只是因为我调用到了这个函数。<br>components\libraries\util\nrf_assert.h<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#if defined(DEBUG_NRF) || defined(DEBUG_NRF_USER)</div><div class="line"></div><div class="line">void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name);</div></pre></td></tr></table></figure></p>
+<h4 id="连接三大分支的核心–最小二乘法"><a href="#连接三大分支的核心–最小二乘法" class="headerlink" title="连接三大分支的核心–最小二乘法"></a>连接三大分支的核心–最小二乘法</h4><p>假设一组数据<br>X       Y<br>21.6        208<br>15.5        152<br>10.4        113<br>31.0        227<br>13.0        137<br>32.4        238<br>19.0        178<br>10.4        104<br>19.0        191<br>11.8        130<br><img src="/2017/08/01/数学的物理意义/散点.png" alt="图1"><br>假设公式为 y=kx+b; 也就是我们假设这是一条直线.<br>要求一条直线,离这些点最近. 引入方差概念.<br><img src="/2017/08/01/数学的物理意义/公式.bmp" alt="公式1"><br>对上式求偏导(微积分)<br><img src="/2017/08/01/数学的物理意义/公式2.bmp" alt="公式2"><br>x2=sum(X.^2);       % 求Σ(xi^2)<br>x1=sum(X);          % 求Σ(xi)<br>x1y1=sum(X.<em>Y);     % 求Σ(xi</em>yi)<br>y1=sum(Y);          % 求Σ(yi)<br>k=(n<em>x1y1-x1</em>y1)/(n<em>x2-x1</em>x1);      %解出直线斜率b=(y1-a<em>x1)/n<br>b=(y1-a</em>x1)/n;                      %解出直线截距</p>
+<p>求解出k=0.1612 b=-8.6451 (事实上,这步求解都是用矩阵完成)<br>y=x*0.1612-8.6451;<br><img src="/2017/08/01/数学的物理意义/拟合.png" alt="公式2"></p>
+<h4 id="more"><a href="#more" class="headerlink" title="more"></a>more</h4><p>当我们把公式变成Y=aX^2 + bx +c的时候</p>
 	  
 	</div>
 
@@ -144,14 +149,14 @@ var _hmt = _hmt || [];
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2017/03/24/NRF-MX25L/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2017/03/22/Computer-Investing-W4/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2017/05/05/开源深度学习库/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -206,7 +211,7 @@ var _hmt = _hmt || [];
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-03-23 
+	2017-08-01 
 	</div>
 	
 
@@ -217,7 +222,7 @@ var _hmt = _hmt || [];
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/硬件开发/">硬件开发<span>3</span></a></li>
+    <li><a href="/categories/数学/">数学<span>1</span></a></li>
   </li>
 
     </ul>
@@ -230,13 +235,18 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/蓝牙/">蓝牙<span>3</span></a></li> <li><a href="/tags/NRF51822/">NRF51822<span>2</span></a></li>
+  <li><a href="/tags/漫游数学/">漫游数学<span>1</span></a></li>
     </ul>
 	</div>
 		
 
 	<!-- toc -->
 	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#高中数学参考"><span class="toc-article-text">高中数学参考</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#大学数学三大分支"><span class="toc-article-text">大学数学三大分支</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#微积分"><span class="toc-article-text">微积分:</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#线性代数"><span class="toc-article-text">线性代数</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#概率统计"><span class="toc-article-text">概率统计</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#连接三大分支的核心–最小二乘法"><span class="toc-article-text">连接三大分支的核心–最小二乘法</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#more"><span class="toc-article-text">more</span></a></li></ol></li></ol></li></ol>
+		</div>
 	
 	</div>
 	
